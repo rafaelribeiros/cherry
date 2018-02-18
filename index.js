@@ -1,4 +1,4 @@
-import { AppRegistry } from 'react-native';
-import App from './App';
+import { AppRegistry } from 'react-native'  
+import { Cherry } from './src'
 
-AppRegistry.registerComponent('cherry', () => App);
+AppRegistry.registerComponent('cherry', () => Cherry)
