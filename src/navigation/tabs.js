@@ -2,13 +2,14 @@ import React from 'react'
 import { StackNavigator, TabNavigator } from 'react-navigation'
 
 import { FeedScreen } from '../modules/feed/containers/FeedScreen'
+import { WelcomeScreen } from '../modules/authentication/containers/WelcomeScreen'
 
 import { Colors } from '../constants'
 
 const MainTab = StackNavigator(
   {
     Feed: {
-      screen: FeedScreen,
+      screen: WelcomeScreen,
       navigationOptions: {
         headerBackTitle: 'Ocorrências'
       }
@@ -20,6 +21,13 @@ const MainTab = StackNavigator(
 export const Tabs = TabNavigator(
   {
     MainTab: {
+      screen: MainTab,
+      path: '/',
+      navigationOptions: {
+        tabBarLabel: 'Feed',
+      },
+    },
+    MapTab: {
       screen: MainTab,
       path: '/',
       navigationOptions: {

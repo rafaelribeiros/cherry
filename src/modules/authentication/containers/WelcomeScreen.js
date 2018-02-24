@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { bool, string, shape, func } from 'prop-types'
 import { connect } from 'react-redux'
 
-export class WelcomeContainer extends Component {
+class WelcomeContainer extends Component {
   static propTypes = {
     navigation: shape({
       navigate: func

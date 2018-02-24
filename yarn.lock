@@ -1427,6 +1427,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+data.maybe@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/data.maybe/-/data.maybe-1.2.2.tgz#f955e4b5572b2eb5047eab93d8bb3a1cc76a2dc3"
+
 dateformat@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-2.2.0.tgz#4065e2013cf9fb916ddfd82efb506ad4c6769062"
@@ -4067,6 +4071,12 @@ react-native@0.53.0:
     xcode "^0.9.1"
     xmldoc "^0.4.0"
     yargs "^9.0.0"
+
+react-navigation-redux-helpers@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-navigation-redux-helpers/-/react-navigation-redux-helpers-1.0.1.tgz#1d98cb6364ebdf98a90d34aa7b4592b9073d76e2"
+  dependencies:
+    invariant "^2.2.2"
 
 react-navigation@^1.0.3:
   version "1.0.3"
