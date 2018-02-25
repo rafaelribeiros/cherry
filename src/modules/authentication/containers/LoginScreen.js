@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { bool, string, shape, func } from 'prop-types'
 import { connect } from 'react-redux'
 
-class WelcomeContainer extends Component {
+class LoginContainer extends Component {
   static propTypes = {
     navigation: shape({
       navigate: func
@@ -31,6 +31,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 })
 
-export const WelcomeScreen = connect(
-  mapStateToProps, mapDispatchToProps
-)(WelcomeContainer)
+export const LoginScreen = connect(mapStateToProps, mapDispatchToProps)(LoginContainer)
