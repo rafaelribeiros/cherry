@@ -7,7 +7,6 @@ import { func, array, bool, object, shape, string, number } from 'prop-types'
 class FeedScreenContainer extends Component {
   static navigationOptions = () => ({
     title: 'Ocorrências',
-    ...Values.navbarStyles.primary
   })
 
   static propTypes = {
