@@ -7,7 +7,7 @@ export class App extends React.Component {
   state = { loaded: false }
 
   componentDidMount = () => {
-    const user = { id: '1' }
+    const user = { }
     this.setState({ isLogged: typeof user.id !== 'undefined', loaded: true })
   }
   render() {

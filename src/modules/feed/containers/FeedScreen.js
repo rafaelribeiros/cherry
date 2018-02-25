@@ -21,7 +21,7 @@ class FeedScreenContainer extends Component {
   test = () => {
     const actionToDispatch = NavigationActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Login' })]
+      actions: [NavigationActions.navigate({ routeName: 'SignIn' })]
     })
     this.props.navigation.dispatch(actionToDispatch)
   }
