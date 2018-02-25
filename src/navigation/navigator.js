@@ -3,8 +3,9 @@ import { StackNavigator as Navigator, TabNavigator } from 'react-navigation'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { FeedScreen } from '../modules/feed/containers/FeedScreen'
 import { SignInScreen } from '../modules/authentication/containers/SignInScreen'
+import { SignUpEmailScreen } from '../modules/authentication/containers/SignUpEmailScreen'
+import { FeedScreen } from '../modules/feed/containers/FeedScreen'
 
 import { Colors } from '../constants'
 
@@ -14,6 +15,13 @@ const MainStack = Navigator(
   {
     SignIn: {
       screen: SignInScreen,
+      navigationOptions: {
+        tabBarVisible: false,
+        header: null
+      }
+    },
+    SignUpEmail: {
+      screen: SignUpEmailScreen,
       navigationOptions: {
         tabBarVisible: false,
         header: null

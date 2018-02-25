@@ -23,7 +23,9 @@ class SignInContainer extends Component {
 
   render() {
     return (
-      <SignIn />
+      <SignIn
+        navigateToForgotPassword={() => this.props.navigation.navigate('SignUpEmail')}
+      />
     )
   }
 }
