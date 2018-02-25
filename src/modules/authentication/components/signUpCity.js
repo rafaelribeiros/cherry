@@ -5,7 +5,7 @@ import { SignUp } from './signUp'
 
 import { Images } from '../../../constants/index'
 
-export class SignUpState extends Component {
+export class SignUpCity extends Component {
 
   static propTypes = {
     onButtonPress: PropTypes.func,
@@ -23,8 +23,8 @@ export class SignUpState extends Component {
     alert: { showAlert: false, message: '' },
   }
 
-  onNextButtonPress = (userState) => {
-    this.props.onButtonPress(userState)
+  onNextButtonPress = (city) => {
+    this.props.onButtonPress(city)
   }
 
   hideAlert = () => {
@@ -38,16 +38,16 @@ export class SignUpState extends Component {
     return (
       <SignUp
         hasPicker
-        navBarTitle="Quase acabando!"
+        navBarTitle="Ultima coisa!"
         backgroundImage={Images.signUp}
         buttonLabel="Próximo"
         goBack={this.props.goBack}
         onButtonPress={this.onNextButtonPress}
         hideAlert={this.hideAlert}
         alert={this.state.alert}
-        inputAlertMessage="seu estado"
-        pickerLabel="Selecione seu estado"
-        pickerValues={['Espirito Santo', 'Acre']}
+        inputAlertMessage="sua cidade"
+        pickerLabel="Selecione sua cidade"
+        pickerValues={['Vitória', 'Cariacica', 'Vila Velha']}
       />
     )
   }

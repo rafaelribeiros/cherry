@@ -9,9 +9,9 @@ import { SignUpPasswordScreen } from '../modules/authentication/containers/SignU
 import { SignUpNameScreen } from '../modules/authentication/containers/SignUpNameScreen'
 import { SignUpStateScreen } from '../modules/authentication/containers/SignUpStateScreen'
 import { FeedScreen } from '../modules/feed/containers/FeedScreen'
+import { SignUpCityScreen } from '../modules/authentication/containers/SignUpCityScreen'
 
 import { Colors } from '../constants'
-
 
 export const initialRouteName = 'MainTab'
 
@@ -47,6 +47,13 @@ const MainStack = Navigator(
     },
     SignUpState: {
       screen: SignUpStateScreen,
+      navigationOptions: {
+        tabBarVisible: false,
+        header: null
+      }
+    },
+    SignUpCity: {
+      screen: SignUpCityScreen,
       navigationOptions: {
         tabBarVisible: false,
         header: null

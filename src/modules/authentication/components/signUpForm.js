@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
-import { func, shape, string, bool } from 'prop-types'
+import { func, shape, string, bool, array } from 'prop-types'
 
 import { FormErrorMessage } from '../../shared/components/formErrorMessage'
 import { ButtonPrimary } from '../../shared/components/buttons/index'
@@ -29,7 +29,8 @@ export class SignUpForm extends Component {
     inputAlertMessage: '',
     inputPasswordSecure: false,
     hasPicker: false,
-    pickerLabel: 'Selecione'
+    pickerLabel: 'Selecione',
+    pickerValues: [],
   }
 
   static propTypes = {
@@ -49,6 +50,7 @@ export class SignUpForm extends Component {
     inputPasswordSecure: bool,
     hasPicker: bool,
     pickerLabel: string,
+    pickerValues: array,
   }
 
   state = {
@@ -92,7 +94,8 @@ export class SignUpForm extends Component {
       inputReturnKeyType,
       inputPasswordSecure,
       changePasswordSecure,
-      pickerLabel
+      pickerLabel,
+      pickerValues,
     } = this.props
     return (
       <View style={styles.bodyContainer}>
@@ -100,7 +103,7 @@ export class SignUpForm extends Component {
           {(!this.props.hasPicker) ?
             <Input
               autoFocus
-              keyboardAppearance={'dark'}
+              keyboardAppearance="dark"
               onIconPress={changePasswordSecure}
               onSubmitEditing={this.onFormButtonPress}
               placeholder={inputPlaceHolder}
@@ -115,7 +118,7 @@ export class SignUpForm extends Component {
               selectedValue={this.state.value}
               label={pickerLabel}
               changeValue={this.changePickerValue}
-              values={['Espirito Santo', 'Acre']}
+              values={pickerValues}
             />
           }
           <FormErrorMessage
