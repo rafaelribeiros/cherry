@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { func, array, bool, object, shape, string, number } from 'prop-types'
 
@@ -7,7 +8,6 @@ import { func, array, bool, object, shape, string, number } from 'prop-types'
 class FeedScreenContainer extends Component {
   static navigationOptions = () => ({
     title: 'Ocorrências',
-    ...Values.navbarStyles.primary
   })
 
   static propTypes = {
@@ -18,10 +18,22 @@ class FeedScreenContainer extends Component {
     navigation: {},
   }
 
+  test = () => {
+    const actionToDispatch = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'Login' })]
+    })
+    this.props.navigation.dispatch(actionToDispatch)
+  }
+
 
   render() {
     return (
-      <View />
+      <TouchableOpacity onPress={this.test}>
+        <View>
+          <Text>Next</Text>
+        </View>
+      </TouchableOpacity>
     )
   }
 }
