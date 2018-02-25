@@ -36,7 +36,6 @@ export class SignUpName extends Component {
         inputReturnKeyType={'done'}
         goBack={this.props.goBack}
         onButtonPress={this.onNextButtonPress}
-        signUpProgress={'30%'}
         hideAlert={this.props.onHideAlert}
         inputAlertMessage={'seu nome'}
       />

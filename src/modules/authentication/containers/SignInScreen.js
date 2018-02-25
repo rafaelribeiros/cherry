@@ -24,8 +24,7 @@ class SignInContainer extends Component {
   render() {
     return (
       <SignIn
-        // navigateToSignUp={() => this.props.navigation.navigate('SignUpEmail')}
-        navigateToSignUp={() => this.props.navigation.navigate('SignUpPassword')}
+        navigateToSignUp={() => this.props.navigation.navigate('SignUpEmail')}
       />
     )
   }

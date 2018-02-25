@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { hideAlert } from '../../../redux/actions/sync/authenticationActions'
+// import { hideAlert } from '../../../redux/actions/sync/authenticationActions'
 import { SignUpName } from '../components/signUpName'
 
 const navigateToNextScreen = ({ navigate, state }) => (name) => {
@@ -31,7 +31,7 @@ const mapStateToProps = () => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  hideAlert: () => dispatch(hideAlert()),
+  // hideAlert: () => dispatch(hideAlert()),
 })
 
 SignUpNameContainer.propTypes = {
