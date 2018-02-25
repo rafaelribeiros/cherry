@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, ImageBackground, StatusBar, StyleSheet, Platform, Keyboard } from 'react-native'
-import PropTypes from 'prop-types'
+import { func, string, number, bool} from 'prop-types'
 
 import { Navbar } from '../../shared/components/navbar'
 // import { SignUpProgress } from './signUpProgress'
@@ -13,12 +13,13 @@ import { Images } from '../../../constants/index'
 export class SignUp extends Component {
 
   static propTypes = {
-    onButtonPress: PropTypes.func,
-    goBack: PropTypes.func,
-    navBarTitle: PropTypes.string,
-    backgroundImage: PropTypes.number,
-    signUpProgress: PropTypes.string,
-    loading: PropTypes.bool,
+    onButtonPress: func,
+    goBack: func,
+    navBarTitle: string,
+    backgroundImage: number,
+    signUpProgress: string,
+    loading: bool,
+    hasPicker: bool
   }
 
   static defaultProps = {
@@ -28,6 +29,7 @@ export class SignUp extends Component {
     backgroundImage: Images.signUp,
     signUpProgress: '0%',
     loading: false,
+    hasPicker: false
   }
 
   state = {
@@ -35,22 +37,22 @@ export class SignUp extends Component {
   };
 
   componentDidMount = () => {
-    if (Platform.OS === 'ios') {
+    if ((Platform.OS === 'ios') && (!this.props.hasPicker)) {
       this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow)
       this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide)
     }
-    if (Platform.OS === 'android') {
+    if ((Platform.OS === 'android') && (!this.props.hasPicker)) {
       this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
       this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
     }
   }
 
   componentWillUnmount = () => {
-    if (Platform.OS === 'ios') {
+    if ((Platform.OS === 'ios') && (!this.props.hasPicker)) {
       this.keyboardWillShowListener.remove()
       this.keyboardWillHideListener.remove()
     }
-    if (Platform.OS === 'android') {
+    if ((Platform.OS === 'android') && (!this.props.hasPicker)) {
       this.keyboardDidShowListener.remove()
       this.keyboardDidHideListener.remove()
     }

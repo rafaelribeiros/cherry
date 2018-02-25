@@ -1,33 +1,17 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
-import PropTypes from 'prop-types'
+import { func, shape, string, bool } from 'prop-types'
 
 import { FormErrorMessage } from '../../shared/components/formErrorMessage'
 import { ButtonPrimary } from '../../shared/components/buttons/index'
 import { Input } from '../../shared/components/inputs/index'
+import { CustomPicker } from '../../shared/components/customPicker'
 
 import { styles } from './styles/signUpForm.styles'
 
 import { INPUT_FORM_BLANK } from '../../../constants/messages'
 
 export class SignUpForm extends Component {
-
-  static propTypes = {
-    alert: PropTypes.shape({
-      message: PropTypes.string,
-      showAlert: PropTypes.bool,
-    }),
-    onButtonPress: PropTypes.func,
-    changePasswordSecure: PropTypes.func,
-    hideAlert: PropTypes.func,
-    buttonLabel: PropTypes.string,
-    inputPlaceHolder: PropTypes.string,
-    inputPrimaryIcon: PropTypes.string,
-    inputSecondaryIcon: PropTypes.string,
-    inputReturnKeyType: PropTypes.string,
-    inputAlertMessage: PropTypes.string,
-    inputPasswordSecure: PropTypes.bool,
-  }
 
   static defaultProps = {
     alert: {
@@ -44,6 +28,27 @@ export class SignUpForm extends Component {
     inputReturnKeyType: '',
     inputAlertMessage: '',
     inputPasswordSecure: false,
+    hasPicker: false,
+    pickerLabel: 'Selecione'
+  }
+
+  static propTypes = {
+    alert: shape({
+      message: string,
+      showAlert: bool,
+    }),
+    onButtonPress: func,
+    changePasswordSecure: func,
+    hideAlert: func,
+    buttonLabel: string,
+    inputPlaceHolder: string,
+    inputPrimaryIcon: string,
+    inputSecondaryIcon: string,
+    inputReturnKeyType: string,
+    inputAlertMessage: string,
+    inputPasswordSecure: bool,
+    hasPicker: bool,
+    pickerLabel: string,
   }
 
   state = {
@@ -74,6 +79,10 @@ export class SignUpForm extends Component {
     }
   }
 
+  changePickerValue = (value) => {
+    this.setState({ value })
+  }
+
   render() {
     const {
       buttonLabel,
@@ -83,23 +92,32 @@ export class SignUpForm extends Component {
       inputReturnKeyType,
       inputPasswordSecure,
       changePasswordSecure,
+      pickerLabel
     } = this.props
     return (
       <View style={styles.bodyContainer}>
         <View style={styles.inputContainer}>
-          <Input
-            autoFocus
-            keyboardAppearance={'dark'}
-            onIconPress={changePasswordSecure}
-            onSubmitEditing={this.onFormButtonPress}
-            placeholder={inputPlaceHolder}
-            primaryIcon={inputPrimaryIcon}
-            returnKeyType={inputReturnKeyType}
-            secondaryIcon={inputSecondaryIcon}
-            secureTextEntry={inputPasswordSecure}
-            value={this.state.value}
-            setValue={value => this.setInputValue(value)}
-          />
+          {(!this.props.hasPicker) ?
+            <Input
+              autoFocus
+              keyboardAppearance={'dark'}
+              onIconPress={changePasswordSecure}
+              onSubmitEditing={this.onFormButtonPress}
+              placeholder={inputPlaceHolder}
+              primaryIcon={inputPrimaryIcon}
+              returnKeyType={inputReturnKeyType}
+              secondaryIcon={inputSecondaryIcon}
+              secureTextEntry={inputPasswordSecure}
+              value={this.state.value}
+              setValue={value => this.setInputValue(value)}
+            />
+            : <CustomPicker
+              selectedValue={this.state.value}
+              label={pickerLabel}
+              changeValue={this.changePickerValue}
+              values={['Espirito Santo', 'Acre']}
+            />
+          }
           <FormErrorMessage
             message={this.state.alert.message}
             isVisible={this.state.alert.showAlert}
