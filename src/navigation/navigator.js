@@ -8,10 +8,13 @@ import { SignUpEmailScreen } from '../modules/authentication/containers/SignUpEm
 import { SignUpPasswordScreen } from '../modules/authentication/containers/SignUpPasswordScreen'
 import { SignUpNameScreen } from '../modules/authentication/containers/SignUpNameScreen'
 import { SignUpStateScreen } from '../modules/authentication/containers/SignUpStateScreen'
-import { FeedScreen } from '../modules/feed/containers/FeedScreen'
 import { SignUpCityScreen } from '../modules/authentication/containers/SignUpCityScreen'
+import { FeedScreen } from '../modules/feed/containers/FeedScreen'
+import { MapScreen } from '../modules/map/containers/MapScreen'
+import { ProfileScreen } from '../modules/profile/containers/ProfileScreen'
 
 import { Colors } from '../constants'
+
 
 export const initialRouteName = 'MainTab'
 
@@ -69,7 +72,7 @@ const MainStack = Navigator(
 const MapStack = Navigator(
   {
     Map: {
-      screen: FeedScreen,
+      screen: MapScreen,
     },
   },
   { initialRouteName: 'Map' }
@@ -78,7 +81,7 @@ const MapStack = Navigator(
 const ProfileStack = Navigator(
   {
     Profile: {
-      screen: FeedScreen,
+      screen: ProfileScreen,
     },
   },
   { initialRouteName: 'Profile' }

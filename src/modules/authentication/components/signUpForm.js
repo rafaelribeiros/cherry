@@ -21,6 +21,7 @@ export class SignUpForm extends Component {
     onButtonPress: () => { },
     changePasswordSecure: () => { },
     hideAlert: () => { },
+    hideKeyboard: () => { },
     buttonLabel: '',
     inputPlaceHolder: '',
     inputPrimaryIcon: '',
@@ -31,6 +32,7 @@ export class SignUpForm extends Component {
     hasPicker: false,
     pickerLabel: 'Selecione',
     pickerValues: [],
+    hideKeyboardAfterSubmit: false,
   }
 
   static propTypes = {
@@ -40,6 +42,7 @@ export class SignUpForm extends Component {
     }),
     onButtonPress: func,
     changePasswordSecure: func,
+    hideKeyboard: func,
     hideAlert: func,
     buttonLabel: string,
     inputPlaceHolder: string,
@@ -51,6 +54,7 @@ export class SignUpForm extends Component {
     hasPicker: bool,
     pickerLabel: string,
     pickerValues: array,
+    hideKeyboardAfterSubmit: bool,
   }
 
   state = {
@@ -68,6 +72,9 @@ export class SignUpForm extends Component {
     const { inputAlertMessage } = this.props
     if (value !== '') {
       this.props.onButtonPress(value)
+      if (this.props.hideKeyboardAfterSubmit) {
+        this.props.hideKeyboard()
+      }
     } else {
       this.setState({ alert: { showAlert: true, message: INPUT_FORM_BLANK(inputAlertMessage) } })
     }

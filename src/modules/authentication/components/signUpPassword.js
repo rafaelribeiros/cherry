@@ -12,20 +12,11 @@ export class SignUpPassword extends Component {
   static propTypes = {
     onButtonPress: PropTypes.func,
     goBack: PropTypes.func,
-    onHideAlert: PropTypes.func,
-    alert: PropTypes.shape({
-      showAlert: PropTypes.bool,
-      message: '',
-    }),
-    loading: PropTypes.bool,
   }
 
   static defaultProps = {
     onButtonPress: () => { },
     goBack: () => { },
-    onHideAlert: () => { },
-    alert: { showAlert: false, message: '' },
-    loading: false
   }
 
   state = {
@@ -34,12 +25,7 @@ export class SignUpPassword extends Component {
     alert: { showAlert: false, message: '' },
   };
 
-  componentWillReceiveProps(nextProps) {
-    const { alert } = nextProps
-    this.setState({ alert })
-  }
-
-  onSignUpButtonPress = (password) => {
+  onButtonPress = (password) => {
     if (password.length >= 6) {
       this.props.onButtonPress(password)
     } else {
@@ -53,7 +39,6 @@ export class SignUpPassword extends Component {
     this.setState({
       alert: { showAlert: false, message: '' },
     })
-    this.props.onHideAlert()
   }
 
   changePasswordSecure = () => {
@@ -68,21 +53,20 @@ export class SignUpPassword extends Component {
     const { passwordSecure, secureIcon } = this.state
     return (
       <SignUp
-        navBarTitle={'Senha'}
+        navBarTitle="Senha"
         backgroundImage={Images.signUp}
-        buttonLabel={'Próximo'}
-        inputPlaceHolder={'Crie uma senha segura'}
-        inputPrimaryIcon={'lock-outline'}
-        inputReturnKeyType={'done'}
+        buttonLabel="Próximo"
+        inputPlaceHolder="Crie uma senha segura"
+        inputPrimaryIcon="lock-outline"
+        inputReturnKeyType="done"
         goBack={this.props.goBack}
-        onButtonPress={this.onSignUpButtonPress}
+        onButtonPress={this.onButtonPress}
         inputPasswordSecure={passwordSecure}
         inputSecondaryIcon={secureIcon}
         changePasswordSecure={this.changePasswordSecure}
         alert={this.state.alert}
-        hideAlert={this.hideAlert}
-        loading={this.props.loading}
-        inputAlertMessage={'uma senha'}
+        inputAlertMessage="uma senha"
+        hideKeyboardAfterSubmit
       />
     )
   }

@@ -40,7 +40,9 @@ export const SignUpCityContainer = props => (
   />
 )
 
-const mapStateToProps = () => ({})
+const mapStateToProps = () => ({
+  // device: state.auth.device
+})
 
 const mapDispatchToProps = dispatch => ({
   // hideAlert: () => dispatch(hideAlert()),

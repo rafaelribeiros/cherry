@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, ImageBackground, StatusBar, StyleSheet, Platform, Keyboard } from 'react-native'
-import { func, string, number, bool} from 'prop-types'
+import { func, string, number, bool } from 'prop-types'
 
 import { Navbar } from '../../shared/components/navbar'
 // import { SignUpProgress } from './signUpProgress'
@@ -83,6 +83,14 @@ export class SignUp extends Component {
     })
   }
 
+  hideKeyboard = () => {
+    if ((Platform.OS === 'ios') && (!this.props.hasPicker)) {
+      this.keyboardWillHide()
+    } else if ((Platform.OS === 'android') && (!this.props.hasPicker)) {
+      this.keyboardDidHide()
+    }
+  }
+
   render() {
     const { navBarTitle, backgroundImage, loading } = this.props
     const conatinerStyle = [
@@ -96,13 +104,13 @@ export class SignUp extends Component {
         <StatusBar
           animated
           barStyle="light-content"
-          backgroundColor={'transparent'}
+          backgroundColor="transparent"
           translucent
         />
-        <ImageBackground resizeMode={'cover'} style={conatinerStyle} source={backgroundImage}>
+        <ImageBackground resizeMode="cover" style={conatinerStyle} source={backgroundImage}>
           <View style={StyleSheet.flatten([styles.absoluteFill, styles.darkOverlay])} />
           <Navbar transparent onBack={this.props.goBack} title={navBarTitle} />
-          <SignUpForm {...this.props} />
+          <SignUpForm hideKeyboard={this.hideKeyboard} {...this.props} />
         </ImageBackground>
         {loading && <LoadingOverlay />}
       </View>
