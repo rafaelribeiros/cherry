@@ -10,28 +10,44 @@ import { Colors } from '../constants'
 
 export const initialRouteName = 'MainTab'
 
-const Main = Navigator(
+const MainStack = Navigator(
   {
     Login: {
       screen: LoginScreen,
       navigationOptions: {
         tabBarVisible: false,
+        header: null
       }
     },
     Feed: {
       screen: FeedScreen,
-      navigationOptions: {
-        headerBackTitle: 'Ocorrências'
-      }
     },
   },
   { initialRouteName: 'Feed' }
 )
 
+const MapStack = Navigator(
+  {
+    Map: {
+      screen: FeedScreen,
+    },
+  },
+  { initialRouteName: 'Map' }
+)
+
+const ProfileStack = Navigator(
+  {
+    Profile: {
+      screen: FeedScreen,
+    },
+  },
+  { initialRouteName: 'Profile' }
+)
+
 const Tabs = TabNavigator(
   {
     MainTab: {
-      screen: Main,
+      screen: MainStack,
       path: '/',
       navigationOptions: {
         tabBarLabel: 'Home',
@@ -45,7 +61,7 @@ const Tabs = TabNavigator(
       },
     },
     MapTab: {
-      screen: Main,
+      screen: MapStack,
       path: '/',
       navigationOptions: {
         tabBarLabel: 'Map',
@@ -59,7 +75,7 @@ const Tabs = TabNavigator(
       },
     },
     ProfileTab: {
-      screen: Main,
+      screen: ProfileStack,
       path: '/',
       navigationOptions: {
         tabBarLabel: 'Profile',
@@ -91,8 +107,3 @@ const Tabs = TabNavigator(
 )
 
 export const StackNavigator = Tabs
-// import { Tabs } from './tabs'
-
-// export const initialRouteName = 'Feed'
-
-// export const Navigator = Tabs

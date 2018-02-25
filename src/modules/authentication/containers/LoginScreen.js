@@ -4,6 +4,9 @@ import { bool, string, shape, func } from 'prop-types'
 import { connect } from 'react-redux'
 
 class LoginContainer extends Component {
+
+  state = {}
+
   static propTypes = {
     navigation: shape({
       navigate: func
