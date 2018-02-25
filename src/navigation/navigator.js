@@ -4,7 +4,7 @@ import { StackNavigator as Navigator, TabNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { FeedScreen } from '../modules/feed/containers/FeedScreen'
-import { LoginScreen } from '../modules/authentication/containers/LoginScreen'
+import { SignInScreen } from '../modules/authentication/containers/SignInScreen'
 
 import { Colors } from '../constants'
 
@@ -12,8 +12,8 @@ export const initialRouteName = 'MainTab'
 
 const MainStack = Navigator(
   {
-    Login: {
-      screen: LoginScreen,
+    SignIn: {
+      screen: SignInScreen,
       navigationOptions: {
         tabBarVisible: false,
         header: null

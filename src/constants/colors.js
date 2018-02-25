@@ -1,7 +1,7 @@
 export const Colors = {
   // APP COLORS
-  primary: '#35A4E7',
-  special: '#04D3C9',
+  primary: '#F44336',
+  special: '#EF5350',
   specialGradient: {
     light: '#3CDBD3',
     dark: '#00AEA5'
