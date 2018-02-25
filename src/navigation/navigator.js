@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { SignInScreen } from '../modules/authentication/containers/SignInScreen'
 import { SignUpEmailScreen } from '../modules/authentication/containers/SignUpEmailScreen'
+import { SignUpPasswordScreen } from '../modules/authentication/containers/SignUpPasswordScreen'
 import { FeedScreen } from '../modules/feed/containers/FeedScreen'
 
 import { Colors } from '../constants'
@@ -22,6 +23,13 @@ const MainStack = Navigator(
     },
     SignUpEmail: {
       screen: SignUpEmailScreen,
+      navigationOptions: {
+        tabBarVisible: false,
+        header: null
+      }
+    },
+    SignUpPassword: {
+      screen: SignUpPasswordScreen,
       navigationOptions: {
         tabBarVisible: false,
         header: null

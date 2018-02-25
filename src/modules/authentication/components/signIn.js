@@ -13,7 +13,7 @@ export class SignIn extends Component {
 
   static propTypes = {
     onButtonPress: PropTypes.func,
-    navigateToForgotPassword: PropTypes.func,
+    navigateToSignUp: PropTypes.func,
     onHideAlert: PropTypes.func,
     goBack: PropTypes.func,
     alert: PropTypes.shape({
@@ -25,7 +25,7 @@ export class SignIn extends Component {
 
   static defaultProps = {
     onButtonPress: () => { },
-    navigateToForgotPassword: () => { },
+    navigateToSignUp: () => { },
     onHideAlert: () => { },
     goBack: () => { },
     alert: { showAlert: false, message: '' },
@@ -90,8 +90,8 @@ export class SignIn extends Component {
     this.props.onButtonPress(email, password)
   }
 
-  onForgotPasswordButtonPress = () => {
-    this.props.navigateToForgotPassword()
+  onSignUpButtonPress = () => {
+    this.props.navigateToSignUp()
   }
 
   render() {
@@ -113,7 +113,7 @@ export class SignIn extends Component {
           <View style={StyleSheet.flatten([styles.absoluteFill, styles.darkOverlay])} />
           <SignInForm
             onButtonPress={this.onSignInButtonPress}
-            onForgotPasswordButtonPress={this.onForgotPasswordButtonPress}
+            onSignUpButtonPress={this.onSignUpButtonPress}
             alert={this.props.alert}
             hideAlert={this.props.onHideAlert}
           />

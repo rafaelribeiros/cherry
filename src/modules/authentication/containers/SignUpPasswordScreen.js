@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 
 import { NavigationActions } from 'react-navigation'
 
-import { signUpAction } from '../../../redux/actions/async/authenticationAsyncActions'
-import { hideAlert, showAlert } from '../../../redux/actions/sync/authenticationActions'
+// import { signUpAction } from '../../../redux/actions/async/authenticationAsyncActions'
+// import { hideAlert, showAlert } from '../../../redux/actions/sync/authenticationActions'
 import { SignUpPassword } from '../components/signUpPassword'
 
 
@@ -64,15 +64,15 @@ SignUpPasswordContainer.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-  loading: state.authentication.loading,
-  alert: state.authentication.alert,
-  device: state.authentication.device
+  // loading: state.auth.loading,
+  // alert: state.auth.alert,
+  // device: state.auth.device
 })
 
 const mapDispatchToProps = dispatch => ({
-  signUp: (email, name, password, deviceId) => dispatch(signUpAction(email, name, password, deviceId)),
-  hideAlert: () => dispatch(hideAlert()),
-  showAlert: message => dispatch(showAlert(message))
+  // signUp: (email, name, password, deviceId) => dispatch(signUpAction(email, name, password, deviceId)),
+  // hideAlert: () => dispatch(hideAlert()),
+  // showAlert: message => dispatch(showAlert(message))
 })
 
 export const SignUpPasswordScreen = connect(mapStateToProps, mapDispatchToProps)(SignUpPasswordContainer)

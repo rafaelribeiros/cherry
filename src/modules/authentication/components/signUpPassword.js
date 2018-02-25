@@ -30,7 +30,7 @@ export class SignUpPassword extends Component {
 
   state = {
     passwordSecure: true,
-    secureIcon: 'eye-off',
+    secureIcon: 'eye-off-outline',
     alert: { showAlert: false, message: '' },
   };
 
@@ -60,7 +60,7 @@ export class SignUpPassword extends Component {
     const { passwordSecure } = this.state
     this.setState({
       passwordSecure: !passwordSecure,
-      secureIcon: !passwordSecure ? 'eye-off' : 'eye',
+      secureIcon: !passwordSecure ? 'eye-off-outline' : 'eye-outline',
     })
   }
 
@@ -72,11 +72,10 @@ export class SignUpPassword extends Component {
         backgroundImage={Images.signUp}
         buttonLabel={'Próximo'}
         inputPlaceHolder={'Crie uma senha segura'}
-        inputPrimaryIcon={'lock'}
+        inputPrimaryIcon={'lock-outline'}
         inputReturnKeyType={'done'}
         goBack={this.props.goBack}
         onButtonPress={this.onSignUpButtonPress}
-        signUpProgress={'70%'}
         inputPasswordSecure={passwordSecure}
         inputSecondaryIcon={secureIcon}
         changePasswordSecure={this.changePasswordSecure}
