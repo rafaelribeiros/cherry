@@ -3,6 +3,8 @@ import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { bool, string, shape, func } from 'prop-types'
 
+import { NavigationActions } from 'react-navigation'
+
 import { SignIn } from '../components/signIn'
 
 class SignInContainer extends Component {
@@ -21,9 +23,26 @@ class SignInContainer extends Component {
     },
   }
 
+  onSignIn = (email, password) => {
+    try {
+      // await signIn(email, password, deviceId)
+      const actionToDispatch = NavigationActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName: 'Feed' })]
+      })
+      this.props.navigation.dispatch(actionToDispatch)
+    } catch (error) {
+      console.log(error)
+      //  showAlert(error.message)
+    }
+  }
+
   render() {
     return (
-      <SignIn />
+      <SignIn
+        navigateToSignUp={() => this.props.navigation.navigate('SignUpEmail')}
+        onButtonPress={this.onSignIn}
+      />
     )
   }
 }

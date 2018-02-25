@@ -14,7 +14,7 @@ export class SignInForm extends Component {
 
   static propTypes = {
     onButtonPress: PropTypes.func,
-    onForgotPasswordButtonPress: PropTypes.func,
+    onSignUpButtonPress: PropTypes.func,
     hideAlert: PropTypes.func,
     alert: PropTypes.shape({
       showAlert: PropTypes.bool,
@@ -24,7 +24,7 @@ export class SignInForm extends Component {
 
   static defaultProps = {
     onButtonPress: () => { },
-    onForgotPasswordButtonPress: () => { },
+    onSignUpButtonPress: () => { },
     hideAlert: () => { },
     alert: {
       showAlert: false,
@@ -119,7 +119,7 @@ export class SignInForm extends Component {
             message={this.state.alert.message}
             isVisible={this.state.alert.showAlert}
           />
-          <TouchableWithoutFeedback onPress={this.props.onForgotPasswordButtonPress}>
+          <TouchableWithoutFeedback onPress={this.props.onSignUpButtonPress}>
             <View style={styles.forgotPasswordContainer}>
               <Text style={styles.forgotPasswordText}>Não tem cadastro?
                 <Text style={styles.forgotPasswordLink}> Cadastre-se aqui</Text>

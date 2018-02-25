@@ -28,11 +28,8 @@ class Stack extends React.Component {
   }
   onBackPress = () => {
     const { dispatch, nav } = this.props
-    if (nav.index === 0) {
-      return false
-    }
     dispatch(NavigationActions.back())
-    return true
+    return nav !== this.props.nav
   }
   navigateTo = (routeName) => {
     const actionToDispatch = NavigationActions.reset({

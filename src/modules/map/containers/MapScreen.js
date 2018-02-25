@@ -4,14 +4,14 @@ import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { func, array, bool, object, shape, string, number } from 'prop-types'
 
-import { Feed } from '../components/feed'
+import { MapComponent } from '../components/map'
 
 import { Values } from '../../../constants'
 
 
-class FeedScreenContainer extends Component {
+class MapScreenContainer extends Component {
   static navigationOptions = () => ({
-    title: 'Ocorrências Recentes',
+    title: null,
     ...Values.navbarStyles.primary
   })
 
@@ -26,7 +26,7 @@ class FeedScreenContainer extends Component {
 
   render() {
     return (
-      <Feed
+      <MapComponent
         feed={[]}
       />
     )
@@ -39,4 +39,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 })
 
-export const FeedScreen = connect(mapStateToProps, mapDispatchToProps)(FeedScreenContainer)
+export const MapScreen = connect(mapStateToProps, mapDispatchToProps)(MapScreenContainer)

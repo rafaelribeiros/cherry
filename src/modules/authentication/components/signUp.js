@@ -1,59 +1,58 @@
 import React, { Component } from 'react'
 import { View, ImageBackground, StatusBar, StyleSheet, Platform, Keyboard } from 'react-native'
-import PropTypes from 'prop-types'
+import { func, string, number, bool } from 'prop-types'
 
+import { Navbar } from '../../shared/components/navbar'
+// import { SignUpProgress } from './signUpProgress'
+import { SignUpForm } from './signUpForm'
 import { LoadingOverlay } from '../../shared/components/loadingOverlay'
 
-import { SignInForm } from './signInForm'
-
-import { styles } from './styles/signIn.styles'
+import { styles } from './styles/signUp.styles'
 import { Images } from '../../../constants/index'
 
-export class SignIn extends Component {
+export class SignUp extends Component {
 
   static propTypes = {
-    onButtonPress: PropTypes.func,
-    navigateToSignUp: PropTypes.func,
-    onHideAlert: PropTypes.func,
-    goBack: PropTypes.func,
-    alert: PropTypes.shape({
-      showAlert: PropTypes.bool,
-      message: '',
-    }),
-    loading: PropTypes.bool,
+    onButtonPress: func,
+    goBack: func,
+    navBarTitle: string,
+    backgroundImage: number,
+    signUpProgress: string,
+    loading: bool,
+    hasPicker: bool
   }
 
   static defaultProps = {
     onButtonPress: () => { },
-    navigateToSignUp: () => { },
-    onHideAlert: () => { },
     goBack: () => { },
-    alert: { showAlert: false, message: '' },
-    loading: false
+    navBarTitle: '',
+    backgroundImage: Images.signUp,
+    signUpProgress: '0%',
+    loading: false,
+    hasPicker: false
   }
 
   state = {
-    isKeyboardActive: false,
     keyboardHeight: 0,
   };
 
   componentDidMount = () => {
-    if (Platform.OS === 'ios') {
+    if ((Platform.OS === 'ios') && (!this.props.hasPicker)) {
       this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow)
       this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide)
     }
-    if (Platform.OS === 'android') {
+    if ((Platform.OS === 'android') && (!this.props.hasPicker)) {
       this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
       this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
     }
   }
 
   componentWillUnmount = () => {
-    if (Platform.OS === 'ios') {
+    if ((Platform.OS === 'ios') && (!this.props.hasPicker)) {
       this.keyboardWillShowListener.remove()
       this.keyboardWillHideListener.remove()
     }
-    if (Platform.OS === 'android') {
+    if ((Platform.OS === 'android') && (!this.props.hasPicker)) {
       this.keyboardDidShowListener.remove()
       this.keyboardDidHideListener.remove()
     }
@@ -68,7 +67,6 @@ export class SignIn extends Component {
   setKeyboard = (event) => {
     const keyboardHeight = event.endCoordinates.height
     this.setState({
-      isKeyboardActive: true,
       keyboardHeight: Platform.OS === 'ios' ? keyboardHeight : 0,
     })
   }
@@ -81,20 +79,20 @@ export class SignIn extends Component {
   }
   unsetKeyboard = () => {
     this.setState({
-      isKeyboardActive: false,
       keyboardHeight: 0,
     })
   }
 
-  onSignInButtonPress = (email, password) => {
-    this.props.onButtonPress(email, password)
-  }
-
-  onSignUpButtonPress = () => {
-    this.props.navigateToSignUp()
+  hideKeyboard = () => {
+    if ((Platform.OS === 'ios') && (!this.props.hasPicker)) {
+      this.keyboardWillHide()
+    } else if ((Platform.OS === 'android') && (!this.props.hasPicker)) {
+      this.keyboardDidHide()
+    }
   }
 
   render() {
+    const { navBarTitle, backgroundImage, loading } = this.props
     const conatinerStyle = [
       styles.container,
       {
@@ -106,19 +104,15 @@ export class SignIn extends Component {
         <StatusBar
           animated
           barStyle="light-content"
-          backgroundColor={'transparent'}
+          backgroundColor="transparent"
           translucent
         />
-        <ImageBackground resizeMode={'cover'} style={conatinerStyle} source={Images.signIn}>
+        <ImageBackground resizeMode="cover" style={conatinerStyle} source={backgroundImage}>
           <View style={StyleSheet.flatten([styles.absoluteFill, styles.darkOverlay])} />
-          <SignInForm
-            onButtonPress={this.onSignInButtonPress}
-            onSignUpButtonPress={this.onSignUpButtonPress}
-            alert={this.props.alert}
-            hideAlert={this.props.onHideAlert}
-          />
+          <Navbar transparent onBack={this.props.goBack} title={navBarTitle} />
+          <SignUpForm hideKeyboard={this.hideKeyboard} {...this.props} />
         </ImageBackground>
-        {this.props.loading && <LoadingOverlay elevated />}
+        {loading && <LoadingOverlay />}
       </View>
     )
   }
