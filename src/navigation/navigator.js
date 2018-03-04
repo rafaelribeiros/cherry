@@ -3,6 +3,7 @@ import { StackNavigator as Navigator, TabNavigator } from 'react-navigation'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { WelcomeScreen } from '../modules/authentication/containers/WelcomeScreen'
 import { SignInScreen } from '../modules/authentication/containers/SignInScreen'
 import { SignUpEmailScreen } from '../modules/authentication/containers/SignUpEmailScreen'
 import { SignUpPasswordScreen } from '../modules/authentication/containers/SignUpPasswordScreen'
@@ -20,6 +21,13 @@ export const initialRouteName = 'MainTab'
 
 const MainStack = Navigator(
   {
+    Welcome: {
+      screen: WelcomeScreen,
+      navigationOptions: {
+        tabBarVisible: false,
+        header: null
+      }
+    },
     SignIn: {
       screen: SignInScreen,
       navigationOptions: {
@@ -66,7 +74,7 @@ const MainStack = Navigator(
       screen: FeedScreen,
     },
   },
-  { initialRouteName: 'Feed' }
+  { initialRouteName: 'Welcome' }
 )
 
 const MapStack = Navigator(
