@@ -4,7 +4,7 @@ import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { func, array, bool, object, shape, string, number } from 'prop-types'
 
-import { Feed } from '../components/feed'
+// import { Feed } from '../components/feed'
 
 import { Values } from '../../../constants'
 
@@ -26,7 +26,7 @@ class FeedScreenContainer extends Component {
 
   render() {
     return (
-      <Feed
+      <View
         feed={[]}
       />
     )
