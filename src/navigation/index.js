@@ -15,11 +15,15 @@ class Stack extends React.Component {
     isLogged: bool.isRequired,
   };
 
+  state = { loaded: false }
+
   componentDidMount() {
     if (this.props.isLogged === true) {
       this.navigateTo('home')
+      this.setState({ loaded: true })
     } else {
       this.navigateTo('auth')
+      this.setState({ loaded: true })
     }
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
   }
@@ -44,7 +48,7 @@ class Stack extends React.Component {
     const { dispatch, nav } = this.props
     const addListener = createReduxBoundAddListener('root')
     const navigation = addNavigationHelpers({ state: nav, dispatch, addListener })
-    return <StackNavigator navigation={navigation} />
+    return this.state.loaded && <StackNavigator navigation={navigation} />
   }
 }
 
