@@ -1,6 +1,13 @@
 {
   "parser": "babel-eslint",
   "extends": "airbnb",
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ios.js", ".android.js"]
+      }
+    }
+  },
   "env": {
     "node": true,
     "es6": true,

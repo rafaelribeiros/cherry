@@ -5,7 +5,11 @@ import { Colors, Fonts, Metrics } from '../../../../constants'
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: Colors.screen,
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
   },
   headerSpacing: {
     height: Metrics.smallSpacing

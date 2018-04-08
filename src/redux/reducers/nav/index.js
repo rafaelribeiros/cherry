@@ -1,13 +1,7 @@
 import { NavigationActions } from 'react-navigation'
 import { StackNavigator, initialRouteName } from '../../../navigation/navigator'
 
-// const initialState = StackNavigator.router.getStateForAction(StackNavigator.router.getActionForPathAndParams(initialRouteName))
-
-const initialState = StackNavigator.router.getStateForAction(
-  NavigationActions.navigate({
-    routeName: initialRouteName
-  })
-)
+const initialState = StackNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: initialRouteName }))
 
 export const navigationReducer = (state = initialState, action) => {
   const nextState = StackNavigator.router.getStateForAction(action, state)
