@@ -3,5 +3,6 @@ export const NOT_LOGGED_IN = {
   name: null
 }
 export const AUTH_INITIAL_STATE = {
-  user: {}
+  user: {},
+  loading: false,
 }

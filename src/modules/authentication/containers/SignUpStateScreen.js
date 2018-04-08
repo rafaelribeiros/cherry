@@ -6,9 +6,8 @@ import { connect } from 'react-redux'
 
 import { SignUpState } from '../components/signUpState'
 
-const navigateToNextScreen = ({ navigate, state }) => (userState) => {
-  const { email, name, password } = state.params
-  navigate('SignUpCity', { email, name, password, userState })
+const navigateToNextScreen = ({ navigate }) => () => {
+  navigate('SignUpCity')
 }
 
 const navigateBack = goBack => () => {

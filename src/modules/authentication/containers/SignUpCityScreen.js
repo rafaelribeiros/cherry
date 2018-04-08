@@ -14,8 +14,9 @@ const onSignUp = ({ navigation, signUp, device, showAlert }) => async (city) => 
     // const deviceId = device.userId
     // await signUp(email, name, password, userState, city, deviceId)
     const actionToDispatch = NavigationActions.reset({
+      key: null,
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Feed' })]
+      actions: [NavigationActions.navigate({ routeName: 'home' })]
     })
     navigation.dispatch(actionToDispatch)
   } catch (error) {

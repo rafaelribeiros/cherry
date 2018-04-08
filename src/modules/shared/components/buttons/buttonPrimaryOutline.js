@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text, ViewPropTypes } from 'react-native'
 import PropTypes from 'prop-types'
 
 import { Touchable } from '../touchable'
-import { styles } from '../styles/button.styles'
+import { styles } from '../styles/button.style'
 
 export const ButtonPrimaryOutline = ({ label, onPress, containerStyle, ...props }) => {
   const { containerFlat, primaryOutline, textPrimaryFlat } = styles

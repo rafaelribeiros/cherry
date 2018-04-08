@@ -6,8 +6,8 @@ import { connect } from 'react-redux'
 
 import { SignUpEmail } from '../components/signUpEmail'
 
-const navigateToNextScreen = navigate => (email) => {
-  navigate('SignUpName', { email })
+const navigateToNextScreen = navigate => () => {
+  navigate('SignUpPassword')
 }
 
 const navigateBack = goBack => () => {

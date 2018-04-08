@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { Touchable } from '../touchable'
 
-import { styles } from '../styles/button.styles'
+import { styles } from '../styles/button.style'
 
 export const ButtonWhite = (props) => {
   const { label, onPress } = props

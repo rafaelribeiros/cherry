@@ -4,7 +4,7 @@ import PropTypes, { bool } from 'prop-types'
 
 import { Touchable } from '../touchable'
 
-import { styles } from '../styles/button.styles'
+import { styles } from '../styles/button.style'
 
 export const ButtonWhiteSpecial = ({ label, notExpanded, onPress, special, style, ...props }) => {
   const { centeredContainer, container, whiteBackground, specialText } = styles

@@ -33,5 +33,31 @@ export const styles = StyleSheet.create({
   forgotPasswordLink: {
     ...Fonts.style.footnote,
     color: Colors.special,
-  }
+  },
+  welcomeButton: {
+    width: '100%',
+    minWidth: 96,
+    alignSelf: 'center'
+  },
+  flexCenteredContent: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  alternativeLoginWrap: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: Metrics.smallSpacing,
+    marginHorizontal: Metrics.standardSpacing * 2,
+  },
+  alternativeLoginLine: {
+    flex: 1,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: Colors.darkDivider
+  },
+  alternativeLoginText: {
+    color: Colors.blackDisabledAlt,
+    marginHorizontal: Metrics.standardSpacing,
+    ...Fonts.style.medium
+  },
 })
