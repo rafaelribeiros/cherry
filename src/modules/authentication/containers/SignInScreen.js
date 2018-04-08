@@ -23,6 +23,11 @@ class SignInContainer extends Component {
     },
   }
 
+  goBack = () => {
+    // this.props.hideAlert()
+    this.props.navigation.goBack()
+  }
+
   onSignIn = (email, password) => {
     try {
       // await signIn(email, password, deviceId)
@@ -37,11 +42,16 @@ class SignInContainer extends Component {
     }
   }
 
+  goToSignUp = () => {
+    this.props.navigation.navigate('SignUpEmail')
+  }
+
   render() {
     return (
       <SignIn
-        navigateToSignUp={() => this.props.navigation.navigate('SignUpEmail')}
+        navigateToSignUp={this.goToSignUp}
         onButtonPress={this.onSignIn}
+        goBack={this.goBack}
       />
     )
   }

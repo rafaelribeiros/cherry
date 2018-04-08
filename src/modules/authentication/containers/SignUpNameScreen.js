@@ -5,9 +5,8 @@ import { connect } from 'react-redux'
 // import { hideAlert } from '../../../redux/actions/sync/authenticationActions'
 import { SignUpName } from '../components/signUpName'
 
-const navigateToNextScreen = ({ navigate, state }) => (name) => {
-  const { email } = state.params
-  navigate('SignUpPassword', { email, name })
+const navigateToNextScreen = ({ navigate }) => () => {
+  navigate('SignUpEmail')
 }
 
 const navigateBack = goBack => () => {
@@ -40,7 +39,6 @@ SignUpNameContainer.propTypes = {
 }
 
 SignUpNameContainer.defaultProps = {
-  hideAlert: () => { },
   navigation: {},
 }
 
