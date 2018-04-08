@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text } from 'react-native'
 import PropTypes from 'prop-types'
 
 import { Touchable } from '../touchable'
-import { styles } from '../styles/button.styles'
+import { styles } from '../styles/button.style'
 import { Colors } from '../../../../constants'
 
 export const ButtonFooter = (props) => {

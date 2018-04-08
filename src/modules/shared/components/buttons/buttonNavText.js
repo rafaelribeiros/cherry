@@ -4,7 +4,7 @@ import { Text, Platform, StyleSheet } from 'react-native'
 import { string, func } from 'prop-types'
 import { Touchable } from '../touchable'
 
-import { styles } from '../styles/button.styles'
+import { styles } from '../styles/button.style'
 
 export const ButtonNavText = ({ title, onPress, containerStyle }) => {
   const textToDisplay = (Platform.OS === 'android') ? title.toUpperCase() : title

@@ -1,12 +1,29 @@
+import { Platform } from 'react-native'
+
+const isIOS = Platform.OS === 'ios'
+
 export const Colors = {
   // APP COLORS
   primary: '#F44336',
   special: '#EF5350',
+  primaryGradient: {
+    light: '#F44336',
+    dark: '#F44336'
+  },
+  primaryGradientCondensed: ['#F44336', '#F44336'],
   specialGradient: {
     light: '#3CDBD3',
     dark: '#00AEA5'
   },
   buttonText: '#ffffff',
+  navBar: {
+    background: isIOS
+      ? '#f3f5f7'
+      : '#F6F8FA',
+    tint: isIOS
+      ? '#15c850'
+      : '#00000089',
+  },
 
   // FIXED COLORS
   facebookColor: '#3A5A98',

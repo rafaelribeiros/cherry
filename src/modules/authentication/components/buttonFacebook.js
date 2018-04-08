@@ -7,7 +7,7 @@ import { Touchable } from '../../shared/components/touchable'
 
 import { Metrics, Colors } from '../../../constants/index'
 
-import { styles } from '../../shared/components/styles/button.styles'
+import { styles } from '../../shared/components/styles/button.style'
 
 export const ButtonFacebook = ({ label, onPress }) => {
   const labelToShow = (Platform.OS === 'ios') ? label : label.toUpperCase()

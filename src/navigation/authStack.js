@@ -1,5 +1,6 @@
 import { StackNavigator as Navigator } from 'react-navigation'
 
+import { WelcomeScreen } from '../modules/authentication/containers/WelcomeScreen'
 import { SignInScreen } from '../modules/authentication/containers/SignInScreen'
 import { SignUpEmailScreen } from '../modules/authentication/containers/SignUpEmailScreen'
 import { SignUpPasswordScreen } from '../modules/authentication/containers/SignUpPasswordScreen'
@@ -9,7 +10,7 @@ import { SignUpCityScreen } from '../modules/authentication/containers/SignUpCit
 
 export const AuthStack = Navigator({
   Welcome: {
-    screen: SignInScreen,
+    screen: WelcomeScreen,
     navigationOptions: {
       tabBarVisible: false,
       header: null

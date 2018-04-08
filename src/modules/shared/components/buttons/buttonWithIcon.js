@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { Touchable } from '../touchable'
-import { styles } from '../styles/button.styles'
+import { styles } from '../styles/button.style'
 import { Colors, Metrics } from '../../../../constants'
 
 export const ButtonWithIcon = (props) => {
