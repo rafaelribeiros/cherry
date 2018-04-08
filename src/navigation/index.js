@@ -17,9 +17,9 @@ class Stack extends React.Component {
 
   componentDidMount() {
     if (this.props.isLogged === true) {
-      this.navigateTo('Feed')
+      this.navigateTo('home')
     } else {
-      this.navigateTo('SignIn')
+      this.navigateTo('auth')
     }
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
   }
