@@ -78,15 +78,15 @@ export class FeedCard extends Component {
     } = this.props
     const hasImage = (images.length > 0)
     const imageSource = hasImage ? { uri: images[0], priority: FastImage.priority.normal } : {}
-    const subtitleToShow = `${candidate.pageType} - ${formatedDate}`
-    const extraSubtitleToShow = type === 'SPONSORED' ? 'PATROCINADO' : ''
+    const subtitleToShow = formatedDate
+    const extraSubtitleToShow = type
     return (
       <Card style={styles.card}>
         <RowAvatar
           title={candidate.name}
           subtitle={subtitleToShow}
           extraSubtitle={extraSubtitleToShow}
-          source={candidate.userImage}
+          source={candidate.image}
           onPress={onReadMorePress}
         />
         <TouchableWithoutFeedback onPress={onReadMorePress}>

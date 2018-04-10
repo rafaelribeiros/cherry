@@ -16,7 +16,7 @@ export const CardCreatePost = ({
 }) => (
   <Card style={styles.container}>
     <Touchable onPress={onPress} style={styles.wrap}>
-      <Text style={styles.title}>Criar publicação</Text>
+      <Text style={styles.title}>Criar ocorrência</Text>
       <IconButton
         name="image"
         color={Colors.blackSecondary}

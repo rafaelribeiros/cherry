@@ -41,7 +41,7 @@ export class LikeButton extends PureComponent {
   render() {
     const { isActive, disabled, number } = this.props
     const buttonOpacity = (disabled && this.state.processingTouch) ? { opacity: 0.5 } : {}
-    const [iconColor, iconName] = ((disabled && this.state.processingTouch) || isActive) ? [Colors.primary, 'heart'] : [Colors.blackSecondary, 'heart-outline']
+    const [iconColor, iconName] = ((disabled && this.state.processingTouch) || isActive) ? [Colors.primary, 'thumb-up'] : [Colors.blackSecondary, 'thumb-up-outline']
     return (
       <Touchable disabled={disabled} borderless onPress={this.onPressButton} style={styles.buttonWrap}>
         <Icon

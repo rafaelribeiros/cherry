@@ -14,11 +14,15 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  cardWrapper: {
+    flex: 1,
+    paddingVertical: Metrics.largeSpacing * 2,
+  },
   card: {
     backgroundColor: Colors.white,
     borderRadius: Metrics.menuRadius,
     paddingVertical: Metrics.tinySpacing,
-    marginHorizontal: Metrics.largeSpacing
+    marginHorizontal: Metrics.largeSpacing * 2
   },
   menu: {
     ...Fonts.style.description,
