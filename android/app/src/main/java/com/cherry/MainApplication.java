@@ -3,6 +3,9 @@ package com.cherry;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.brentvatne.react.ReactVideoPackage;
+import com.dylanvann.fastimage.FastImageViewPackage;
+import com.github.droibit.android.reactnative.customtabs.CustomTabsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.CallbackManager;
@@ -34,6 +37,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactVideoPackage(),
+            new FastImageViewPackage(),
+            new CustomTabsPackage(),
             new LinearGradientPackage(),
             new FBSDKPackage(mCallbackManager),
             new MapsPackage(),

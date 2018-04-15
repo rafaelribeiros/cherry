@@ -33,7 +33,8 @@ class SignInContainer extends Component {
       // await signIn(email, password, deviceId)
       const actionToDispatch = NavigationActions.reset({
         index: 0,
-        actions: [NavigationActions.navigate({ routeName: 'Feed' })]
+        key: null,
+        actions: [NavigationActions.navigate({ routeName: 'home' })]
       })
       this.props.navigation.dispatch(actionToDispatch)
     } catch (error) {

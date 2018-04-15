@@ -137,6 +137,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-video-exoplayer')
+    compile project(':react-native-fast-image')
+    compile project(':react-native-custom-tabs')
     compile project(':react-native-fbsdk')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-maps')
