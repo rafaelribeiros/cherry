@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { FeedScreen } from '../modules/feed/containers/FeedScreen'
 import { MapScreen } from '../modules/map/containers/MapScreen'
 import { ProfileScreen } from '../modules/profile/containers/ProfileScreen'
+import { ProfileEditScreen } from '../modules/profile/containers/ProfileEditScreen'
 
 import { Colors } from '../constants'
 
@@ -30,6 +31,14 @@ const ProfileStack = Navigator(
   {
     Profile: {
       screen: ProfileScreen,
+    },
+    ProfileEdit: {
+      screen: ProfileEditScreen,
+      navigationOptions: {
+        title: 'Editar Perfil',
+        headerBackTitle: 'Editar',
+        tabBarVisible: false,
+      }
     },
   },
   { initialRouteName: 'Profile' }
