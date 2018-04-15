@@ -22,11 +22,6 @@ export const CardCreatePost = ({
         color={Colors.blackSecondary}
         // onPress={onImagePress}
       />
-      <IconButton
-        name="youtube-play"
-        color={Colors.blackSecondary}
-        // onPress={onVideoPress}
-      />
     </Touchable>
   </Card>
 )

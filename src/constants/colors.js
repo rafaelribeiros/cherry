@@ -4,13 +4,13 @@ const isIOS = Platform.OS === 'ios'
 
 export const Colors = {
   // APP COLORS
-  primary: '#F44336',
+  primary: '#D32F2F',
   special: '#EF5350',
   primaryGradient: {
-    light: '#F44336',
-    dark: '#F44336'
+    light: '#D32F2F',
+    dark: '#D32F2F'
   },
-  primaryGradientCondensed: ['#F44336', '#F44336'],
+  primaryGradientCondensed: ['#D32F2F', '#D32F2F'],
   specialGradient: {
     light: '#3CDBD3',
     dark: '#00AEA5'
