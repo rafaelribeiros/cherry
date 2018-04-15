@@ -9,8 +9,13 @@ import { ProfileEdit } from '../components/profileEdit'
 import { userDefaultProps, userPropTypes } from '../../shared/propTypes/userPropTypes'
 // import { getUser } from '../../../redux/reducers/authentication/selectors'
 import { getLoading } from '../../../redux/reducers/profile/selectors'
+import { Values } from '../../../constants'
 
 class ProfileEditContainer extends Component {
+
+  static navigationOptions = () => ({
+    ...Values.navbarStyles.primary
+  })
 
   static defaultProps = {
     updateProfile: () => { },

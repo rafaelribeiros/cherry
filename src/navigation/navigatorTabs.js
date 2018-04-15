@@ -36,7 +36,6 @@ const ProfileStack = Navigator(
       screen: ProfileEditScreen,
       navigationOptions: {
         title: 'Editar Perfil',
-        headerBackTitle: 'Editar',
         tabBarVisible: false,
       }
     },

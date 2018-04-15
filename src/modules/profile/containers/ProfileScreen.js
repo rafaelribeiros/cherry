@@ -26,10 +26,6 @@ const Config = ''
 class ProfileScreenContainer extends Component {
   static navigationOptions = { header: null }
 
-  static propTypes = {
-    loading: bool,
-  }
-
   static defaultProps = {
     getProfile: () => { },
     logout: () => { },
