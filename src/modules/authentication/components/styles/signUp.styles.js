@@ -5,6 +5,10 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   absoluteFill: {
     ...StyleSheet.absoluteFillObject,
   },

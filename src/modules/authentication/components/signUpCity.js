@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import { SignUp } from './signUp'
 
-import { Images } from '../../../constants/index'
-
 export class SignUpCity extends Component {
 
   static propTypes = {
@@ -38,8 +36,8 @@ export class SignUpCity extends Component {
     return (
       <SignUp
         hasPicker
-        navBarTitle="Ultima coisa!"
-        backgroundImage={Images.signUp}
+        title="Sua cidade"
+        subtitle="Informe sua cidade para visualizar ocorrências em sua área"
         buttonLabel="Próximo"
         goBack={this.props.goBack}
         onButtonPress={this.onNextButtonPress}
