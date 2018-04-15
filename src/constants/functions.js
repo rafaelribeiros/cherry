@@ -42,9 +42,13 @@ export function getNameInitials(name) {
     userName = userName.toUpperCase()
     const arr = userName.split(' ')
     if (arr.length > 1) {
-      if (arr[1][0].toUpperCase() !== arr[1][0]) arr.splice(1, 1) // Verifica se há algum nome com letra minúscula
+      // Verifica se há algum nome com letra minúscula
+      if ((arr[1][0].toUpperCase()) !== (arr[1][0])) {
+        arr.splice(1, 1)
+      }
       userName = `${arr[0]} ${arr[arr.length - 1]}` // Pega apenas o nome e o ultimo sobrenome
-      const arrInitials = userName.match(/\b(\w)/gi) // Iniciais de cada parte do nome.
+      const cleanName = userName.replace(/[^\w\s]/gi, '') // Remove os caracteres especiais
+      const arrInitials = cleanName.match(/\b(\w)/gi) // Iniciais de cada parte do nome.
       const initials = clearUndefined(arrInitials)
       return { initials, color }
     }
