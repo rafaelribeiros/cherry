@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { bool, string, shape, func } from 'prop-types'
 
@@ -31,6 +31,7 @@ class SignInContainer extends Component {
   onSignIn = (email, password) => {
     try {
       // await signIn(email, password, deviceId)
+      AsyncStorage.setItem('profile', JSON.stringify({ id: '1', name: 'Aline' })).then(() => { })
       const actionToDispatch = NavigationActions.reset({
         index: 0,
         key: null,

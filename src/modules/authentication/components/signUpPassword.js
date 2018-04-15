@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { SignUp } from './signUp'
-
-import { Images } from '../../../constants/index'
-
 import { INVALID_PASSWORD } from '../../../constants/messages'
 
 export class SignUpPassword extends Component {
@@ -53,10 +50,10 @@ export class SignUpPassword extends Component {
     const { passwordSecure, secureIcon } = this.state
     return (
       <SignUp
-        navBarTitle="Senha"
-        backgroundImage={Images.signUp}
+        title="Senha de acesso"
+        subtitle="Crie uma senha segura"
         buttonLabel="Próximo"
-        inputPlaceHolder="Crie uma senha segura"
+        inputPlaceHolder="Informe uma senha"
         inputPrimaryIcon="lock-outline"
         inputReturnKeyType="done"
         goBack={this.props.goBack}

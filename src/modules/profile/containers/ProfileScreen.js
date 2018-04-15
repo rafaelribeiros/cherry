@@ -26,10 +26,6 @@ const Config = ''
 class ProfileScreenContainer extends Component {
   static navigationOptions = { header: null }
 
-  static propTypes = {
-    loading: bool,
-  }
-
   static defaultProps = {
     getProfile: () => { },
     logout: () => { },
@@ -65,12 +61,12 @@ class ProfileScreenContainer extends Component {
 
   logout = async () => {
     try {
-      await this.props.logout()
+      // await this.props.logout()
       AsyncStorage.removeItem('profile').then(async () => { })
       const actionToDispatch = NavigationActions.reset({
         index: 0,
         key: null,
-        actions: [NavigationActions.navigate({ routeName: 'authenticationStack' })]
+        actions: [NavigationActions.navigate({ routeName: 'auth' })]
       })
       this.props.navigation.dispatch(actionToDispatch)
     } catch (error) {

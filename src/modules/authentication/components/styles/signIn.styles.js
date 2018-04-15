@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     ...Fonts.style.footnote,
-    color: Colors.white,
+    color: Colors.blackSecondary,
   },
   forgotPasswordLink: {
     ...Fonts.style.footnote,

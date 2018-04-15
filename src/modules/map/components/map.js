@@ -16,8 +16,8 @@ export class MapComponent extends Component {
     isRendering: true,
     refreshing: false,
     region: {
-      latitude: 20.3297200,
-      longitude: -40.2925000,
+      latitude: 37.78825,
+      longitude: -122.4324,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     },

@@ -22,7 +22,7 @@ class Stack extends React.Component {
       this.navigateTo('home')
       this.setState({ loaded: true })
     } else {
-      this.navigateTo('home')
+      this.navigateTo('auth')
       this.setState({ loaded: true })
     }
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)

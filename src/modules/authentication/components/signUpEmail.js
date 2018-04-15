@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { SignUp } from './signUp'
-
-import { Images } from '../../../constants/index'
 import { INVALID_EMAIL } from '../../../constants/messages'
 
 export class SignUpEmail extends Component {
@@ -46,17 +44,17 @@ export class SignUpEmail extends Component {
   render() {
     return (
       <SignUp
-        navBarTitle={'Vamos lá!'}
-        backgroundImage={Images.signUp}
-        buttonLabel={'Próximo'}
-        inputPlaceHolder={'Qual seu email?'}
-        inputPrimaryIcon={'email-outline'}
-        inputReturnKeyType={'done'}
+        title="Email de cadastro"
+        subtitle="Informe seu email para acessar o aplicativo"
+        buttonLabel="Próximo"
+        inputPlaceHolder="Qual seu email?"
+        inputPrimaryIcon="email-outline"
+        inputReturnKeyType="done"
         goBack={this.props.goBack}
         onButtonPress={this.onNextButtonPress}
         hideAlert={this.hideAlert}
         alert={this.state.alert}
-        inputAlertMessage={'seu email'}
+        inputAlertMessage="seu email"
       />
     )
   }

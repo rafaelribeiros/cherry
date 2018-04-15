@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, TouchableWithoutFeedback } from 'react-native'
 import { func, shape, string, bool, array } from 'prop-types'
 
 import { FormErrorMessage } from '../../shared/components/formErrorMessage'
@@ -7,9 +7,8 @@ import { ButtonPrimary } from '../../shared/components/buttons/index'
 import { Input } from '../../shared/components/inputs/index'
 import { CustomPicker } from '../../shared/components/customPicker'
 
-import { styles } from './styles/signUpForm.styles'
-
 import { INPUT_FORM_BLANK } from '../../../constants/messages'
+import { isFunctionEmpty } from '../../../constants/functions'
 
 export class SignUpForm extends Component {
 
@@ -22,6 +21,7 @@ export class SignUpForm extends Component {
     changePasswordSecure: () => { },
     hideAlert: () => { },
     hideKeyboard: () => { },
+    onInputPress: () => { },
     buttonLabel: '',
     inputPlaceHolder: '',
     inputPrimaryIcon: '',
@@ -43,6 +43,7 @@ export class SignUpForm extends Component {
     onButtonPress: func,
     changePasswordSecure: func,
     hideKeyboard: func,
+    onInputPress: func,
     hideAlert: func,
     buttonLabel: string,
     inputPlaceHolder: string,
@@ -103,36 +104,40 @@ export class SignUpForm extends Component {
       changePasswordSecure,
       pickerLabel,
       pickerValues,
+      onInputPress,
     } = this.props
+    const inputPointerEvents = (typeof onInputPress === 'function' && isFunctionEmpty(onInputPress)) ? 'auto' : 'box-only'
     return (
-      <View style={styles.bodyContainer}>
-        <View style={styles.inputContainer}>
-          {(!this.props.hasPicker) ?
-            <Input
-              autoFocus
-              keyboardAppearance="dark"
-              onIconPress={changePasswordSecure}
-              onSubmitEditing={this.onFormButtonPress}
-              placeholder={inputPlaceHolder}
-              primaryIcon={inputPrimaryIcon}
-              returnKeyType={inputReturnKeyType}
-              secondaryIcon={inputSecondaryIcon}
-              secureTextEntry={inputPasswordSecure}
-              value={this.state.value}
-              setValue={value => this.setInputValue(value)}
-            />
-            : <CustomPicker
-              selectedValue={this.state.value}
-              label={pickerLabel}
-              changeValue={this.changePickerValue}
-              values={pickerValues}
-            />
-          }
-          <FormErrorMessage
-            message={this.state.alert.message}
-            isVisible={this.state.alert.showAlert}
-          />
-        </View>
+      <View >
+        <TouchableWithoutFeedback onPress={onInputPress}>
+          <View pointerEvents={inputPointerEvents}>
+            {(!this.props.hasPicker) ?
+              <Input
+                autoFocus
+                keyboardAppearance="dark"
+                onIconPress={changePasswordSecure}
+                onSubmitEditing={this.onFormButtonPress}
+                placeholder={inputPlaceHolder}
+                primaryIcon={inputPrimaryIcon}
+                returnKeyType={inputReturnKeyType}
+                secondaryIcon={inputSecondaryIcon}
+                secureTextEntry={inputPasswordSecure}
+                value={this.state.value}
+                setValue={value => this.setInputValue(value)}
+              />
+              : <CustomPicker
+                selectedValue={this.state.value}
+                label={pickerLabel}
+                changeValue={this.changePickerValue}
+                values={pickerValues}
+              />
+            }
+          </View>
+        </TouchableWithoutFeedback>
+        <FormErrorMessage
+          message={this.state.alert.message}
+          isVisible={this.state.alert.showAlert}
+        />
         <ButtonPrimary label={buttonLabel} onPress={this.onFormButtonPress} />
       </View>
     )
