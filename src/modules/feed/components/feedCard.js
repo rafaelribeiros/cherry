@@ -68,7 +68,7 @@ export class FeedCard extends Component {
       images,
       interactions: { like, comment, share },
       onReadMorePress,
-      type,
+      contentType,
       showGallery,
       showMenuModal,
       text,
@@ -79,7 +79,7 @@ export class FeedCard extends Component {
     const hasImage = (images.length > 0)
     const imageSource = hasImage ? { uri: images[0], priority: FastImage.priority.normal } : {}
     const subtitleToShow = formatedDate
-    const extraSubtitleToShow = type
+    const extraSubtitleToShow = contentType
     return (
       <Card style={styles.card}>
         <RowAvatar

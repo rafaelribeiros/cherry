@@ -61,16 +61,9 @@ export const feedItemDefault = {
   commentCount: 0,
   shareCount: 0,
   type: 'REGULAR',
-  origin: 'REGULAR',
 }
 export const feedItemProps = {
   candidate: shape(candidatePropTypes).isRequired,
-  origin: oneOf([
-    'REGULAR',
-    'FACEBOOK',
-    'INSTAGRAM',
-    'TWITTER',
-  ]).isRequired,
   type: oneOf(['REGULAR', 'SPONSORED']),
   audio: shape({
     file: oneOfType([string, number, object]),

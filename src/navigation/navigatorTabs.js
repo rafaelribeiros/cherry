@@ -3,6 +3,8 @@ import { StackNavigator as Navigator, TabNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { FeedScreen } from '../modules/feed/containers/FeedScreen'
+import { PublishPostScreen } from '../modules/feed/containers/PublishPostScreen'
+
 import { MapScreen } from '../modules/map/containers/MapScreen'
 import { ProfileScreen } from '../modules/profile/containers/ProfileScreen'
 import { ProfileEditScreen } from '../modules/profile/containers/ProfileEditScreen'
@@ -13,6 +15,14 @@ const MainStack = Navigator(
   {
     Feed: {
       screen: FeedScreen,
+    },
+    PublishPost: {
+      screen: PublishPostScreen,
+      navigationOptions: {
+        tabBarVisible: false,
+        title: 'Criar ocorrência',
+        headerBackTitle: 'Criar',
+      }
     },
   },
   { initialRouteName: 'Feed' }

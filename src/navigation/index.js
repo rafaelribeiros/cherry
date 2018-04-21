@@ -1,5 +1,5 @@
 import React from 'react'
-import { BackHandler } from 'react-native'
+import { InteractionManager, BackHandler } from 'react-native'
 import { connect } from 'react-redux'
 import { func, object, bool } from 'prop-types'
 import { addNavigationHelpers, NavigationActions } from 'react-navigation'
@@ -18,14 +18,16 @@ class Stack extends React.Component {
   state = { loaded: false }
 
   componentDidMount() {
-    if (this.props.isLogged === true) {
-      this.navigateTo('home')
-      this.setState({ loaded: true })
-    } else {
-      this.navigateTo('auth')
-      this.setState({ loaded: true })
-    }
-    BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
+    InteractionManager.runAfterInteractions(() => {
+      if (this.props.isLogged === true) {
+        this.navigateTo('home')
+        this.setState({ loaded: true })
+      } else {
+        this.navigateTo('home')
+        this.setState({ loaded: true })
+      }
+      BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
+    })
   }
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress)

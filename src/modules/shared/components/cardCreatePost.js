@@ -12,7 +12,6 @@ import { IconButton } from './buttons'
 export const CardCreatePost = ({
   onPress,
   // onImagePress,
-  // onVideoPress
 }) => (
   <Card style={styles.container}>
     <Touchable onPress={onPress} style={styles.wrap}>
@@ -29,12 +28,10 @@ export const CardCreatePost = ({
 CardCreatePost.defaultProps = {
   onPress: () => {},
   // onImagePress: () => {},
-  // onVideoPress: () => {},
 }
 CardCreatePost.propTypes = {
   onPress: func,
   // onImagePress: func,
-  // onVideoPress: func,
 }
 
 const styles = StyleSheet.create({

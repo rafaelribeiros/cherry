@@ -38,9 +38,12 @@ export class Feed extends Component {
     activeUserId: undefined,
     feed: [],
     hasPostsEndReached: false,
+    isAdmin: false,
+    isLoadingPosts: false,
     onCommentPress: () => { },
     onDeletePress: () => { },
     onLoadMorePosts: () => { },
+    onNewPostPress: () => {},
     onRefreshPosts: () => { },
     onReportPress: () => { },
     onSharePress: () => { },
@@ -57,12 +60,12 @@ export class Feed extends Component {
     activeUserId: string,
     feed: arrayOf(shape(feedItemProps)),
     hasPostsEndReached: bool,
-    isAdmin: bool.isRequired,
-    isLoadingPosts: bool.isRequired,
+    isAdmin: bool,
+    isLoadingPosts: bool,
     onCommentPress: func,
     onDeletePress: func,
     onLoadMorePosts: func,
-    onNewPostPress: func.isRequired,
+    onNewPostPress: func,
     onRefreshPosts: func,
     onReportPress: func,
     onSharePress: func,
@@ -269,7 +272,6 @@ export class Feed extends Component {
         onFollowPress={() => alert('onFollowPress')}
         onReadMorePress={() => this.props.onReadMorePress(item)}
         onVideoPress={() => this.showVideoModal(item.video)}
-        origin={item.origin}
         post={item}
         shareCount={item.shareCount}
         showGallery={this.showGallery}
@@ -278,6 +280,7 @@ export class Feed extends Component {
         text={item.body}
         title={item.title}
         type={item.type}
+        contentType={item.contentType}
         video={item.video}
         videoThumbnail={item.videoThumbnail}
       />
