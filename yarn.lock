@@ -4509,6 +4509,10 @@ react-native-fbsdk@^0.7.0:
     pump "^1.0.2"
     xcode "^0.9.3"
 
+react-native-google-places@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-google-places/-/react-native-google-places-2.5.0.tgz#a52c0ee6629a5c4aa222589022f127c5fa201436"
+
 react-native-hyperlink@^0.0.12:
   version "0.0.12"
   resolved "https://registry.yarnpkg.com/react-native-hyperlink/-/react-native-hyperlink-0.0.12.tgz#07fcd81bdc23da35dafde0546073347398adcaff"
