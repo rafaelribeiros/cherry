@@ -46,8 +46,8 @@ export const RowInteract = ({
     />
     <Divider />
     {interactionButton('message-text', comment)}
-    <Divider />
-    {interactionButton('share', share)}
+    {/* <Divider />
+    {interactionButton('share', share)} */}
     {hasMenu &&
       <View style={styles.alignRight}>
         {interactionButton('dots-horizontal', menu)}

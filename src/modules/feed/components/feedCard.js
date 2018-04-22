@@ -78,14 +78,12 @@ export class FeedCard extends Component {
     } = this.props
     const hasImage = (images.length > 0)
     const imageSource = hasImage ? { uri: images[0], priority: FastImage.priority.normal } : {}
-    const subtitleToShow = formatedDate
-    const extraSubtitleToShow = contentType
+    const subtitleToShow = `${contentType} - ${formatedDate}`
     return (
       <Card style={styles.card}>
         <RowAvatar
           title={candidate.name}
           subtitle={subtitleToShow}
-          extraSubtitle={extraSubtitleToShow}
           source={candidate.image}
           onPress={onReadMorePress}
         />
