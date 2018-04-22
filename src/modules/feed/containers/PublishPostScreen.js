@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { object, bool, } from 'prop-types'
+import { object, bool, func } from 'prop-types'
 
 import { PublishPost } from '../components/publishPost'
 import { getLoadingPost } from '../../../redux/reducers/feed/selectors'
@@ -15,18 +15,19 @@ class PublishPostContainer extends Component {
   static defaultProps = {
     navigation: {},
     loading: false,
+    publishPost: () => { }
   }
 
   static propTypes = {
     navigation: object,
     loading: bool,
+    publishPost: func,
   }
 
   navigateBack = () => this.props.navigation.goBack()
 
   onPublishPress = async (formData) => {
-    console.log(formData)
-    //  await this.props.publishPost(formData, this.props.navigation)
+    await this.props.publishPost(formData, this.props.navigation)
   }
 
   render() {
