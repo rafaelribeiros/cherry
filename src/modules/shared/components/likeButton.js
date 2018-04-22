@@ -58,7 +58,7 @@ export class LikeButton extends PureComponent {
             color={Colors.blackSecondary}
             containerStyle={buttonOpacity}
             dense
-            name="arrow-down-bold-circle"
+            name="arrow-down-bold-circle-outline"
           />
         </Touchable>
       </View>
