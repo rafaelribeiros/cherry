@@ -3,13 +3,15 @@ import {
   Alert,
   Platform,
   ScrollView,
-  StyleSheet,
   View,
-  Image
+  Image,
+  Text
 } from 'react-native'
-import { func, bool, shape, string } from 'prop-types'
-
+import { func, bool } from 'prop-types'
+import _ from 'lodash'
 import ImagePicker from 'react-native-image-picker'
+import LinearGradient from 'react-native-linear-gradient'
+import RNGooglePlaces from 'react-native-google-places'
 
 import { ButtonFooter } from '../../shared/components/buttons'
 import { IconButton } from '../../shared/components/iconButton'
@@ -18,6 +20,8 @@ import { InputWithLabel, InputMultlineWithLabel } from '../../shared/components/
 import { SelectWithLabel } from '../../shared/components/selects'
 import { Toggle } from '../../shared/components/toggle'
 import { LoadingSpinner } from '../../shared/components/loadingSpinner'
+import { Touchable } from '../../shared/components/touchable'
+import { Icon } from '../../shared/components/icon'
 
 import { getFileName } from '../../../config/utils'
 import {
@@ -31,35 +35,19 @@ import { styles } from './styles/publishPostForm.style'
 export class PublishPostForm extends Component {
   static defaultProps = {
     onPublishPress: () => { },
-    openGraph: {
-      hasOg: false,
-      ogTitle: '',
-      ogImage: '',
-      ogLink: '',
-      ogDescription: ''
-    },
-    loadingOg: false,
   }
 
   static propTypes = {
     onPublishPress: func,
-    openGraph: shape({
-      hasOg: bool,
-      ogTitle: string,
-      ogImage: string,
-      ogLink: string,
-      ogDescription: string
-    }),
-    loadingOg: bool
   }
 
   state = {
     title: '',
     description: '',
     image: { uri: '' },
-    isModalVisible: false,
     anonymus: false,
     selectedType: '',
+    location: {},
     items: [
       'Assalto',
       'Assasinato',
@@ -68,12 +56,6 @@ export class PublishPostForm extends Component {
       'Outro',
     ]
   }
-
-  showModal = () => {
-    setTimeout(() => this.videoModal.activateImmersion(), 2000)
-    this.setState({ isModalVisible: true })
-  }
-  hideModal = () => this.setState({ isModalVisible: false })
 
   onRemoveImagePress = () => {
     Alert.alert(
@@ -103,9 +85,13 @@ export class PublishPostForm extends Component {
   }
 
   onSubmitPress = () => {
-    const { description } = this.state
+    const { description, location, selectedType } = this.state
     if (description === '') {
-      return this.showAlert('', INPUT_FORM_BLANK('a descrição'))
+      return this.showAlert(INPUT_FORM_BLANK('a descrição'), '')
+    } else if (_.isEmpty(location)) {
+      return this.showAlert(INPUT_FORM_BLANK('o local da ocorrência'), '')
+    } else if (selectedType === '') {
+      return this.showAlert(INPUT_FORM_BLANK('o tipo da ocorrência'), '')
     }
     return (
       Alert.alert(
@@ -113,7 +99,7 @@ export class PublishPostForm extends Component {
         'Deseja concluir esta publicação?',
         [
           { text: 'Editar', onPress: () => { } },
-          { text: 'Publicar', onPress: () => this.props.onPublishPress(this.state, this.props.openGraph) }
+          { text: 'Publicar', onPress: () => this.props.onPublishPress(this.state) }
         ]
       )
     )
@@ -142,6 +128,15 @@ export class PublishPostForm extends Component {
 
   focusDescription = () => this.descriptionInput.focus()
 
+  openSearchModal = () => {
+    RNGooglePlaces.openAutocompleteModal({ country: 'BR' })
+      .then((location) => {
+        this.setState({ location })
+        console.log(location)
+      })
+      .catch(error => console.log(error.message))
+  }
+
   renderToggle = () => {
     return (
       <Toggle
@@ -161,17 +156,15 @@ export class PublishPostForm extends Component {
       anonymus,
       items,
       selectedType,
+      location,
     } = this.state
 
     const hasImage = (image.uri !== '')
 
     const backgroundColor = Colors.primary
     const publishButtonText = anonymus ? 'Publicar anonimamente' : 'Publicar'
+    const locationText = location.address ? location.address : 'Local da Ocorrência'
 
-    const mediaTextContainerStyle = StyleSheet.flatten([
-      styles.mediaTextContainer,
-      { marginTop: (hasImage) ? Metrics.tinySpacing : Metrics.standardSpacing }
-    ])
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -190,6 +183,18 @@ export class PublishPostForm extends Component {
             selectedValue={selectedType}
             onValueChange={selectedType => this.setState({ selectedType })}
           />
+          <Touchable
+            onPress={this.openSearchModal}
+            style={{ flexDirection: 'row', alignItems: 'center' }}
+          >
+            <Icon
+              style={styles.icon}
+              color={Colors.blackSecondary}
+              name="map-marker"
+              size={Metrics.icons.medium}
+            />
+            <Text>{locationText}</Text>
+          </Touchable>
           <InputMultlineWithLabel
             ref={(ref) => { this.descriptionInput = ref }}
             label="TEXTO DA PUBLICAÇÃO"
@@ -197,19 +202,6 @@ export class PublishPostForm extends Component {
             value={description}
             onChangeText={description => this.setDescripton(description)}
           />
-          <View style={mediaTextContainerStyle}>
-            {
-              (hasImage) &&
-              <IconButton
-                color={Colors.blackDisabledAlt}
-                dense
-                name="delete"
-                onPress={this.onRemoveImagePress}
-                size={Metrics.icons.medium}
-                style={styles.icon}
-              />
-            }
-          </View>
           {(!hasImage) &&
             <MediaButtonsContainer
               buttonsColor={backgroundColor}
@@ -218,10 +210,22 @@ export class PublishPostForm extends Component {
             />
           }
           {(hasImage) &&
-            <Image style={{ aspectRatio: 16 / 9 }} source={{ uri: image.uri }} />
-          }
-          {
-            this.props.loadingOg && <LoadingSpinner spinnerColor={Colors.primary} />
+            <View style={{ aspectRatio: 16 / 9, }}>
+              <Image style={{ width: '100%', height: '100%' }} source={{ uri: image.uri }} />
+              <LinearGradient
+                locations={[0.4, 0.8, 1]}
+                colors={['#0000', 'rgba(0, 0, 0, 0.60)', 'rgba(0, 0, 0, 0.7)']}
+                style={styles.linearContainer}
+              >
+                <IconButton
+                  color={Colors.white}
+                  dense
+                  name="delete"
+                  onPress={this.onRemoveImagePress}
+                  size={Metrics.icons.medium}
+                />
+              </LinearGradient>
+            </View>
           }
         </ScrollView>
         <ButtonFooter onPress={this.onSubmitPress} label={publishButtonText} />

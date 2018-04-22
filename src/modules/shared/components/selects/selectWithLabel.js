@@ -22,7 +22,7 @@ export const SelectWithLabel = ({
         onValueChange={itemValue => onValueChange(itemValue)}
       >
         <Picker.Item label={placeholder} value="" />
-        {items.map(item => <Picker.Item label={item} value={item} />)}
+        {items.map(item => <Picker.Item key={item} label={item} value={item} />)}
       </Picker>
     </View>
   )

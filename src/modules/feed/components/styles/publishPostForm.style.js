@@ -20,6 +20,12 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: null,
   },
+  linearContainer: {
+    ...StyleSheet.absoluteFillObject,
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+  },
   backgroundVideo: {
     position: 'absolute',
     top: 0,
