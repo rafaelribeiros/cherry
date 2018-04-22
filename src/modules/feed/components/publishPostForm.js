@@ -5,9 +5,9 @@ import {
   ScrollView,
   View,
   Image,
-  Text
+  Text,
 } from 'react-native'
-import { func, bool } from 'prop-types'
+import { func } from 'prop-types'
 import _ from 'lodash'
 import ImagePicker from 'react-native-image-picker'
 import LinearGradient from 'react-native-linear-gradient'
@@ -19,7 +19,6 @@ import { MediaButtonsContainer } from '../../shared/components/mediaButtonsConta
 import { InputWithLabel, InputMultlineWithLabel } from '../../shared/components/inputs'
 import { SelectWithLabel } from '../../shared/components/selects'
 import { Toggle } from '../../shared/components/toggle'
-import { LoadingSpinner } from '../../shared/components/loadingSpinner'
 import { Touchable } from '../../shared/components/touchable'
 import { Icon } from '../../shared/components/icon'
 
@@ -87,11 +86,11 @@ export class PublishPostForm extends Component {
   onSubmitPress = () => {
     const { description, location, selectedType } = this.state
     if (description === '') {
-      return this.showAlert(INPUT_FORM_BLANK('a descrição'), '')
+      return this.showAlert('', INPUT_FORM_BLANK('a descrição'))
     } else if (_.isEmpty(location)) {
-      return this.showAlert(INPUT_FORM_BLANK('o local da ocorrência'), '')
+      return this.showAlert('', INPUT_FORM_BLANK('o local da ocorrência'))
     } else if (selectedType === '') {
-      return this.showAlert(INPUT_FORM_BLANK('o tipo da ocorrência'), '')
+      return this.showAlert('', INPUT_FORM_BLANK('o tipo da ocorrência'))
     }
     return (
       Alert.alert(
