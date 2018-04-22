@@ -39,6 +39,7 @@ class FeedScreenContainer extends Component {
           party: 'PES',
           pageType: 'Presidente'
         },
+        placeDescription: 'Cariacica',
         contentType: 'Assalto',
         formatedDate: moment().fromNow(),
         interactions: {
@@ -80,6 +81,7 @@ class FeedScreenContainer extends Component {
           pageType: 'Presidente',
           image: 'https://upload.wikimedia.org/wikipedia/commons/9/98/Christopher_Fabian_profile.jpg'
         },
+        placeDescription: 'Vitória',
         contentType: 'Assalto',
         formatedDate: moment().fromNow(),
         images: ['https://www.carlosbritto.com/wp-content/uploads/2017/09/roubo-celulares.jpg'],
@@ -121,6 +123,7 @@ class FeedScreenContainer extends Component {
           party: 'PES',
           pageType: 'Presidente'
         },
+        placeDescription: 'Vila velha',
         contentType: 'Assasinato',
         formatedDate: moment().fromNow(),
         interactions: {
@@ -169,6 +172,9 @@ class FeedScreenContainer extends Component {
     // this.props.getComments(post.id)
     this.props.navigation.navigate('Post', { post })
   }
+  onPlacePress = () => {
+    this.props.navigation.navigate('Map')
+  }
 
   render() {
     return (
@@ -178,6 +184,7 @@ class FeedScreenContainer extends Component {
         onNewPostPress={this.navigateToNewPost}
         onReadMorePress={this.onGoToPostPress}
         onCommentPress={this.onCommentPress}
+        onPlacePress={this.onPlacePress}
       />
     )
   }

@@ -262,6 +262,7 @@ export class Post extends Component {
             audio={post.audio}
             authorId={post.authorId}
             user={post.user}
+            placeDescription={post.placeDescription}
             commentCount={post.commentCount}
             comments={post.comments}
             formatedDate={post.formatedDate}

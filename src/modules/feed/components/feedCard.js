@@ -4,12 +4,13 @@ import { Text, View, TouchableWithoutFeedback, ImageBackground } from 'react-nat
 import { number } from 'prop-types'
 import FastImage from 'react-native-fast-image'
 
-// import { OpenGraph } from '../../shared/components/openGraph'
 import { Card } from '../../shared/components/card'
 import { RowAvatar, RowInteract } from '../../shared/components/rows'
 import { TextWithReadMore } from '../../shared/components/textWithReadMore'
+import { Icon } from '../../shared/components/icon'
+import { Touchable } from '../../shared/components/touchable'
 
-import { Metrics } from '../../../constants'
+import { Metrics, Colors } from '../../../constants'
 import { styles } from './styles/feed.style'
 import { feedItemDefault, feedItemProps } from '../../shared/propTypes/feedPropTypes'
 
@@ -56,10 +57,6 @@ export class FeedCard extends Component {
 
   render() {
     const {
-    //   isOgPocket,
-    //   og: {
-    //     ogLink, ogImage, ogTitle, ogDescription
-    //   },
       user,
       formatedDate,
       goOgLink,
@@ -75,6 +72,8 @@ export class FeedCard extends Component {
       textMaxLength,
       title,
       videoThumbnail,
+      placeDescription,
+      onPlacePress,
     } = this.props
     const hasImage = (images.length > 0)
     const imageSource = hasImage ? { uri: images[0], priority: FastImage.priority.normal } : {}
@@ -127,16 +126,16 @@ export class FeedCard extends Component {
                 </View>
               </TouchableWithoutFeedback>
             }
-            {/* {(ogLink) &&
-              <OpenGraph
-                link={ogLink}
-                image={ogImage}
-                title={ogTitle}
-                description={ogDescription}
-                onPress={goOgLink}
-                pocket={isOgPocket}
+            <Touchable onPress={onPlacePress} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon
+                style={styles.icon}
+                color={Colors.blackSecondary}
+                name="map-marker"
+                dense
+                size={Metrics.icons.small}
               />
-            } */}
+              <Text>{placeDescription}</Text>
+            </Touchable>
           </View>
         </TouchableWithoutFeedback>
         <RowInteract

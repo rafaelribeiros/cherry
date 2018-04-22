@@ -220,6 +220,8 @@ export class Feed extends Component {
         commentCount={item.commentCount}
         comments={item.comments}
         formatedDate={item.formatedDate}
+        placeDescription={item.placeDescription}
+        onPlacePress={this.props.onPlacePress}
         id={item.id}
         images={item.images}
         interactions={this.formatInteractions(item)}
