@@ -16,7 +16,6 @@ export const styles = StyleSheet.create({
   buttonNumber: {
     ...Fonts.style.footnote,
     color: Colors.blackSecondary,
-    paddingRight: Metrics.tinySpacing,
   },
   dividerWrap: {
     paddingLeft: Metrics.tinySpacing,

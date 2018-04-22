@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Text } from 'react-native'
+import { View, Text } from 'react-native'
 
 import { Icon } from './icon'
 import { Touchable } from './touchable'
@@ -22,7 +22,7 @@ export class LikeButton extends PureComponent {
     onPress: () => { },
   }
 
-  state= {
+  state = {
     processingTouch: false
   }
 
@@ -43,15 +43,25 @@ export class LikeButton extends PureComponent {
     const buttonOpacity = (disabled && this.state.processingTouch) ? { opacity: 0.5 } : {}
     const [iconColor, iconName] = ((disabled && this.state.processingTouch) || isActive) ? [Colors.primary, 'thumb-up'] : [Colors.blackSecondary, 'thumb-up-outline']
     return (
-      <Touchable disabled={disabled} borderless onPress={this.onPressButton} style={styles.buttonWrap}>
-        <Icon
-          color={iconColor}
-          containerStyle={buttonOpacity}
-          dense
-          name={iconName}
-        />
+      <View style={{ flexDirection: 'row', alignItems: 'center', alignContent: 'center' }}>
+        <Touchable disabled={disabled} borderless onPress={this.onPressButton} style={styles.buttonWrap}>
+          <Icon
+            color={iconColor}
+            containerStyle={buttonOpacity}
+            dense
+            name="arrow-up-bold-circle-outline"
+          />
+        </Touchable>
         {this.renderNumber(number)}
-      </Touchable>
+        <Touchable disabled={disabled} borderless onPress={this.onPressButton} style={styles.buttonWrap}>
+          <Icon
+            color={Colors.blackSecondary}
+            containerStyle={buttonOpacity}
+            dense
+            name="arrow-down-bold-circle"
+          />
+        </Touchable>
+      </View>
     )
   }
 }
