@@ -34,7 +34,7 @@ class FeedScreenContainer extends Component {
           party: 'PES',
           pageType: 'Presidente'
         },
-        type: 'Assalto',
+        contentType: 'Assalto',
         formatedDate: moment().fromNow(),
         interactions: {
           like: {
@@ -75,7 +75,7 @@ class FeedScreenContainer extends Component {
           pageType: 'Presidente',
           image: 'https://upload.wikimedia.org/wikipedia/commons/9/98/Christopher_Fabian_profile.jpg'
         },
-        type: 'Assalto',
+        contentType: 'Assalto',
         formatedDate: moment().fromNow(),
         images: ['https://www.carlosbritto.com/wp-content/uploads/2017/09/roubo-celulares.jpg'],
         interactions: {
@@ -116,7 +116,7 @@ class FeedScreenContainer extends Component {
           party: 'PES',
           pageType: 'Presidente'
         },
-        type: 'Assasinato',
+        contentType: 'Assasinato',
         formatedDate: moment().fromNow(),
         interactions: {
           like: {
@@ -150,12 +150,14 @@ class FeedScreenContainer extends Component {
     ]
   }
 
+  navigateToNewPost = () => this.props.navigation.navigate('PublishPost')
 
   render() {
     return (
       <Feed
         feed={this.state.posts}
         isAdmin={true}
+        onNewPostPress={this.navigateToNewPost}
       />
     )
   }
