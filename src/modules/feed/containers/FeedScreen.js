@@ -6,7 +6,8 @@ import { func, array, bool, object, shape, string, number } from 'prop-types'
 import moment from 'moment'
 
 import { Feed } from '../components/feed'
-
+import { getCommentsAction } from '../../../redux/actions/async/postAsyncActions'
+import { fetchPost } from '../../../redux/actions/sync/postSyncActions'
 import { Values } from '../../../constants'
 
 class FeedScreenContainer extends Component {
@@ -17,17 +18,21 @@ class FeedScreenContainer extends Component {
 
   static propTypes = {
     navigation: object,
+    savePost: func,
+    getComments: func,
   }
 
   static defaultProps = {
     navigation: {},
+    savePost: () => { },
+    getComments: () => { },
   }
 
   state = {
     posts: [
       {
         id: '1',
-        candidate: {
+        user: {
           id: '123',
           name: 'José da Silva',
           number: 123,
@@ -67,7 +72,7 @@ class FeedScreenContainer extends Component {
       },
       {
         id: '2',
-        candidate: {
+        user: {
           id: '123',
           name: 'João de Almeida',
           number: 123,
@@ -109,7 +114,7 @@ class FeedScreenContainer extends Component {
       },
       {
         id: '3',
-        candidate: {
+        user: {
           id: '123',
           name: 'Anônimo',
           number: 123,
@@ -151,13 +156,28 @@ class FeedScreenContainer extends Component {
   }
 
   navigateToNewPost = () => this.props.navigation.navigate('PublishPost')
+  onGoToPostPress = (post) => {
+    const commenting = false
+    this.props.savePost(post, commenting)
+    // this.props.getComments(post.id)
+    this.props.navigation.navigate('Post', { post })
+  }
+  onCommentPress = (post) => {
+    console.log('passou')
+    const commenting = true
+    this.props.savePost(post, commenting)
+    // this.props.getComments(post.id)
+    this.props.navigation.navigate('Post', { post })
+  }
 
   render() {
     return (
       <Feed
         feed={this.state.posts}
-        isAdmin={true}
+        isAuthenticated={true}
         onNewPostPress={this.navigateToNewPost}
+        onReadMorePress={this.onGoToPostPress}
+        onCommentPress={this.onCommentPress}
       />
     )
   }
@@ -167,6 +187,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  savePost: (post, commenting) => dispatch(fetchPost(post, commenting)),
+  getComments: postId => dispatch(getCommentsAction(postId)),
 })
 
 export const FeedScreen = connect(mapStateToProps, mapDispatchToProps)(FeedScreenContainer)

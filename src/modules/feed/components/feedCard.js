@@ -60,7 +60,7 @@ export class FeedCard extends Component {
     //   og: {
     //     ogLink, ogImage, ogTitle, ogDescription
     //   },
-      candidate,
+      user,
       formatedDate,
       goOgLink,
       id,
@@ -82,9 +82,9 @@ export class FeedCard extends Component {
     return (
       <Card style={styles.card}>
         <RowAvatar
-          title={candidate.name}
+          title={user.name}
           subtitle={subtitleToShow}
-          source={candidate.image}
+          source={user.image}
           onPress={onReadMorePress}
         />
         <TouchableWithoutFeedback onPress={onReadMorePress}>

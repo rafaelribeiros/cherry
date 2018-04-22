@@ -12,7 +12,6 @@ import {
   arrayOf,
   bool,
   func,
-  number,
   shape,
   string,
 } from 'prop-types'
@@ -21,14 +20,13 @@ import { CustomTabs } from 'react-native-custom-tabs'
 import { CardCreatePost } from '../../shared/components/cardCreatePost'
 import { FeedCard } from './feedCard'
 import { LoadingSpinner } from '../../shared/components/loadingSpinner'
-import { PublishingPostCard } from '../../shared/components/publishingPostCard'
 import { ScreenWithScrollHOC } from '../../shared/components/hoc/screenWithScrollHOC'
 import { StatusBarStandard } from '../../shared/components/statusBarStandard'
 
 import { styles } from './styles/feed.style'
 import { Metrics, Colors } from '../../../constants'
 import { feedItemProps } from '../../shared/propTypes/feedPropTypes'
-import { MenuModal, VideoModal, ImagesGallery } from '../../shared/components/modals'
+import { MenuModal, ImagesGallery } from '../../shared/components/modals'
 import { SHARE_MESSAGE, POST_REQUEST_FAIL } from '../../../constants/messages'
 
 const Container = ScreenWithScrollHOC(View)
@@ -40,6 +38,7 @@ export class Feed extends Component {
     hasPostsEndReached: false,
     isAdmin: false,
     isLoadingPosts: false,
+    isAuthenticated: false,
     onCommentPress: () => { },
     onDeletePress: () => { },
     onLoadMorePosts: () => { },
@@ -47,13 +46,7 @@ export class Feed extends Component {
     onRefreshPosts: () => { },
     onReportPress: () => { },
     onSharePress: () => { },
-    uploadingImage: false,
-    videoUploading: {
-      data: {},
-      uploading: false,
-    },
     onReadMorePress: () => { },
-    onFollowPage: () => { },
   }
 
   static propTypes = {
@@ -62,6 +55,7 @@ export class Feed extends Component {
     hasPostsEndReached: bool,
     isAdmin: bool,
     isLoadingPosts: bool,
+    isAuthenticated: bool,
     onCommentPress: func,
     onDeletePress: func,
     onLoadMorePosts: func,
@@ -69,16 +63,7 @@ export class Feed extends Component {
     onRefreshPosts: func,
     onReportPress: func,
     onSharePress: func,
-    uploadingImage: bool,
-    videoUploading: shape({
-      data: shape({
-        bytes: number,
-        totalBytes: number,
-      }),
-      uploading: bool,
-    }),
     onReadMorePress: func,
-    onFollowPage: func,
   }
 
   state = {
@@ -88,8 +73,6 @@ export class Feed extends Component {
     refreshing: false,
     disableLike: false,
     images: [],
-    video: { uri: '' },
-    isModalVisible: false,
   }
 
   componentDidMount = () => InteractionManager.runAfterInteractions(() => this.setState({ isRendering: false }))
@@ -98,11 +81,6 @@ export class Feed extends Component {
   hideMenuModal = () => this.setState({ isMenuModalVisible: false, selectedId: undefined })
   showGallery = images => this.setState({ images, isGalleryVisible: true })
   hideGallery = () => this.setState({ isGalleryVisible: false, images: [] })
-  showVideoModal = (video) => {
-    setTimeout(() => this.videoModal.activateImmersion(), 2000)
-    this.setState({ isModalVisible: true, video: { uri: video } })
-  }
-  hideVideoModal = () => this.setState({ isModalVisible: false, video: { uri: '' } })
   report = () => {
     this.props.onReportPress(this.state.selectedId)
     this.hideMenuModal()
@@ -195,10 +173,6 @@ export class Feed extends Component {
       alert('Erro ao abrir link')
     }
   }
-  followPage = (post) => {
-    const { id, candidate } = post
-    this.props.onFollowPage(candidate.id, id)
-  }
   formatInteractions = (post) => {
     const { activeUserId, onCommentPress } = this.props
 
@@ -226,23 +200,12 @@ export class Feed extends Component {
 
   renderHeader = () => {
     const {
-      isAdmin,
+      isAuthenticated,
       onNewPostPress,
-      uploadingImage,
-      videoUploading
+
     } = this.props
-
-    if ((uploadingImage || videoUploading.uploading)) {
-      return (
-        <PublishingPostCard
-          uploadingImage={uploadingImage}
-          videoUploading={videoUploading}
-        />
-      )
-    }
-
     return (
-      isAdmin
+      isAuthenticated
         ? <CardCreatePost onPress={onNewPostPress} />
         : <View style={styles.headerSpacing} />
     )
@@ -252,15 +215,11 @@ export class Feed extends Component {
     return (
       (item.status !== 'DRAFT') &&
       <FeedCard
-        // isSubscriber={this.props.isSubscriber}
-        // onReadMorePress={() => this.props.onReadMorePress(item)}
-        audio={item.audio}
         authorId={item.authorId}
-        candidate={item.candidate}
+        user={item.user}
         commentCount={item.commentCount}
         comments={item.comments}
         formatedDate={item.formatedDate}
-        goOgLink={this.openLink}
         id={item.id}
         images={item.images}
         interactions={this.formatInteractions(item)}
@@ -269,9 +228,7 @@ export class Feed extends Component {
         liked={item.liked}
         likes={item.likes}
         og={item.og}
-        onFollowPress={() => alert('onFollowPress')}
         onReadMorePress={() => this.props.onReadMorePress(item)}
-        onVideoPress={() => this.showVideoModal(item.video)}
         post={item}
         shareCount={item.shareCount}
         showGallery={this.showGallery}
@@ -281,8 +238,6 @@ export class Feed extends Component {
         title={item.title}
         type={item.type}
         contentType={item.contentType}
-        video={item.video}
-        videoThumbnail={item.videoThumbnail}
       />
     )
   }
@@ -344,12 +299,6 @@ export class Feed extends Component {
               closeGallery={this.hideGallery}
               images={this.state.images}
               isVisible={this.state.isGalleryVisible}
-            />
-            <VideoModal
-              ref={(ref) => { this.videoModal = ref }}
-              visible={this.state.isModalVisible}
-              video={this.state.video}
-              hideModal={this.hideVideoModal}
             />
           </View>
         }

@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { FeedScreen } from '../modules/feed/containers/FeedScreen'
 import { PublishPostScreen } from '../modules/feed/containers/PublishPostScreen'
+import { PostScreen } from '../modules/feed/containers/PostScreen'
 
 import { MapScreen } from '../modules/map/containers/MapScreen'
 import { ProfileScreen } from '../modules/profile/containers/ProfileScreen'
@@ -22,6 +23,12 @@ const MainStack = Navigator(
         tabBarVisible: false,
         title: 'Criar ocorrência',
         headerBackTitle: 'Criar',
+      }
+    },
+    Post: {
+      screen: PostScreen,
+      navigationOptions: {
+        tabBarVisible: false,
       }
     },
   },

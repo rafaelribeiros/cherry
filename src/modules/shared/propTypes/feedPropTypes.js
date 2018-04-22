@@ -14,7 +14,7 @@ import {
 import { candidatePropTypes, candidateDefaultProps } from './candidatePropTypes'
 
 export const feedItemDefault = {
-  candidate: candidateDefaultProps,
+  user: candidateDefaultProps,
   audio: undefined,
   image: undefined,
   interactions: {
@@ -63,7 +63,7 @@ export const feedItemDefault = {
   type: 'REGULAR',
 }
 export const feedItemProps = {
-  candidate: shape(candidatePropTypes).isRequired,
+  user: shape(candidatePropTypes).isRequired,
   type: oneOf(['REGULAR', 'SPONSORED']),
   audio: shape({
     file: oneOfType([string, number, object]),
