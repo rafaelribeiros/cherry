@@ -5,13 +5,13 @@ import { bool, func, object, shape } from 'prop-types'
 // import Config from 'react-native-config'
 import { NavigationActions } from 'react-navigation'
 
-import { getUserProfileAction } from '../../../redux/actions/async/profileAsyncActions'
+// import { getUserProfileAction } from '../../../redux/actions/async/profileAsyncActions'
 // import { logoutAction } from '../../../redux/actions/async/authenticationAsyncActions'
 
 import { Profile } from '../components/profile'
 import { userPropTypes, userDefaultProps } from '../../shared/propTypes/userPropTypes'
 import { getLoading } from '../../../redux/reducers/profile/selectors'
-// import { getUser } from '../../../redux/reducers/authentication/selectors'
+import { getUser } from '../../../redux/reducers/authentication/selectors'
 
 import { Values } from '../../../constants'
 import {
@@ -28,7 +28,7 @@ class ProfileScreenContainer extends Component {
 
   static defaultProps = {
     getProfile: () => { },
-    logout: () => { },
+    // logout: () => { },
     navigation: userDefaultProps,
     user: {},
     loading: false
@@ -36,7 +36,7 @@ class ProfileScreenContainer extends Component {
 
   static propTypes = {
     getProfile: func,
-    logout: func,
+    // logout: func,
     navigation: object,
     user: shape(userPropTypes),
     loading: bool,
@@ -44,11 +44,6 @@ class ProfileScreenContainer extends Component {
 
   state = {
     refreshing: false,
-    user: {
-      id: '1',
-      name: 'Aline Moura',
-      imageUrl: 'http://writestylesonline.com/wp-content/uploads/2017/03/Michele-Lando-Circle-3.8.17_smaller.png'
-    }
   }
 
   componentDidMount = () => this.props.getProfile()
@@ -142,7 +137,7 @@ class ProfileScreenContainer extends Component {
   render() {
     return (
       <Profile
-        user={this.state.user}
+        user={this.props.user}
         logout={this.logout}
         onEditAdminPress={this.navigateToAdmin}
         onEditProfilePress={this.navigateEditProfile}
@@ -159,11 +154,11 @@ class ProfileScreenContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  // user: getUser(state),
+  user: getUser(state),
   loading: getLoading(state),
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = () => ({
   // getProfile: () => dispatch(getUserProfileAction()),
   // logout: () => dispatch(logoutAction()),
 })
