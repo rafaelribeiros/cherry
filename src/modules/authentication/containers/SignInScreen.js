@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { View, Text, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
-import { bool, string, shape, func } from 'prop-types'
-
+import { bool, shape, func } from 'prop-types'
 import { NavigationActions } from 'react-navigation'
 
+import { signInAction } from '../../../redux/actions/async/authenticationAsyncActions'
+import { hideAlert } from '../../../redux/actions/sync/authenticationSyncActions'
+import { getLoading, getAlert } from '../../../redux/reducers/authentication/selectors'
 import { SignIn } from '../components/signIn'
 
 class SignInContainer extends Component {
@@ -15,23 +16,33 @@ class SignInContainer extends Component {
     navigation: shape({
       navigate: func
     }),
+    hideAlert: func,
+    loading: bool,
+    signIn: func,
+    alert: shape({
+      showAlert: bool,
+      message: '',
+    }),
   }
 
   static defaultProps = {
     navigation: {
       navigate: () => { }
     },
+    hideAlert: () => { },
+    loading: false,
+    signIn: () => { },
+    alert: { showAlert: false, message: '' },
   }
 
   goBack = () => {
-    // this.props.hideAlert()
+    this.props.hideAlert()
     this.props.navigation.goBack()
   }
 
-  onSignIn = (email, password) => {
+  onSignIn = async (email, password) => {
     try {
-      // await signIn(email, password, deviceId)
-      AsyncStorage.setItem('profile', JSON.stringify({ id: '1', name: 'Aline' })).then(() => { })
+      await this.props.signIn(email, password)
       const actionToDispatch = NavigationActions.reset({
         index: 0,
         key: null,
@@ -40,7 +51,6 @@ class SignInContainer extends Component {
       this.props.navigation.dispatch(actionToDispatch)
     } catch (error) {
       console.log(error)
-      //  showAlert(error.message)
     }
   }
 
@@ -54,15 +64,21 @@ class SignInContainer extends Component {
         navigateToSignUp={this.goToSignUp}
         onButtonPress={this.onSignIn}
         goBack={this.goBack}
+        loading={this.props.loading}
+        alert={this.props.alert}
       />
     )
   }
 }
 
 const mapStateToProps = state => ({
+  loading: getLoading(state),
+  alert: getAlert(state),
 })
 
 const mapDispatchToProps = dispatch => ({
+  signIn: (email, password) => dispatch(signInAction(email, password)),
+  hideAlert: () => dispatch(hideAlert())
 })
 
 export const SignInScreen = connect(mapStateToProps, mapDispatchToProps)(SignInContainer)

@@ -3,7 +3,7 @@ import {
   SIGN_UP,
   SIGN_IN_FACEBOOK,
   FORGOT_PASSWORD,
-  LOGOUT,
+  // LOGOUT,
   VERIFY_EMAIL,
   REQUEST_VERIFY_PHONE_CODE,
   VALIDATE_VERIFY_PHONE_CODE,
@@ -13,7 +13,7 @@ import {
 } from '../../constants/routes'
 import { verifyResponse, getUser, mapUser } from '../../config/utils'
 
-export const signInWithEmailAndPassword = async (email, password, deviceId) => {
+export const signInWithEmailAndPassword = async (email, password) => {
   const fetchResponse = await fetch(SIGN_IN, {
     method: 'POST',
     headers: {
@@ -21,17 +21,17 @@ export const signInWithEmailAndPassword = async (email, password, deviceId) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      username: email,
+      email,
       password,
-      deviceId
     })
   })
 
   const backEndUser = await verifyResponse(fetchResponse)
-  const { payload } = backEndUser
-  payload.deviceId = deviceId
-  const user = mapUser(payload)
-  return user
+  if (backEndUser.user) {
+    const user = mapUser(backEndUser.user)
+    return user
+  }
+  throw { message: 'Email/Senha incorretos' }
 }
 
 export const signUp = async (email, name, password, city, state) => {

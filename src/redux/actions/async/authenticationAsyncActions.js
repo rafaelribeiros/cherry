@@ -33,11 +33,11 @@ import {
 } from '../../../services/authentication/index'
 import { getUser } from '../../../config/utils'
 
-export function signInAction(email, password, deviceId) {
+export function signInAction(email, password) {
   return async (dispatch) => {
     try {
       dispatch(showLoading())
-      const user = await signInWithEmailAndPassword(email, password, deviceId)
+      const user = await signInWithEmailAndPassword(email, password)
       await AsyncStorage.setItem('profile', JSON.stringify(user)).then(() => { })
       dispatch(signInSuccess(user))
       return user

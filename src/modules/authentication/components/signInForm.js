@@ -127,7 +127,7 @@ export class SignInForm extends Component {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        <ButtonPrimary disabled={this.props.alert.showAlert} label={'Entrar'} onPress={this.onSignInButtonPress} />
+        <ButtonPrimary disabled={this.state.alert.showAlert} label={'Entrar'} onPress={this.onSignInButtonPress} />
       </View>
     )
   }
