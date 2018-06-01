@@ -2,16 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-// import { hideAlert } from '../../../redux/actions/sync/authenticationActions'
+import { setState, hideAlert } from '../../../redux/actions/sync/authenticationSyncActions'
 
 import { SignUpState } from '../components/signUpState'
 
-const navigateToNextScreen = ({ navigate }) => () => {
-  navigate('SignUpCity')
+const navigateToNextScreen = ({ navigation, setUserState }) => (state) => {
+  setUserState(state)
+  navigation.navigate('SignUpPassword')
 }
 
-const navigateBack = goBack => () => {
-  goBack()
+const navigateBack = ({ navigation, hideAlert }) => () => {
+  hideAlert()
+  navigation.goBack()
 }
 
 const onHideAlert = hideAlert => () => {
@@ -20,8 +22,8 @@ const onHideAlert = hideAlert => () => {
 
 export const SignUpStateContainer = props => (
   <SignUpState
-    goBack={navigateBack(props.navigation.goBack)}
-    onButtonPress={navigateToNextScreen(props.navigation)}
+    goBack={navigateBack(props)}
+    onButtonPress={navigateToNextScreen(props)}
     onHideAlert={onHideAlert(props.hideAlert)}
   />
 )
@@ -29,11 +31,12 @@ export const SignUpStateContainer = props => (
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = dispatch => ({
-  // hideAlert: () => dispatch(hideAlert()),
+  hideAlert: () => dispatch(hideAlert()),
+  setUserState: userState => dispatch(setState(userState)),
 })
 
 SignUpStateContainer.propTypes = {
-  hideAlert: PropTypes.func.isRequired,
+  hideAlert: PropTypes.func,
   navigation: PropTypes.object,
 }
 

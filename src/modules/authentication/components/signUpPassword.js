@@ -9,11 +9,13 @@ export class SignUpPassword extends Component {
   static propTypes = {
     onButtonPress: PropTypes.func,
     goBack: PropTypes.func,
+    loading: PropTypes.bool,
   }
 
   static defaultProps = {
     onButtonPress: () => { },
     goBack: () => { },
+    loading: false,
   }
 
   state = {
@@ -64,6 +66,7 @@ export class SignUpPassword extends Component {
         alert={this.state.alert}
         inputAlertMessage="uma senha"
         hideKeyboardAfterSubmit
+        loading={this.props.loading}
       />
     )
   }

@@ -2,27 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { NavigationActions } from 'react-navigation'
-
-// import { hideAlert } from '../../../redux/actions/sync/authenticationActions'
+import { hideAlert, setCity } from '../../../redux/actions/sync/authenticationSyncActions'
 
 import { SignUpCity } from '../components/signUpCity'
 
-const onSignUp = ({ navigation, signUp, device, showAlert }) => async (city) => {
-  try {
-    // const { email, name, password, userState } = navigation.state.params
-    // const deviceId = device.userId
-    // await signUp(email, name, password, userState, city, deviceId)
-    const actionToDispatch = NavigationActions.reset({
-      key: null,
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'home' })]
-    })
-    navigation.dispatch(actionToDispatch)
-  } catch (error) {
-    console.log(error)
-    //  showAlert(error.message)
-  }
+const onSignUp = ({ navigation, setUserCity }) => async (city) => {
+  setUserCity(city)
+  navigation.navigate('SignUpState')
 }
 
 const navigateBack = goBack => () => {
@@ -41,16 +27,15 @@ export const SignUpCityContainer = props => (
   />
 )
 
-const mapStateToProps = () => ({
-  // device: state.auth.device
-})
+const mapStateToProps = () => ({})
 
 const mapDispatchToProps = dispatch => ({
-  // hideAlert: () => dispatch(hideAlert()),
+  hideAlert: () => dispatch(hideAlert()),
+  setUserCity: city => dispatch(setCity(city))
 })
 
 SignUpCityContainer.propTypes = {
-  hideAlert: PropTypes.func.isRequired,
+  hideAlert: PropTypes.func,
   navigation: PropTypes.object,
 }
 

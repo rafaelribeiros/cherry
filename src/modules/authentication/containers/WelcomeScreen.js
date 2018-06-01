@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { object, func, bool } from 'prop-types'
-import { NavigationActions } from 'react-navigation'
+// import { NavigationActions } from 'react-navigation'
 
 import { Welcome } from '../components/welcome'
 
@@ -39,20 +39,20 @@ class WelcomeScreenContainer extends Component {
     this.navigateToScreen(user)
   }
 
-  navigateToScreen = (user) => {
-    if (!user.age) {
-      this.props.navigation.navigate('SignUpAge')
-    } else if (!user.phone) {
-      this.props.navigation.navigate('SignUpPhone')
-    } else {
-      const actionToDispatch = NavigationActions.reset({
-        index: 0,
-        key: null,
-        actions: [NavigationActions.navigate({ routeName: 'home' })]
-      })
-      this.props.navigation.dispatch(actionToDispatch)
-    }
-  }
+  // navigateToScreen = (user) => {
+  // if (!user.age) {
+  //   this.props.navigation.navigate('SignUpAge')
+  // } else if (!user.phone) {
+  //   this.props.navigation.navigate('SignUpPhone')
+  // } else {
+  //   const actionToDispatch = NavigationActions.reset({
+  //     index: 0,
+  //     key: null,
+  //     actions: [NavigationActions.navigate({ routeName: 'home' })]
+  //   })
+  //   this.props.navigation.dispatch(actionToDispatch)
+  // }
+  // }
 
   render() {
     return (
@@ -71,9 +71,9 @@ const mapStateToProps = state => ({
   loading: getLoading(state)
 })
 
-const mapDispatchToProps = dispatch => ({
-//   facebookSignIn: (email, token) => dispatch(facebookSignInAction(email, token)),
-//   hideFacebookLoading: () => dispatch(hideLoading()),
+const mapDispatchToProps = () => ({
+  //   facebookSignIn: (email, token) => dispatch(facebookSignInAction(email, token)),
+  //   hideFacebookLoading: () => dispatch(hideLoading()),
 })
 
 export const WelcomeScreen = connect(mapStateToProps, mapDispatchToProps)(WelcomeScreenContainer)

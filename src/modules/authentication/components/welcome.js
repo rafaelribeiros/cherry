@@ -95,12 +95,12 @@ export const Welcome = (props) => {
           label="Criar conta"
           onPress={props.onPressSignUp}
         />
-        <View style={alternativeLoginWrap}>
+        {/* <View style={alternativeLoginWrap}>
           <View style={alternativeLoginLine} />
           <Text style={alternativeLoginText}>Ou</Text>
           <View style={alternativeLoginLine} />
-        </View>
-        <ButtonFacebook
+        </View> */}
+        {/* <ButtonFacebook
           containerStyle={largeBottomSpacing}
           label="Conectar com o Facebook"
           onPress={() => authenticateWithFacebook(props)}
@@ -111,7 +111,7 @@ export const Welcome = (props) => {
               size={Metrics.icons.medium}
             />
           }
-        />
+        /> */}
       </View>
       {props.loading && <LoadingOverlay elevated />}
     </SafeAreaView>

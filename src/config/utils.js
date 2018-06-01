@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native'
 // import Config from 'react-native-config'
-// import { User } from '../domain/User'
+import { User } from '../domain/User'
 // import { Post } from '../domain/Post'
 // import { Comment } from '../domain/Comment'
 // import { CommentReply } from '../domain/CommentReply'
@@ -88,48 +88,9 @@ export function getVideoUrl(url) {
   return null
 }
 
-// export const mapUser = (item) => {
-//   const {
-//     _id,
-//     name,
-//     email,
-//     userImage,
-//     authorization,
-//     userType,
-//     userStatus,
-//     premiumMember,
-//     deviceId,
-//     facebookId,
-//     facebookToken,
-//     phone,
-//     city,
-//     country,
-//     state,
-//     age,
-//     adsBlocked,
-//     pageAdmin,
-//   } = item
-//   return new User({
-//     _id,
-//     name,
-//     email,
-//     userImage,
-//     authorization,
-//     userType,
-//     userStatus,
-//     premiumMember,
-//     deviceId,
-//     facebookId,
-//     facebookToken,
-//     phone,
-//     city,
-//     country,
-//     state,
-//     age,
-//     adsBlocked,
-//     pageAdmin,
-//   })
-// }
+export const mapUser = (item) => {
+  return new User(item)
+}
 
 // export const mapPost = (item, type) => {
 //   const {

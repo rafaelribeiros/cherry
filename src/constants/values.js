@@ -1,8 +1,11 @@
 import { Platform } from 'react-native'
+// import Config from 'react-native-config'
 
 import { Colors } from './colors'
 
-const artistName = 'Luciano Huck'
+const artistName = 'Teste'
+// const API_URL = Config.BASE_URL
+const API_URL = 'http://CivitaDev-env.kyugahk2pa.us-east-1.elasticbeanstalk.com/'
 
 const navbarStyles = {
   androidStatusBarSpacing: {
@@ -113,4 +116,5 @@ export const Values = {
   navbarStyles,
   styleShortcut,
   galleryInputOptions,
+  API_URL,
 }
