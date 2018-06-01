@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-// import { hideAlert } from '../../../redux/actions/sync/authenticationActions'
+import { hideAlert, setName } from '../../../redux/actions/sync/authenticationSyncActions'
 import { SignUpName } from '../components/signUpName'
 
-const navigateToNextScreen = ({ navigate }) => () => {
-  navigate('SignUpEmail')
+const navigateToNextScreen = ({ navigation, setUserName }) => (name) => {
+  setUserName(name)
+  navigation.navigate('SignUpEmail')
 }
 
 const navigateBack = goBack => () => {
@@ -20,7 +21,7 @@ const onHideAlert = hideAlert => () => {
 export const SignUpNameContainer = props => (
   <SignUpName
     goBack={navigateBack(props.navigation.goBack)}
-    onButtonPress={navigateToNextScreen(props.navigation)}
+    onButtonPress={navigateToNextScreen(props)}
     onHideAlert={onHideAlert(props.hideAlert)}
   />
 )
@@ -30,7 +31,8 @@ const mapStateToProps = () => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  // hideAlert: () => dispatch(hideAlert()),
+  hideAlert: () => dispatch(hideAlert()),
+  setUserName: name => dispatch(setName(name))
 })
 
 SignUpNameContainer.propTypes = {
