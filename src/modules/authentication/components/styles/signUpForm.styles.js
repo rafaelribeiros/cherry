@@ -1,4 +1,11 @@
 import { StyleSheet } from 'react-native'
+import { Metrics } from '../../../../constants/index'
+
+const {
+  smallSpacing,
+  largeSpacing,
+} = Metrics
+
 
 export const styles = StyleSheet.create({
   bodyContainer: {
@@ -11,4 +18,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
+  picker: {
+    marginHorizontal: largeSpacing,
+    marginBottom: smallSpacing,
+  }
 })

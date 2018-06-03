@@ -10,6 +10,8 @@ import { CustomPicker } from '../../shared/components/customPicker'
 import { INPUT_FORM_BLANK } from '../../../constants/messages'
 import { isFunctionEmpty } from '../../../constants/functions'
 
+import { styles } from '../components/styles/signUpForm.styles'
+
 export class SignUpForm extends Component {
 
   static defaultProps = {
@@ -125,12 +127,15 @@ export class SignUpForm extends Component {
                 value={this.state.value}
                 setValue={value => this.setInputValue(value)}
               />
-              : <CustomPicker
-                selectedValue={this.state.value}
-                label={pickerLabel}
-                changeValue={this.changePickerValue}
-                values={pickerValues}
-              />
+              :
+              <View style={styles.picker}>
+                <CustomPicker
+                  selectedValue={this.state.value}
+                  label={pickerLabel}
+                  changeValue={this.changePickerValue}
+                  values={pickerValues}
+                />
+              </View>
             }
           </View>
         </TouchableWithoutFeedback>

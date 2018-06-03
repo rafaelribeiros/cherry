@@ -1,4 +1,6 @@
 rootProject.name = 'cherry'
+include ':react-native-s3'
+project(':react-native-s3').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-s3/android')
 include ':react-native-google-places'
 project(':react-native-google-places').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-google-places/android')
 include ':react-native-image-picker'

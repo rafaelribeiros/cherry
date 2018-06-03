@@ -4,7 +4,9 @@ import { User } from '../domain/User'
 // import { Post } from '../domain/Post'
 // import { Comment } from '../domain/Comment'
 // import { CommentReply } from '../domain/CommentReply'
-const Config = ''
+const Config = {
+  IMAGE_URL: 'https://da362xrg7qktb.cloudfront.net/'
+}
 
 export async function getUser() {
   let userJson
