@@ -7,7 +7,7 @@ import { updateProfileAction } from '../../../redux/actions/async/profileAsyncAc
 import { ProfileEdit } from '../components/profileEdit'
 
 import { userDefaultProps, userPropTypes } from '../../shared/propTypes/userPropTypes'
-// import { getUser } from '../../../redux/reducers/authentication/selectors'
+import { getUser } from '../../../redux/reducers/authentication/selectors'
 import { getLoading } from '../../../redux/reducers/profile/selectors'
 import { Values } from '../../../constants'
 
@@ -31,17 +31,15 @@ class ProfileEditContainer extends Component {
     loading: bool,
   }
 
-  state = {
-    user: {
-      id: '1',
-      name: 'Aline Moura',
-      imageUrl: 'http://writestylesonline.com/wp-content/uploads/2017/03/Michele-Lando-Circle-3.8.17_smaller.png',
-      image: 'http://writestylesonline.com/wp-content/uploads/2017/03/Michele-Lando-Circle-3.8.17_smaller.png'
-    }
-  }
+  state = {}
 
-  submitProfile = async ({ name, image }) => {
-    await this.props.updateProfile(name, image)
+  submitProfile = async ({
+    name,
+    image,
+    city,
+    state
+  }) => {
+    await this.props.updateProfile(name, image, city, state)
     this.props.navigation.goBack()
   }
 
@@ -50,19 +48,19 @@ class ProfileEditContainer extends Component {
       <ProfileEdit
         loading={this.props.loading}
         onSubmitPress={this.submitProfile}
-        user={this.state.user}
+        user={this.props.user}
       />
     )
   }
 }
 
 const mapStateToProps = state => ({
-  // user: getUser(state),
+  user: getUser(state),
   loading: getLoading(state),
 })
 
 const mapDispatchToProps = dispatch => ({
-  // updateProfile: (name, image) => dispatch(updateProfileAction(name, image)),
+  updateProfile: (name, image, city, state) => dispatch(updateProfileAction(name, image, city, state)),
 })
 
 export const ProfileEditScreen = connect(mapStateToProps, mapDispatchToProps)(ProfileEditContainer)

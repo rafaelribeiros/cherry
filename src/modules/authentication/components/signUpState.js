@@ -45,7 +45,7 @@ export class SignUpState extends Component {
         alert={this.state.alert}
         inputAlertMessage="seu estado"
         pickerLabel="Selecione seu estado"
-        pickerValues={['Espirito Santo', 'Acre']}
+        pickerValues={['Espirito Santo']}
       />
     )
   }

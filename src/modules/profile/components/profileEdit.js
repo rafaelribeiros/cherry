@@ -17,6 +17,7 @@ import { Icon } from '../../shared/components/icon'
 import { InputWithLabel } from '../../shared/components/inputs'
 import { LoadingOverlay } from '../../shared/components/loadingOverlay'
 import { ViewHandlingKeyboard } from '../../shared/components/viewHandlingKeyboard'
+import { CustomPicker } from '../../shared/components/customPicker'
 
 import { Colors, Metrics } from '../../../constants'
 import { styles } from './styles/profile.style'
@@ -41,6 +42,10 @@ export class ProfileEdit extends Component {
     image: { name: this.props.user.image, uri: this.props.user.imageUrl, upload: false },
     name: this.props.user.name,
     nameUnchanged: this.props.user.name,
+    city: this.props.user.city,
+    state: this.props.user.state,
+    pickerCityValues: ['Vitória', 'Cariacica', 'Vila Velha', 'Serra'],
+    pickerStateValues: ['Espirito Santo'],
   }
 
   submitProfile = () => {
@@ -95,8 +100,11 @@ export class ProfileEdit extends Component {
     })
   }
 
+  changeCityPickerValue = city => this.setState({ city })
+  changeStatePickerValue = state => this.setState({ state })
+
   profileHasChanged = () => (
-    (this.state.name !== '' && this.state.name !== this.props.user.name) || (this.state.image.upload)
+    (this.state.name !== '' && this.state.name !== this.props.user.name) || (this.state.image.upload) || (this.state.city !== this.props.user.city) || (this.state.state !== this.props.user.state)
   )
 
   render() {
@@ -136,6 +144,20 @@ export class ProfileEdit extends Component {
               placeholder="Qual seu nome?"
               value={this.state.name}
               returnKeyType="done"
+            />
+            <CustomPicker
+              selectedValue={this.state.city}
+              label="CIDADE"
+              hasLabel
+              changeValue={this.changeCityPickerValue}
+              values={this.state.pickerCityValues}
+            />
+            <CustomPicker
+              selectedValue={this.state.state}
+              label="ESTADO"
+              hasLabel
+              changeValue={this.changeStatePickerValue}
+              values={this.state.pickerStateValues}
             />
           </Card>
         </ScrollView>

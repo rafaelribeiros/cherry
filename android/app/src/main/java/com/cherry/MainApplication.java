@@ -3,6 +3,7 @@ package com.cherry;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.mybigday.rns3.RNS3Package;
 import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.brentvatne.react.ReactVideoPackage;
@@ -39,6 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNS3Package(),
             new RNGooglePlacesPackage(),
             new ImagePickerPackage(),
             new ReactVideoPackage(),

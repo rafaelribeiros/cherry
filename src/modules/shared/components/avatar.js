@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
+import { View, Text, ViewPropTypes, Image } from 'react-native'
 import { any, number, object, oneOfType, string } from 'prop-types'
-import { View, Text, StyleSheet, ViewPropTypes } from 'react-native'
-import FastImage from 'react-native-fast-image'
-import { Colors, Functions, Metrics, Values } from '../../../constants'
+import { Colors, Functions, Metrics } from '../../../constants'
 
 export class Avatar extends Component {
 
@@ -12,6 +11,7 @@ export class Avatar extends Component {
     name: string,
     size: number,
     source: oneOfType([number, string, object]),
+    imageStyle: ViewPropTypes.style,
   };
 
   static defaultProps = {
@@ -20,22 +20,32 @@ export class Avatar extends Component {
     name: '',
     size: Metrics.avatar.standard,
     source: '',
+    imageStyle: {},
   };
+
+  state = { imageError: false }
+
+  onImageError = () => {
+    this.setState({ imageError: true })
+  }
 
   renderHeaderImage = () => {
     const {
       name = '',
       source = '',
-      size = Metrics.avatar.standard
+      size = Metrics.avatar.standard,
+      imageStyle,
     } = this.props
-    if (source) {
+    if ((source) && (this.state.imageError === false)) {
       const image = (source.uri) ? { uri: source.uri } : { uri: source }
       return (
-        <View style={styles.imageWrap}>
-          <FastImage
+        // <View style={styles.imageWrap}>
+        <View style={this.setImageWrapStyle(size, imageStyle)}>
+          <Image
             style={this.setImageStyle(size)}
             source={image}
-            resizeMode={FastImage.resizeMode.cover}
+            resizeMode="cover"
+            onError={this.onImageError}
           />
         </View>
       )
@@ -43,24 +53,32 @@ export class Avatar extends Component {
     const data = Functions.getNameInitials(name)
     const { initials, color = Colors.primary } = data
     return (
-      <View style={this.setInitialsWrapStyle(size, color)}>
+      <View style={this.setInitialsWrapStyle(size, color, imageStyle)}>
         <Text style={this.setInitialsStyle(size)}>{initials}</Text>
       </View>
     )
   }
 
+  setImageWrapStyle = (size, imageStyle) => ({
+    borderRadius: size / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+    ...imageStyle
+  })
   setImageStyle = size => ({
     borderRadius: size / 2,
     height: size,
     width: size,
   })
-  setInitialsWrapStyle = (size, color) => ({
+  setInitialsWrapStyle = (size, color, imageStyle) => ({
     alignItems: 'center',
     backgroundColor: color,
     borderRadius: size / 2,
     height: size,
     justifyContent: 'center',
     width: size,
+    ...imageStyle
   })
   setInitialsStyle = size => ({
     bottom: 1,
@@ -78,10 +96,3 @@ export class Avatar extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  imageWrap: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-})
