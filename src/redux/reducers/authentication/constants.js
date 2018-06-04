@@ -3,8 +3,8 @@ export const NOT_LOGGED_IN = {
   name: undefined,
   email: null,
   pageAdmin: {},
-  isAdmin: false
-
+  isAdmin: false,
+  isAuthenticated: false,
 }
 
 export const NO_REGISTERED = {

@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native'
 // import Config from 'react-native-config'
 import { User } from '../domain/User'
+import { Post } from '../domain/Post'
 // import { Post } from '../domain/Post'
 // import { Comment } from '../domain/Comment'
 // import { CommentReply } from '../domain/CommentReply'
@@ -94,55 +95,9 @@ export const mapUser = (item) => {
   return new User(item)
 }
 
-// export const mapPost = (item, type) => {
-//   const {
-//     _id,
-//     socialId,
-//     authorId,
-//     body,
-//     commentCount,
-//     comments,
-//     createdAt,
-//     images,
-//     liked,
-//     likesCount,
-//     membersOnly,
-//     owner,
-//     ownerId,
-//     shareCount,
-//     status,
-//     title,
-//     updatedAt,
-//     video,
-//     videoThumbnail,
-//     og,
-//     contentType,
-//   } = item
-//   return new Post({
-//     _id,
-//     socialId,
-//     authorId,
-//     body,
-//     commentCount,
-//     comments,
-//     createdAt,
-//     images,
-//     liked,
-//     likesCount,
-//     membersOnly,
-//     owner,
-//     ownerId,
-//     shareCount,
-//     status,
-//     title,
-//     type,
-//     updatedAt,
-//     video,
-//     videoThumbnail,
-//     og,
-//     contentType
-//   })
-// }
+export const mapPost = (item) => {
+  return new Post(item)
+}
 
 // export const mapComment = (item) => {
 //   const {

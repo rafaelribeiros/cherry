@@ -1,83 +1,26 @@
-import { GET_POSTS } from '../../constants/routes'
+import { GET_POSTS_CLOSE } from '../../constants/routes'
 
-import { getUser } from '../../config/utils'
-
-import { Post } from '../../domain/Post'
+import { mapPost } from '../../config/utils'
 import { fetchApi } from '../../constants/functions'
 
-const mapPost = (response, type) => {
-  const {
-    _id,
-    socialId,
-    authorId,
-    body,
-    commentCount,
-    comments,
-    createdAt,
-    images,
-    liked,
-    likesCount,
-    membersOnly,
-    owner,
-    ownerId,
-    shareCount,
-    status,
-    title,
-    updatedAt,
-    video,
-    videoThumbnail,
-    og,
-    contentType,
-  } = response
-  return new Post({
-    _id,
-    socialId,
-    authorId,
-    body,
-    commentCount,
-    comments,
-    createdAt,
-    images,
-    liked,
-    likesCount,
-    membersOnly,
-    owner,
-    ownerId,
-    shareCount,
-    status,
-    title,
-    type,
-    updatedAt,
-    video,
-    videoThumbnail,
-    og,
-    contentType
-  })
-}
-
-export const getPosts = async (skip = 0, fromTimestamp = '') => {
-  const user = await getUser()
-  const params = fromTimestamp ? `?skip=${skip}&limit=${10}&fromTimestamp=${fromTimestamp}` : `?skip=${skip}&limit=${10}`
+export const getPosts = async (skip = 0, lat = 1, lng = 1) => {
+  const params = `?skip=${skip}&lat=${lat}&lng=${lng}`
   const options = {
     method: 'GET',
     headers: {
-      Authorization: user.authorization,
       'Content-Type': 'application/json'
     }
   }
-  return fetchApi(`${GET_POSTS}${params}`, options)
+  console.log(`${GET_POSTS_CLOSE}${params}`)
+  return fetchApi(`${GET_POSTS_CLOSE}${params}`, options)
     .then((postsBackend) => {
-      const { payload } = postsBackend
-      const { posts, ads } = payload
-      const defaultPosts = posts.map((item) => {
-        const post = mapPost(item, 'REGULAR')
-        return post
-      })
-      const adsPosts = ads.map((item) => {
-        const post = mapPost(item, 'SPONSORED')
-        return post
-      })
-      return [...defaultPosts, ...adsPosts]
+      // const { payload } = postsBackend
+      // console.log(payload)
+      // const posts = payload.map((item) => {
+      //   const post = mapPost(item)
+      //   return post
+      // })
+      return []
     })
     .catch((err) => {
       throw err

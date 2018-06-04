@@ -22,5 +22,6 @@ export class User {
     this.city = city
     this.state = state
     this.userType = type
+    this.isAuthenticated = status === 'VERIFIED'
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, InteractionManager } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { func, array, bool, object, shape, string, number } from 'prop-types'
@@ -7,8 +7,11 @@ import moment from 'moment'
 
 import { Feed } from '../components/feed'
 import { getCommentsAction } from '../../../redux/actions/async/postAsyncActions'
+import { getPostsAction } from '../../../redux/actions/async/feedAsyncActions'
 import { fetchPost } from '../../../redux/actions/sync/postSyncActions'
 import { Values } from '../../../constants'
+import { getPosts, getLoadingPosts, getPostsEndReached } from '../../../redux/reducers/feed/selectors'
+import { getUser } from '../../../redux/reducers/authentication/selectors'
 
 class FeedScreenContainer extends Component {
   static navigationOptions = () => ({
@@ -28,134 +31,21 @@ class FeedScreenContainer extends Component {
     getComments: () => { },
   }
 
-  state = {
-    posts: [
-      {
-        id: '1',
-        user: {
-          id: '123',
-          name: 'José da Silva',
-          number: 123,
-          party: 'PES',
-          pageType: 'Presidente'
-        },
-        placeDescription: 'Cariacica',
-        contentType: 'Assalto',
-        formatedDate: moment().fromNow(),
-        interactions: {
-          like: {
-            isActive: false,
-            number: 12,
-            onPress: () => { },
-          },
-          comment: {
-            number: 22,
-            onPress: () => { },
-          },
-          share: {
-            number: 1,
-            onPress: () => { },
-          },
-        },
-        isSubscriber: true,
-        menu: {
-          buttons: [],
-          hideMenuModal: () => { },
-          isMenuModalVisible: false,
-          showMenuModal: () => { },
-        },
-        title: 'Título da ocorrencia 1',
-        body: 'Texto da publicação está sendo exibida',
-        liked: true,
-        likesCount: 12,
-        commentCount: 22,
-        shareCount: 1,
-      },
-      {
-        id: '2',
-        user: {
-          id: '123',
-          name: 'João de Almeida',
-          number: 123,
-          party: 'PES',
-          pageType: 'Presidente',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/9/98/Christopher_Fabian_profile.jpg'
-        },
-        placeDescription: 'Vitória',
-        contentType: 'Assalto',
-        formatedDate: moment().fromNow(),
-        images: ['https://www.carlosbritto.com/wp-content/uploads/2017/09/roubo-celulares.jpg'],
-        interactions: {
-          like: {
-            isActive: false,
-            number: 12,
-            onPress: () => { },
-          },
-          comment: {
-            number: 22,
-            onPress: () => { },
-          },
-          share: {
-            number: 1,
-            onPress: () => { },
-          },
-        },
-        isSubscriber: true,
-        menu: {
-          buttons: [],
-          hideMenuModal: () => { },
-          isMenuModalVisible: false,
-          showMenuModal: () => { },
-        },
-        title: 'Título da ocorrencia 2',
-        body: 'Texto da publicação está sendo exibida',
-        liked: true,
-        likesCount: 12,
-        commentCount: 22,
-        shareCount: 1,
-      },
-      {
-        id: '3',
-        user: {
-          id: '123',
-          name: 'Anônimo',
-          number: 123,
-          party: 'PES',
-          pageType: 'Presidente'
-        },
-        placeDescription: 'Vila velha',
-        contentType: 'Assasinato',
-        formatedDate: moment().fromNow(),
-        interactions: {
-          like: {
-            isActive: false,
-            number: 12,
-            onPress: () => { },
-          },
-          comment: {
-            number: 22,
-            onPress: () => { },
-          },
-          share: {
-            number: 1,
-            onPress: () => { },
-          },
-        },
-        isSubscriber: true,
-        menu: {
-          buttons: [],
-          hideMenuModal: () => { },
-          isMenuModalVisible: false,
-          showMenuModal: () => { },
-        },
-        title: 'Título da ocorrencia 3',
-        body: 'Texto da publicação está sendo exibida',
-        liked: true,
-        likesCount: 12,
-        commentCount: 22,
-        shareCount: 1,
-      }
-    ]
+  state = {}
+
+  componentDidMount = () => {
+    try {
+      InteractionManager.runAfterInteractions(() => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          console.log(position)
+          const lat = position.coords.latitude
+          const lng = position.coords.longitude
+          this.props.fetchPosts(0, lat, lng)
+        })
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   navigateToNewPost = () => this.props.navigation.navigate('PublishPost')
@@ -179,8 +69,8 @@ class FeedScreenContainer extends Component {
   render() {
     return (
       <Feed
-        feed={this.state.posts}
-        isAuthenticated={true}
+        feed={this.props.posts}
+        isAuthenticated={this.props.user.isAuthenticated}
         onNewPostPress={this.navigateToNewPost}
         onReadMorePress={this.onGoToPostPress}
         onCommentPress={this.onCommentPress}
@@ -191,9 +81,14 @@ class FeedScreenContainer extends Component {
 }
 
 const mapStateToProps = state => ({
+  user: getUser(state),
+  isLoadingPosts: getLoadingPosts(state),
+  hasPostsEndReached: getPostsEndReached(state),
+  posts: getPosts(state)
 })
 
 const mapDispatchToProps = dispatch => ({
+  fetchPosts: (skip, lat, lng) => dispatch(getPostsAction(skip, lat, lng)),
   savePost: (post, commenting) => dispatch(fetchPost(post, commenting)),
   getComments: postId => dispatch(getCommentsAction(postId)),
 })
