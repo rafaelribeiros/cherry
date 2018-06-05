@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, InteractionManager } from 'react-native'
+import { View, Text, TouchableOpacity, InteractionManager, PermissionsAndroid, Alert } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { func, array, bool, object, shape, string, number } from 'prop-types'
-import moment from 'moment'
 
 import { Feed } from '../components/feed'
 import { getCommentsAction } from '../../../redux/actions/async/postAsyncActions'
@@ -41,15 +40,33 @@ class FeedScreenContainer extends Component {
     })
   }
 
-  getLocalPosts = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position)
-      const lat = -20.2976178
-      const lng = -40.2957768
-      this.props.fetchPosts(0, lat, lng)
-    })
+  getLocalPosts = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Civita Permissão de Localização',
+          message: 'Civita precisa de acesso a sua localização ' +
+          'para enviar informações sobre eventos próximos a você.'
+        }
+      )
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          console.log(position)
+          const lat = position.coords.latitude
+          const lng = position.coords.longitude
+          await this.props.fetchPosts(0, lat, lng)
+        }, () => {
+          this.showAlert('Atenção', 'Sua localização está desativada.')
+        })
+      } else {
+        this.showAlert('Permissão não concedida', '')
+      }
+    } catch (error) {
+      this.showAlert(error.message, '')
+    }
   }
-
+  showAlert = (title, text) => Alert.alert(title, text, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
   navigateToNewPost = () => this.props.navigation.navigate('PublishPost')
   onGoToPostPress = (post) => {
     const commenting = false
@@ -78,6 +95,7 @@ class FeedScreenContainer extends Component {
         onReadMorePress={this.onGoToPostPress}
         onCommentPress={this.onCommentPress}
         onPlacePress={this.onPlacePress}
+        onRefreshPosts={this.getLocalPosts}
       />
     )
   }

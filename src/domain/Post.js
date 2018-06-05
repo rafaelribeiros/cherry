@@ -5,7 +5,7 @@ import { getImageUrl } from '../config/utils'
 const mapUser = (user) => {
   return {
     userImage: getImageUrl(user.image || user.userImage),
-    name: user.firstname,
+    name: user.firstname || user.name,
     id: user._id || user.id,
     email: user.email,
   }
