@@ -1,3 +1,6 @@
+import { Values } from '../constants/values'
+import { verifyResponse } from '../config/utils'
+
 function getRandomColor(nameToColor) {
   const name = nameToColor || 'usuario'
   const colors = [
@@ -64,4 +67,10 @@ export const isFunctionEmpty = f => /^function[^{]+\{\s*\}/m.test(f.toString())
 export const Functions = {
   getNameInitials,
   isFunctionEmpty,
+}
+
+export const fetchApi = (route, options) => {
+  return fetch(`${Values.API_URL}${route}`, options).then(resp => verifyResponse(resp))
+    .then(response => response)
+    .catch((err) => { throw err })
 }

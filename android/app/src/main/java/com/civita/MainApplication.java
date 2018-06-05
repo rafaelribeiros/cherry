@@ -1,4 +1,4 @@
-package com.cherry;
+package com.civita;
 
 import android.app.Application;
 

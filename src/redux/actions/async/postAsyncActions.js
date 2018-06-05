@@ -1,48 +1,48 @@
-// import { Alert } from 'react-native'
+import { Alert } from 'react-native'
 
-// import {
-//   getPost,
-//   likePost,
-//   undoLikePost,
-//   reportPost,
-//   deletePost,
-//   sharePost,
-//   getComments,
-//   publishComment,
-//   likeComment,
-//   undoLikeComment,
-//   reportComment,
-//   editComment,
-//   deleteComment,
-//   getCommentReplies,
-//   setCommentReply,
-//   likeCommentReply,
-//   undoLikeCommentReply,
-//   reportCommentReply,
-//   deleteCommentReply,
-// } from '../../../services/post'
+import {
+  getPost,
+  //   likePost,
+  //   undoLikePost,
+  //   reportPost,
+  //   deletePost,
+  //   sharePost,
+  //   getComments,
+  //   publishComment,
+  //   likeComment,
+  //   undoLikeComment,
+  //   reportComment,
+  //   editComment,
+  //   deleteComment,
+  //   getCommentReplies,
+  //   setCommentReply,
+  //   likeCommentReply,
+  //   undoLikeCommentReply,
+  //   reportCommentReply,
+  //   deleteCommentReply,
+} from '../../../services/post'
 // import { followPage } from '../../../services/page'
-// import {
-//   likePostSuccess,
-//   undoLikePostSuccess,
-//   deletePostSuccess,
-//   sharePostSuccess,
-//   fetchPost,
-//   loadingComments,
-//   fetchComments,
-//   fetchMoreComments,
-//   publishCommentSuccess,
-//   likeCommentSuccess,
-//   undoLikeCommentSuccess,
-//   editCommentSuccess,
-//   deleteCommentSuccess,
-//   fetchCommentReplies,
-//   addCommentReply,
-//   followPageSuccess,
-//   likeCommentReplySuccess,
-//   undoLikeCommentReplySuccess,
-//   deleteCommentReplySuccess,
-// } from '../sync/postSyncActions'
+import {
+  //   likePostSuccess,
+  //   undoLikePostSuccess,
+  //   deletePostSuccess,
+  //   sharePostSuccess,
+  fetchPost,
+  //   loadingComments,
+  //   fetchComments,
+  //   fetchMoreComments,
+  //   publishCommentSuccess,
+  //   likeCommentSuccess,
+  //   undoLikeCommentSuccess,
+  //   editCommentSuccess,
+  //   deleteCommentSuccess,
+  //   fetchCommentReplies,
+  //   addCommentReply,
+  //   followPageSuccess,
+  //   likeCommentReplySuccess,
+  //   undoLikeCommentReplySuccess,
+  //   deleteCommentReplySuccess,
+} from '../sync/postSyncActions'
 // import {
 //   shareFeedPostSuccess,
 //   followPageOnFeedSuccess,
@@ -50,21 +50,22 @@
 //   decreasePostCommentCount,
 //   updatePost,
 // } from '../sync/feedSyncActions'
-// import { POST_REQUEST_FAIL, POST_REPORT_SUCCESS } from '../../../constants/messages'
+import { POST_REQUEST_FAIL, POST_REPORT_SUCCESS } from '../../../constants/messages'
 
-// const showAlert = (title, text) => Alert.alert(title, text, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
+const showAlert = (title, text) => Alert.alert(title, text, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
 
-// export function getPostAction(postId, type = 'REGULAR') {
-//   return async (dispatch) => {
-//     try {
-//       const post = await getPost(postId, type)
-//       dispatch(fetchPost(post))
-//       dispatch(updatePost(post))
-//     } catch (error) {
-//       showAlert('Erro ao carregar', POST_REQUEST_FAIL('carregar'))
-//     }
-//   }
-// }
+export function getPostAction(postId) {
+  return async (dispatch) => {
+    try {
+      const post = await getPost(postId)
+      console.log(post)
+      dispatch(fetchPost(post))
+      // dispatch(updatePost(post))
+    } catch (error) {
+      showAlert('Erro ao carregar', POST_REQUEST_FAIL('carregar'))
+    }
+  }
+}
 
 // export function likePostAction(postId) {
 //   return async (dispatch) => {

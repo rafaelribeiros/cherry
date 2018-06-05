@@ -27,19 +27,18 @@ import {
 
 import { verifyResponse, getUser, mapPost, mapComment, mapCommentReply, mapUser } from '../../config/utils'
 
-export const getPost = async (postId, type) => {
-  const user = await getUser()
+export const getPost = async (postId) => {
+  // const user = await getUser()
   return fetch(GET_POST(postId), {
     method: 'GET',
     headers: {
-      Authorization: user.authorization,
+      // Authorization: user.authorization,
       'Content-Type': 'application/json'
     },
   })
     .then(resp => verifyResponse(resp))
     .then((postBackend) => {
-      const { payload } = postBackend
-      const post = mapPost(payload, type)
+      const post = mapPost(postBackend)
       return post
     }).catch((err) => { throw err })
 }
@@ -375,47 +374,41 @@ export const deleteCommentReply = async (postId, commentId) => {
     }).catch((err) => { throw err })
 }
 
-export const publishPost = async (
-  {
-    title, description, video, images, ads
-  }, {
-    hasOg, ogLink, ogDescription, ogImage, ogTitle
-  }) => {
+export const publishPost = async ({
+  title,
+  description,
+  image,
+  selectedType,
+  anonymus,
+  location,
+}) => {
   const user = await getUser()
   const bodySend = {
-    ads,
-    body: description
-  }
-  if (typeof title === 'string' && title !== '') bodySend.title = title
-  if (hasOg) {
-    bodySend.og = {
-      ogLink, ogDescription, ogImage, ogTitle
-    }
-  }
-
-  if (video.uri !== '') {
-    bodySend.status = 'DRAFT'
-    bodySend.video = video.uploadName
-    bodySend.videoThumbnail = video.thumbnailUploadName
-  } else if (images.length > 0) {
-    const bodyImages = images.map(image => image.name)
-    bodySend.status = 'DRAFT'
-    bodySend.images = bodyImages
+    userId: user.id,
+    description,
+    user,
+    title,
+    imgUrl: image.name,
+    type: selectedType,
+    lat: location.latitude,
+    lng: location.longitude,
+    placeDescription: location.address,
+    anonymus,
   }
 
   return fetch(PUBLISH_POST, {
     method: 'POST',
     headers: {
-      Authorization: user.authorization,
       Aceept: 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(bodySend)
   }).then(resp => verifyResponse(resp))
-    .then((postBackend) => {
-      const { payload } = postBackend
-      const post = mapPost(payload, 'REGULAR')
-      return post
+    .then(({ payload }) => {
+      const post = payload
+      post.user = user
+      const newPost = mapPost(post)
+      return newPost
     }).catch((err) => { throw err })
 }
 

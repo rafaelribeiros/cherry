@@ -12,7 +12,9 @@ import {
   getCommenting
 } from '../../../redux/reducers/post/selectors'
 import { clearPost } from '../../../redux/actions/sync/postSyncActions'
+import { getPostAction } from '../../../redux/actions/async/postAsyncActions'
 import { Values } from '../../../constants'
+import { getUser } from '../../../redux/reducers/authentication/selectors'
 
 class PostScreenContainer extends Component {
   static navigationOptions = () => ({
@@ -88,7 +90,7 @@ class PostScreenContainer extends Component {
   componentDidMount = () => {
     const { params = {} } = this.props.navigation.state
     const { post = {} } = params
-    // this.props.fetchPost(post.id, post.type)
+    this.props.fetchPost(post.id)
   }
 
   componentWillUnmount = () => this.props.clearPostState()
@@ -133,7 +135,7 @@ class PostScreenContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  // user: getUser(state),
+  user: getUser(state),
   commenting: getCommenting(state),
   post: getPost(state),
   comments: getComments(state),
@@ -143,6 +145,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   clearPostState: () => dispatch(clearPost()),
+  fetchPost: postId => dispatch(getPostAction(postId))
 })
 
 export const PostScreen = connect(mapStateToProps, mapDispatchToProps)(PostScreenContainer)

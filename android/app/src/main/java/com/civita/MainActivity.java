@@ -1,4 +1,4 @@
-package com.cherry;
+package com.civita;
 
 import com.facebook.react.ReactActivity;
 import android.content.Intent;
