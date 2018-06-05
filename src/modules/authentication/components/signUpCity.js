@@ -45,7 +45,7 @@ export class SignUpCity extends Component {
         alert={this.state.alert}
         inputAlertMessage="sua cidade"
         pickerLabel="Selecione sua cidade"
-        pickerValues={['Vitória', 'Cariacica', 'Vila Velha, Serra']}
+        pickerValues={['Vitória', 'Cariacica', 'Vila Velha', 'Serra']}
       />
     )
   }
