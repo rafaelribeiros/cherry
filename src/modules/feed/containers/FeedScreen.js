@@ -51,14 +51,21 @@ class FeedScreenContainer extends Component {
         }
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-          console.log(position)
-          const lat = position.coords.latitude
-          const lng = position.coords.longitude
-          await this.props.fetchPosts(0, lat, lng)
-        }, () => {
-          this.showAlert('Atenção', 'Sua localização está desativada.')
-        })
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            console.log(position)
+            const lat = position.coords.latitude
+            const lng = position.coords.longitude
+            await this.props.fetchPosts(0, lat, lng)
+          }, () => {
+            this.showAlert('Atenção', 'Ocorreu um problema ao buscar sua localização.')
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 3000
+          }
+        )
       } else {
         this.showAlert('Permissão não concedida', '')
       }
@@ -96,6 +103,7 @@ class FeedScreenContainer extends Component {
         onCommentPress={this.onCommentPress}
         onPlacePress={this.onPlacePress}
         onRefreshPosts={this.getLocalPosts}
+        isLoadingPosts={this.props.isLoadingPosts}
       />
     )
   }
