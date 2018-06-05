@@ -5,7 +5,7 @@ import { getImageUrl } from '../config/utils'
 const mapUser = (user) => {
   return {
     userImage: getImageUrl(user.image || user.userImage),
-    name: user.name,
+    name: user.firstname,
     id: user._id || user.id,
     email: user.email,
   }
@@ -36,7 +36,7 @@ export class Post {
     this.karma = karma
     this.status = status
     this.title = title
-    this.type = type
+    this.contentType = type
     this.user = user ? mapUser(user) : {}
     this.placeDescription = placeDescription
     this.anonymus = anonymus

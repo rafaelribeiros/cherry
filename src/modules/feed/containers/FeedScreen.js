@@ -23,29 +23,31 @@ class FeedScreenContainer extends Component {
     navigation: object,
     savePost: func,
     getComments: func,
+    fetchPosts: func,
   }
 
   static defaultProps = {
     navigation: {},
     savePost: () => { },
     getComments: () => { },
+    fetchPosts: () => { },
   }
 
   state = {}
 
   componentDidMount = () => {
-    try {
-      InteractionManager.runAfterInteractions(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-          console.log(position)
-          const lat = position.coords.latitude
-          const lng = position.coords.longitude
-          this.props.fetchPosts(0, lat, lng)
-        })
-      })
-    } catch (error) {
-      console.log(error)
-    }
+    InteractionManager.runAfterInteractions(() => {
+      this.getLocalPosts()
+    })
+  }
+
+  getLocalPosts = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position)
+      const lat = -20.2976178
+      const lng = -40.2957768
+      this.props.fetchPosts(0, lat, lng)
+    })
   }
 
   navigateToNewPost = () => this.props.navigation.navigate('PublishPost')
@@ -70,7 +72,8 @@ class FeedScreenContainer extends Component {
     return (
       <Feed
         feed={this.props.posts}
-        isAuthenticated={this.props.user.isAuthenticated}
+        isAuthenticated
+        // isAuthenticated={this.props.user.isAuthenticated}
         onNewPostPress={this.navigateToNewPost}
         onReadMorePress={this.onGoToPostPress}
         onCommentPress={this.onCommentPress}

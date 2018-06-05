@@ -27,19 +27,18 @@ import {
 
 import { verifyResponse, getUser, mapPost, mapComment, mapCommentReply, mapUser } from '../../config/utils'
 
-export const getPost = async (postId, type) => {
-  const user = await getUser()
+export const getPost = async (postId) => {
+  // const user = await getUser()
   return fetch(GET_POST(postId), {
     method: 'GET',
     headers: {
-      Authorization: user.authorization,
+      // Authorization: user.authorization,
       'Content-Type': 'application/json'
     },
   })
     .then(resp => verifyResponse(resp))
     .then((postBackend) => {
-      const { payload } = postBackend
-      const post = mapPost(payload, type)
+      const post = mapPost(postBackend)
       return post
     }).catch((err) => { throw err })
 }
