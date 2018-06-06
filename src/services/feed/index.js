@@ -15,8 +15,9 @@ export const getPosts = async (skip = 0, lat = 1, lng = 1) => {
   )
     .then(resp => verifyResponse(resp))
     .then((postsBackend) => {
+      console.log(postsBackend)
       const { payload } = postsBackend
-      const posts = payload.map((item) => {
+      const posts = postsBackend.map((item) => {
         const post = mapPost(item)
         return post
       })

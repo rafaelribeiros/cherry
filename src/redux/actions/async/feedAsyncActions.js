@@ -26,6 +26,7 @@ import {
   publishPostSuccess,
   loadingPosts,
   fetchPosts,
+  refreshPosts,
   // updatePostStatusOnFeed,
   // loadingOg,
   // saveOpenGraph,
@@ -44,11 +45,9 @@ export function getPostsAction(skip, lat, lng) {
     try {
       dispatch(loadingPosts(true))
       const posts = await getPosts(skip, lat, lng)
-      console.log(posts)
       const postsEndReached = posts.length < 10
       dispatch(fetchPosts(posts, postsEndReached))
     } catch (err) {
-      console.log(err)
       dispatch(loadingPosts(false))
     }
   }
@@ -66,6 +65,20 @@ export function publishPostAction(formData, navigation) {
       }
       navigation.goBack()
     } catch (err) {
+      showAlert(err.message, '')
+    }
+  }
+}
+
+export function refreshPostsAction(lat, lng) {
+  return async (dispatch) => {
+    try {
+      dispatch(loadingPosts(true))
+      const posts = await getPosts(0, lat, lng)
+      const postsEndReached = posts.length < 10
+      dispatch(refreshPosts(posts, postsEndReached))
+    } catch (err) {
+      dispatch(loadingPosts(false))
       showAlert(err.message, '')
     }
   }

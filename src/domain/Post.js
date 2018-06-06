@@ -1,6 +1,6 @@
 import moment from 'moment'
 // import _ from 'lodash'
-import { getImageUrl } from '../config/utils'
+import { getImageUrl, } from '../config/utils'
 
 const mapUser = (user) => {
   return {
@@ -23,7 +23,7 @@ export class Post {
     type,
     placeDescription,
     createdAt,
-    imageUrl,
+    imgUrl,
     user,
     authorId,
   }) {
@@ -32,7 +32,7 @@ export class Post {
     this.body = description
     this.createdAt = createdAt
     this.formatedDate = moment(createdAt).fromNow()
-    this.images = imageUrl ? [imageUrl] : []
+    this.images = imgUrl ? [getImageUrl(imgUrl, 'medium')] : []
     this.karma = karma
     this.status = status
     this.title = title

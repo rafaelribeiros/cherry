@@ -77,8 +77,8 @@ export class Feed extends Component {
 
   componentDidMount = () => InteractionManager.runAfterInteractions(() => this.setState({ isRendering: false }))
 
-  showMenuModal = selectedId => this.setState({ isMenuModalVisible: true, selectedId })
-  hideMenuModal = () => this.setState({ isMenuModalVisible: false, selectedId: undefined })
+  showMenuModal = (selectedId, authorId) => this.setState({ isMenuModalVisible: true, selectedId, authorId })
+  hideMenuModal = () => this.setState({ isMenuModalVisible: false, selectedId: undefined, authorId: undefined })
   showGallery = images => this.setState({ images, isGalleryVisible: true })
   hideGallery = () => this.setState({ isGalleryVisible: false, images: [] })
   report = () => {
@@ -212,11 +212,15 @@ export class Feed extends Component {
   }
 
   flatItem = ({ item }) => {
+    console.log(item)
     return (
       (item.status !== 'DRAFT') &&
       <FeedCard
+        isAuthenticated={this.props.isAuthenticated}
         authorId={item.authorId}
         user={item.user}
+        activeUserId={this.props.user.id}
+        anonymus={item.anonymus}
         commentCount={item.commentCount}
         comments={item.comments}
         formatedDate={item.formatedDate}
@@ -256,7 +260,7 @@ export class Feed extends Component {
   }
 
   render() {
-    const modalButtons = this.props.isAdmin
+    const modalButtons = (this.props.user.id === this.state.authorId)
       ? [
         { label: 'Reportar publicação', onPress: this.report },
         { label: 'Excluir publicação', onPress: this.delete }

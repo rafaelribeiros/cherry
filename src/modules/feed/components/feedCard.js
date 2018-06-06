@@ -58,6 +58,7 @@ export class FeedCard extends Component {
   render() {
     const {
       user,
+      authorId,
       formatedDate,
       goOgLink,
       id,
@@ -74,16 +75,21 @@ export class FeedCard extends Component {
       videoThumbnail,
       placeDescription,
       onPlacePress,
+      activeUserId,
+      anonymus,
+      isAuthenticated
     } = this.props
     const hasImage = (images.length > 0)
-    const imageSource = hasImage ? { uri: images[0], priority: FastImage.priority.normal } : {}
+    const imageSource = (hasImage) ? { uri: images[0], priority: FastImage.priority.normal } : {}
     const subtitleToShow = `${contentType} - ${formatedDate}`
+    const userName = ((anonymus) || (!isAuthenticated)) && (authorId !== activeUserId) ? 'Anônimo' : user.name
+    const userImage = ((anonymus) || (!isAuthenticated)) && (authorId !== activeUserId) ? '' : user.image
     return (
       <Card style={styles.card}>
         <RowAvatar
-          title={user.name}
+          title={userName}
           subtitle={subtitleToShow}
-          source={user.image}
+          source={userImage}
           onPress={onReadMorePress}
         />
         <TouchableWithoutFeedback onPress={onReadMorePress}>
@@ -143,7 +149,7 @@ export class FeedCard extends Component {
           comment={comment}
           share={share}
           hasMenu
-          menu={{ onPress: () => showMenuModal(id) }}
+          menu={{ onPress: () => showMenuModal(id, authorId) }}
         />
       </Card>
     )

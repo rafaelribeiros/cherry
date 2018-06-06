@@ -6,7 +6,7 @@ import { func, array, bool, object, shape, string, number } from 'prop-types'
 
 import { Feed } from '../components/feed'
 import { getCommentsAction } from '../../../redux/actions/async/postAsyncActions'
-import { getPostsAction } from '../../../redux/actions/async/feedAsyncActions'
+import { getPostsAction, refreshPostsAction } from '../../../redux/actions/async/feedAsyncActions'
 import { fetchPost } from '../../../redux/actions/sync/postSyncActions'
 import { Values } from '../../../constants'
 import { getPosts, getLoadingPosts, getPostsEndReached } from '../../../redux/reducers/feed/selectors'
@@ -36,7 +36,8 @@ class FeedScreenContainer extends Component {
 
   componentDidMount = () => {
     InteractionManager.runAfterInteractions(() => {
-      this.getLocalPosts()
+      // this.getLocalPosts()
+      this.props.fetchPosts(0, 1, 1)
     })
   }
 
@@ -53,10 +54,41 @@ class FeedScreenContainer extends Component {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         navigator.geolocation.getCurrentPosition(
           async (position) => {
-            console.log(position)
             const lat = position.coords.latitude
             const lng = position.coords.longitude
             await this.props.fetchPosts(0, lat, lng)
+          }, () => {
+            this.showAlert('Atenção', 'Ocorreu um problema ao buscar sua localização.')
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 3000
+          }
+        )
+      } else {
+        this.showAlert('Permissão não concedida', '')
+      }
+    } catch (error) {
+      this.showAlert(error.message, '')
+    }
+  }
+  refreshPosts = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Civita Permissão de Localização',
+          message: 'Civita precisa de acesso a sua localização ' +
+          'para enviar informações sobre eventos próximos a você.'
+        }
+      )
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const lat = position.coords.latitude
+            const lng = position.coords.longitude
+            await this.props.refreshPosts(lat, lng)
           }, () => {
             this.showAlert('Atenção', 'Ocorreu um problema ao buscar sua localização.')
           },
@@ -96,13 +128,14 @@ class FeedScreenContainer extends Component {
     return (
       <Feed
         feed={this.props.posts}
-        isAuthenticated
-        // isAuthenticated={this.props.user.isAuthenticated}
+        user={this.props.user}
+        // isAuthenticated
+        isAuthenticated={this.props.user.isAuthenticated}
         onNewPostPress={this.navigateToNewPost}
         onReadMorePress={this.onGoToPostPress}
         onCommentPress={this.onCommentPress}
         onPlacePress={this.onPlacePress}
-        onRefreshPosts={this.getLocalPosts}
+        onRefreshPosts={this.refreshPosts}
         isLoadingPosts={this.props.isLoadingPosts}
       />
     )
@@ -118,6 +151,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchPosts: (skip, lat, lng) => dispatch(getPostsAction(skip, lat, lng)),
+  refreshPosts: (lat, lng) => dispatch(refreshPostsAction(lat, lng)),
   savePost: (post, commenting) => dispatch(fetchPost(post, commenting)),
   getComments: postId => dispatch(getCommentsAction(postId)),
 })

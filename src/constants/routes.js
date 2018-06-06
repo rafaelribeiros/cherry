@@ -8,5 +8,5 @@ export const UPDATE_PROFILE = `${API_URL}user/update`
 
 // Post
 export const PUBLISH_POST = `${API_URL}post/create`
-export const GET_POSTS_CLOSE = `${API_URL}post/all_close`
+export const GET_POSTS_CLOSE = `${API_URL}post/all`
 export const GET_POST = postId => `${API_URL}post/id/${postId}`
