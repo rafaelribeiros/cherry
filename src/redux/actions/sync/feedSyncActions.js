@@ -23,6 +23,7 @@ import {
   INCREASE_POST_COMMENT_COUNT_ON_FEED,
   DECREASE_POST_COMMENT_COUNT_ON_FEED,
   UPDATE_POST_ON_FEED,
+  VOTE_POST_SUCCESS,
 } from '../../types/feedTypes'
 
 export const loadingPosts = loadingPosts => ({ type: LOADING_POSTS, loadingPosts })
@@ -31,6 +32,7 @@ export const refreshPosts = (posts, postsEndReached) => ({ type: REFRESH_POSTS, 
 export const likeFeedPostSuccess = postId => ({ type: LIKE_POST_SUCCESS, postId })
 export const undoLikePostSuccess = postId => ({ type: UNDO_LIKE_POST_SUCCESS, postId })
 export const deletePostSuccess = postId => ({ type: DELETE_POST_SUCCESS, postId })
+export const votePostSuccess = (postId, vote) => ({ type: VOTE_POST_SUCCESS, postId, vote })
 export const shareFeedPostSuccess = (postId, shareCount) => ({ type: FEED_SHARE_POST_SUCCESS, postId, shareCount })
 export const updatePostStatusOnFeed = (postId, status) => ({ type: UPDATE_POST_STATUS_ON_FEED, postId, status })
 export const followPageOnFeedSuccess = (postId, postType) => ({ type: FOLLOW_PAGE_ON_FEED_SUCCESS, postId, postType })

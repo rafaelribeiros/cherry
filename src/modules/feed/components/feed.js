@@ -86,8 +86,8 @@ export class Feed extends Component {
     this.hideMenuModal()
   }
   delete = () => {
-    this.hideMenuModal()
     const postId = this.state.selectedId
+    this.hideMenuModal()
     setTimeout(() => {
       Alert.alert(
         'Excluir postagem',
@@ -212,10 +212,14 @@ export class Feed extends Component {
   }
 
   flatItem = ({ item }) => {
-    console.log(item)
     return (
       (item.status !== 'DRAFT') &&
       <FeedCard
+        onPositivePress={this.props.onPositivePress}
+        onNegativePress={this.props.onNegativePress}
+        votedNegative={item.votedNegative}
+        votedPositive={item.votedPositive}
+        karma={item.karma}
         isAuthenticated={this.props.isAuthenticated}
         authorId={item.authorId}
         user={item.user}
@@ -262,7 +266,7 @@ export class Feed extends Component {
   render() {
     const modalButtons = (this.props.user.id === this.state.authorId)
       ? [
-        { label: 'Reportar publicação', onPress: this.report },
+        // { label: 'Reportar publicação', onPress: this.report },
         { label: 'Excluir publicação', onPress: this.delete }
       ] :
       [

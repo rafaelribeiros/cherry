@@ -24,7 +24,7 @@ import { MenuModal, ImagesGallery } from '../../shared/components/modals'
 import { InputFooter } from '../../shared/components/inputs'
 import { ViewHandlingKeyboard } from '../../shared/components/viewHandlingKeyboard'
 
-import { SHARE_MESSAGE, POST_REQUEST_FAIL, COMMENT_REPORT_SUCCESS } from '../../../constants/messages'
+import { SHARE_MESSAGE, POST_REQUEST_FAIL, COMMENT_REPORT_SUCCESS, POST_REPORT_SUCCESS } from '../../../constants/messages'
 import { styles } from './styles/post.style'
 import { Colors } from '../../../constants'
 
@@ -184,8 +184,11 @@ export class Post extends Component {
     }
   }
   reportPost = () => {
-    this.props.onReportPress(this.props.post.id)
+    // this.props.onReportPress(this.props.post.id)
     this.hideMenuModal()
+    setTimeout(() => {
+      Alert.alert('Postagem reportada', POST_REPORT_SUCCESS, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
+    }, 200)
   }
   deletePost = () => {
     this.hideMenuModal()
@@ -225,7 +228,7 @@ export class Post extends Component {
   }
   fetchMoreComments = (skip, sort) => this.props.onLoadMoreComments(this.props.post.id, skip, sort)
   reportComment = async (commentId) => {
-    await this.props.onReportCommentPress(this.props.post.id, commentId)
+    // await this.props.onReportCommentPress(this.props.post.id, commentId)
     Alert.alert('Comentário reportado', COMMENT_REPORT_SUCCESS, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
   }
   deleteComment = commentId => this.props.onDeleteCommentPress(this.props.post.id, commentId)
@@ -245,20 +248,25 @@ export class Post extends Component {
       comments,
       post,
     } = this.props
-    const isAdmin = this.props.post.user.id === this.props.activePageId
-    const modalButtons = isAdmin ?
+    // console.log(post)
+    // const isAdmin = this.props.post.user.id === this.props.activePageId
+    const modalButtons = (this.props.user.id === post.authorId) ?
       [
         { label: 'Excluir publicação', onPress: this.deletePost }
       ] :
       [
         { label: 'Reportar publicação', onPress: this.reportPost },
-        { label: 'Reportar usuário', onPress: this.reportPage }
+        // { label: 'Reportar usuário', onPress: this.reportPage }
       ]
 
     return (
       <ViewHandlingKeyboard style={styles.container}>
         <ScrollView>
           <FeedCard
+            onPositivePress={this.props.onPositivePress}
+            onNegativePress={this.props.onNegativePress}
+            activeUserId={this.props.user.id}
+            anonymus={post.anonymus}
             audio={post.audio}
             authorId={post.authorId}
             user={post.user}

@@ -52,7 +52,7 @@ export class MapComponent extends Component {
               }
             })
           }, () => {
-            this.showAlert('Atenção', 'Ocorreu um problema ao buscar sua localização.')
+            //  this.showAlert('Atenção', 'Ocorreu um problema ao buscar sua localização.')
             this.setState({ isRendering: false })
           },
           {

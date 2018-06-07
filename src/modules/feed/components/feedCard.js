@@ -34,6 +34,15 @@ export class FeedCard extends Component {
   state = {}
 
   shouldComponentUpdate(nextProps) {
+    if (this.props.karma !== nextProps.karma) {
+      return true
+    }
+    if (this.props.votedNegative !== nextProps.votedNegative) {
+      return true
+    }
+    if (this.props.votedPositive !== nextProps.votedPositive) {
+      return true
+    }
     if (this.props.liked !== nextProps.liked) {
       return true
     }
@@ -77,7 +86,12 @@ export class FeedCard extends Component {
       onPlacePress,
       activeUserId,
       anonymus,
-      isAuthenticated
+      isAuthenticated,
+      karma,
+      votedNegative,
+      votedPositive,
+      onPositivePress,
+      onNegativePress,
     } = this.props
     const hasImage = (images.length > 0)
     const imageSource = (hasImage) ? { uri: images[0], priority: FastImage.priority.normal } : {}
@@ -145,10 +159,16 @@ export class FeedCard extends Component {
           </View>
         </TouchableWithoutFeedback>
         <RowInteract
+          karma={karma}
+          onPositivePress={onPositivePress}
+          onNegativePress={onNegativePress}
+          votedNegative={votedNegative}
+          votedPositive={votedPositive}
           like={like}
           comment={comment}
           share={share}
           hasMenu
+          postId={id}
           menu={{ onPress: () => showMenuModal(id, authorId) }}
         />
       </Card>

@@ -26,6 +26,8 @@ export class Post {
     imgUrl,
     user,
     authorId,
+    votedNegative,
+    votedPositive,
   }) {
     this.id = _id
     this.authorId = authorId
@@ -41,6 +43,20 @@ export class Post {
     this.placeDescription = placeDescription
     this.anonymus = anonymus
     this.loc = loc
+    this.votedNegative = votedNegative || false
+    this.votedPositive = votedPositive || false
+  }
+
+  voteNegative() {
+    this.votedNegative = true
+    this.votedPositive = false
+    this.karma -= 1
+  }
+
+  votePositive() {
+    this.votedPositive = true
+    this.votedNegative = false
+    this.karma += 1
   }
 
   increaseLike() {

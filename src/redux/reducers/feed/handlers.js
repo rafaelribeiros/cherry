@@ -20,3 +20,18 @@ export const publishPost = (state, { post }) => {
   posts.unshift(post)
   return { ...state, posts, publishingPost: false }
 }
+export const deletePost = (state, { postId }) => {
+  const posts = _.cloneDeep(state.posts)
+  const newPosts = posts.filter(item => item.id !== postId)
+  return { ...state, posts: newPosts }
+}
+export const votePostSuccess = (state, { postId, vote }) => {
+  const posts = _.cloneDeep(state.posts)
+  const post = posts.find(item => item.id === postId)
+  if (vote === 1) {
+    post.votePositive()
+  } else {
+    post.voteNegative()
+  }
+  return { ...state, posts }
+}

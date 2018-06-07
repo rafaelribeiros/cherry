@@ -23,6 +23,7 @@ import {
   REPORT_COMMENT_REPLY,
   DELETE_COMMENT_REPLY,
   GET_POST_LIKES,
+  VOTE_POST,
 } from '../../constants/routes'
 
 import { verifyResponse, getUser, mapPost, mapComment, mapCommentReply, mapUser } from '../../config/utils'
@@ -38,6 +39,7 @@ export const getPost = async (postId) => {
   })
     .then(resp => verifyResponse(resp))
     .then((postBackend) => {
+      console.log(postBackend)
       const post = mapPost(postBackend)
       return post
     }).catch((err) => { throw err })
@@ -93,7 +95,7 @@ export const reportPost = async (postId) => {
 
 export const deletePost = async (postId) => {
   const user = await getUser()
-  return fetch(DELETE_POST(postId), {
+  return fetch(DELETE_POST, {
     method: 'POST',
     Aceept: 'application/json',
     headers: {
@@ -101,8 +103,28 @@ export const deletePost = async (postId) => {
       Aceept: 'application/json',
       'Content-Type': 'application/json'
     },
+    body: JSON.stringify({ id: postId })
   }).then(resp => verifyResponse(resp))
     .then((response) => {
+      console.log(response)
+      return response
+    }).catch((err) => { throw err })
+}
+
+export const votePost = async (postId, vote) => {
+  const user = await getUser()
+  return fetch(VOTE_POST, {
+    method: 'POST',
+    Aceept: 'application/json',
+    headers: {
+      // Authorization: user.authorization,
+      Aceept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ post: postId, user: user.id, value: vote })
+  }).then(resp => verifyResponse(resp))
+    .then((response) => {
+      console.log(response)
       return response
     }).catch((err) => { throw err })
 }

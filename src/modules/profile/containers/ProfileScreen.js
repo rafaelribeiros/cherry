@@ -20,6 +20,7 @@ import {
   POST_REQUEST_FAIL,
   SHARE_APP_MESSAGE,
 } from '../../../constants/messages'
+import { getUserProfileAction } from '../../../redux/actions/async/profileAsyncActions'
 
 const Config = ''
 
@@ -158,8 +159,8 @@ const mapStateToProps = state => ({
   loading: getLoading(state),
 })
 
-const mapDispatchToProps = () => ({
-  // getProfile: () => dispatch(getUserProfileAction()),
+const mapDispatchToProps = dispatch => ({
+  getProfile: () => dispatch(getUserProfileAction()),
   // logout: () => dispatch(logoutAction()),
 })
 

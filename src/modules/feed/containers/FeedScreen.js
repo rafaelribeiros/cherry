@@ -6,7 +6,7 @@ import { func, array, bool, object, shape, string, number } from 'prop-types'
 
 import { Feed } from '../components/feed'
 import { getCommentsAction } from '../../../redux/actions/async/postAsyncActions'
-import { getPostsAction, refreshPostsAction } from '../../../redux/actions/async/feedAsyncActions'
+import { getPostsAction, refreshPostsAction, deletePostAction, votePostAction } from '../../../redux/actions/async/feedAsyncActions'
 import { fetchPost } from '../../../redux/actions/sync/postSyncActions'
 import { Values } from '../../../constants'
 import { getPosts, getLoadingPosts, getPostsEndReached } from '../../../redux/reducers/feed/selectors'
@@ -90,7 +90,7 @@ class FeedScreenContainer extends Component {
             const lng = position.coords.longitude
             await this.props.refreshPosts(lat, lng)
           }, () => {
-            this.showAlert('Atenção', 'Ocorreu um problema ao buscar sua localização.')
+            // this.showAlert('Atenção', 'Ocorreu um problema ao buscar sua localização.')
           },
           {
             enableHighAccuracy: true,
@@ -125,18 +125,22 @@ class FeedScreenContainer extends Component {
   }
 
   render() {
+    // console.log(this.props.posts)
     return (
       <Feed
         feed={this.props.posts}
         user={this.props.user}
-        // isAuthenticated
-        isAuthenticated={this.props.user.isAuthenticated}
+        isAuthenticated
+        // isAuthenticated={this.props.user.isAuthenticated}
         onNewPostPress={this.navigateToNewPost}
         onReadMorePress={this.onGoToPostPress}
         onCommentPress={this.onCommentPress}
         onPlacePress={this.onPlacePress}
         onRefreshPosts={this.refreshPosts}
         isLoadingPosts={this.props.isLoadingPosts}
+        onDeletePress={this.props.deletePost}
+        onPositivePress={this.props.votePositive}
+        onNegativePress={this.props.voteNegative}
       />
     )
   }
@@ -154,6 +158,9 @@ const mapDispatchToProps = dispatch => ({
   refreshPosts: (lat, lng) => dispatch(refreshPostsAction(lat, lng)),
   savePost: (post, commenting) => dispatch(fetchPost(post, commenting)),
   getComments: postId => dispatch(getCommentsAction(postId)),
+  deletePost: postId => dispatch(deletePostAction(postId)),
+  votePositive: (postId, vote) => dispatch(votePostAction(postId, vote)),
+  voteNegative: (postId, vote) => dispatch(votePostAction(postId, vote)),
 })
 
 export const FeedScreen = connect(mapStateToProps, mapDispatchToProps)(FeedScreenContainer)

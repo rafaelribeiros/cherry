@@ -15,6 +15,7 @@ import { clearPost } from '../../../redux/actions/sync/postSyncActions'
 import { getPostAction } from '../../../redux/actions/async/postAsyncActions'
 import { Values } from '../../../constants'
 import { getUser } from '../../../redux/reducers/authentication/selectors'
+import { votePostAction, deletePostAction } from '../../../redux/actions/async/feedAsyncActions'
 
 class PostScreenContainer extends Component {
   static navigationOptions = () => ({
@@ -94,11 +95,17 @@ class PostScreenContainer extends Component {
   }
 
   componentWillUnmount = () => this.props.clearPostState()
+  onDeletePress = async () => {
+    await this.props.deletePost(this.props.post.id)
+    this.props.navigation.goBack()
+  }
 
   render() {
     return (
       <Post
+        user={this.props.user}
         autofocusInput={this.props.commenting}
+        isAuthenticated={this.props.user.isAuthenticated}
         // activeUserId={this.props.user.id}
         // activePageId={this.props.user.pageAdmin.id}
         // isAdmin={this.props.user.isAdmin}
@@ -107,7 +114,7 @@ class PostScreenContainer extends Component {
         onUndoLikePress={this.props.undoLikePost}
         onSharePress={this.props.sharePost}
         onReportPress={this.props.reportPost}
-        onDeletePress={this.props.deletePost}
+        onDeletePress={this.onDeletePress}
         onFollowPage={this.props.followPage}
         comments={this.props.comments}
         onPublishCommentPress={this.props.publishComment}
@@ -129,6 +136,8 @@ class PostScreenContainer extends Component {
         onCandidatePress={this.navigateToPage}
         onReportUserPress={this.props.reportUser}
         onReportPagePress={this.props.reportPage}
+        onPositivePress={this.props.votePositive}
+        onNegativePress={this.props.voteNegative}
       />
     )
   }
@@ -145,7 +154,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   clearPostState: () => dispatch(clearPost()),
-  fetchPost: postId => dispatch(getPostAction(postId))
+  fetchPost: postId => dispatch(getPostAction(postId)),
+  deletePost: postId => dispatch(deletePostAction(postId)),
+  votePositive: (postId, vote) => dispatch(votePostAction(postId, vote)),
+  voteNegative: (postId, vote) => dispatch(votePostAction(postId, vote)),
 })
 
 export const PostScreen = connect(mapStateToProps, mapDispatchToProps)(PostScreenContainer)

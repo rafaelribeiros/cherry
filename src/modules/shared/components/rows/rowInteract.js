@@ -35,14 +35,19 @@ const Divider = () => (
 )
 
 export const RowInteract = ({
-  like, comment, share, menu, hasMenu
+  like, comment, share, menu, hasMenu, karma, votedNegative, votedPositive, onPositivePress, onNegativePress, postId
 }) => (
   <View style={styles.wrap}>
     <LikeButton
       disabled={like.disabled}
       isActive={like.isActive}
-      number={like.number}
+      number={karma}
       onPress={like.onPress}
+      votedNegative={votedNegative}
+      votedPositive={votedPositive}
+      onPositivePress={onPositivePress}
+      onNegativePress={onNegativePress}
+      postId={postId}
     />
     <Divider />
     {interactionButton('message-text', comment)}

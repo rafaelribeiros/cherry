@@ -13,24 +13,37 @@ export class LikeButton extends PureComponent {
     disabled: PropTypes.bool,
     isActive: PropTypes.bool,
     number: PropTypes.number,
-    onPress: PropTypes.func,
+    onPositivePress: PropTypes.func,
+    onNegativePress: PropTypes.func,
   }
   static defaultProps = {
     disabled: false,
     isActive: false,
     number: 0,
-    onPress: () => { },
+    onPositivePress: () => { },
+    onNegativePress: () => { },
   }
 
   state = {
     processingTouch: false
   }
 
-  onPressButton = async () => {
-    const { onPress } = this.props
-    this.setState({ processingTouch: true })
-    await onPress()
-    this.setState({ processingTouch: false })
+  onPositivePressButton = async () => {
+    const { onPositivePress, votedPositive, postId } = this.props
+    if (votedPositive === false) {
+      this.setState({ processingTouch: true })
+      await onPositivePress(postId, 1)
+      this.setState({ processingTouch: false })
+    }
+  }
+
+  onNegativePressButton = async () => {
+    const { onNegativePress, votedNegative, postId } = this.props
+    if (votedNegative === false) {
+      this.setState({ processingTouch: true })
+      await onNegativePress(postId, -1)
+      this.setState({ processingTouch: false })
+    }
   }
 
   renderNumber = number => (
@@ -39,23 +52,30 @@ export class LikeButton extends PureComponent {
   )
 
   render() {
-    const { isActive, disabled, number } = this.props
+    const {
+      isActive,
+      disabled,
+      number,
+      votedNegative,
+      votedPositive
+    } = this.props
     const buttonOpacity = (disabled && this.state.processingTouch) ? { opacity: 0.5 } : {}
-    const [iconColor, iconName] = ((disabled && this.state.processingTouch) || isActive) ? [Colors.primary, 'thumb-up'] : [Colors.blackSecondary, 'thumb-up-outline']
+    const [firstIconColor] = ((disabled && this.state.processingTouch) || votedPositive) ? [Colors.primary, 'thumb-up'] : [Colors.blackSecondary, 'thumb-up-outline']
+    const [secondIconColor] = ((disabled && this.state.processingTouch) || votedNegative) ? [Colors.primary, 'thumb-up'] : [Colors.blackSecondary, 'thumb-up-outline']
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center', alignContent: 'center' }}>
-        <Touchable disabled={disabled} borderless onPress={this.onPressButton} style={styles.buttonWrap}>
+        <Touchable disabled={disabled} borderless onPress={this.onPositivePressButton} style={styles.buttonWrap}>
           <Icon
-            color={iconColor}
+            color={firstIconColor}
             containerStyle={buttonOpacity}
             dense
             name="arrow-up-bold-circle-outline"
           />
         </Touchable>
         {this.renderNumber(number)}
-        <Touchable disabled={disabled} borderless onPress={this.onPressButton} style={styles.buttonWrap}>
+        <Touchable disabled={disabled} borderless onPress={this.onNegativePressButton} style={styles.buttonWrap}>
           <Icon
-            color={Colors.blackSecondary}
+            color={secondIconColor}
             containerStyle={buttonOpacity}
             dense
             name="arrow-down-bold-circle-outline"

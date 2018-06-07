@@ -22,7 +22,7 @@
     "dot-notation": 0,
     "import/no-unresolved": 0,
     "import/prefer-default-export": "off",
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": ["error", "unix"],
     "max-len": [2, 200],
     "no-alert": 0,
     "no-shadow": 0,

@@ -5,9 +5,10 @@ import {
   // likePost,
   // undoLikePost,
   // reportPost,
-  // deletePost,
+  deletePost,
   // sharePost,
   publishPost,
+  votePost,
   // updatePost,
   // fetchOpenGraph,
 } from '../../../services/post'
@@ -19,7 +20,7 @@ import {
   // refreshPosts,
   // likeFeedPostSuccess,
   // undoLikePostSuccess,
-  // deletePostSuccess,
+  deletePostSuccess,
   // shareFeedPostSuccess,
   // followPageOnFeedSuccess,
   publishingPost,
@@ -27,6 +28,7 @@ import {
   loadingPosts,
   fetchPosts,
   refreshPosts,
+  votePostSuccess,
   // updatePostStatusOnFeed,
   // loadingOg,
   // saveOpenGraph,
@@ -80,6 +82,30 @@ export function refreshPostsAction(lat, lng) {
     } catch (err) {
       dispatch(loadingPosts(false))
       showAlert(err.message, '')
+    }
+  }
+}
+
+export function deletePostAction(postId) {
+  return async (dispatch) => {
+    try {
+      await deletePost(postId)
+      dispatch(deletePostSuccess(postId))
+    } catch (error) {
+      throw error
+    }
+  }
+}
+
+export function votePostAction(postId, vote) {
+  console.log(postId, vote)
+  return async (dispatch) => {
+    try {
+      await votePost(postId, vote)
+      dispatch(votePostSuccess(postId, vote))
+    } catch (error) {
+      console.log(error)
+      throw error
     }
   }
 }

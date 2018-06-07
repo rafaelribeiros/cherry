@@ -3,16 +3,16 @@ import { getUser, verifyResponse, mapUser } from '../../config/utils'
 
 export const getUserProfile = async () => {
   const user = await getUser()
-  return fetch(GET_USER_PROFILE, {
+  return fetch(GET_USER_PROFILE(user.id), {
     method: 'GET',
     headers: {
-      Authorization: user.authorization,
+    //  Authorization: user.authorization,
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
   }).then(resp => verifyResponse(resp))
     .then((response) => {
-      const userMapped = mapUser({ ...response.payload, authorization: user.authorization })
+      const userMapped = mapUser(response)
       return userMapped
     })
     .catch((err) => {

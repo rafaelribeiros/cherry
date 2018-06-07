@@ -1,11 +1,13 @@
-import { GET_POSTS_CLOSE } from '../../constants/routes'
+import { GET_POSTS_CLOSE, GET_ALL_POSTS } from '../../constants/routes'
 
-import { mapPost, verifyResponse } from '../../config/utils'
+import { mapPost, verifyResponse, getUser } from '../../config/utils'
 
 export const getPosts = async (skip = 0, lat = 1, lng = 1) => {
+  const user = await getUser()
   const params = `?skip=${skip}&lat=${lat}&lng=${lng}`
   return fetch(
-    `${GET_POSTS_CLOSE}${params}`,
+    `${GET_ALL_POSTS(user.id)}${params}`,
+    // `${GET_POSTS_CLOSE}${params}`,
     {
       method: 'GET',
       headers: {
