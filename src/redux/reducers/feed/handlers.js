@@ -35,6 +35,7 @@ export const votePostSuccess = (state, { postId, vote }) => {
   }
   return { ...state, posts }
 }
+export const setUserLocation = (state, { loc }) => ({ ...state, loc })
 // export const publishCommentSuccess = (state, { comment, postId }) => {
 //   const comments = _.cloneDeep(state.comments)
 //   const posts = _.cloneDeep(state.posts)

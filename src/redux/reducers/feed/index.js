@@ -28,6 +28,7 @@ import {
   CLEAR_NEW_POST_STATE,
   DELETE_POST_SUCCESS,
   VOTE_POST_SUCCESS,
+  SET_USER_LOCATION,
 } from '../../types/feedTypes'
 import {
   loadingPost,
@@ -58,6 +59,7 @@ import {
   clearNewPostState,
   deletePost,
   votePostSuccess,
+  setUserLocation,
 } from './handlers'
 
 const actionHandlers = {
@@ -89,6 +91,7 @@ const actionHandlers = {
   [UNDO_LIKE_COMMENT_SUCCESS]: undolikeComment,
   [CLEAR_NEW_POST_STATE]: clearNewPostState,
   [VOTE_POST_SUCCESS]: votePostSuccess,
+  [SET_USER_LOCATION]: setUserLocation,
 }
 
 export const feedReducerConfig = {

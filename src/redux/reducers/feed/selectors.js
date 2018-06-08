@@ -10,4 +10,6 @@ export function getPosts(state) {
 export function getPostsEndReached(state) {
   return state.feed.postsEndReached
 }
-
+export function getUserLocation(state) {
+  return state.feed.loc
+}

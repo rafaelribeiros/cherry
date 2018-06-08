@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { FeedScreen } from '../modules/feed/containers/FeedScreen'
 import { PublishPostScreen } from '../modules/feed/containers/PublishPostScreen'
 import { PostScreen } from '../modules/feed/containers/PostScreen'
+import { VerifyAccountScreen } from '../modules/feed/containers/VerifyAccountScreen'
 
 import { MapScreen } from '../modules/map/containers/MapScreen'
 import { ProfileScreen } from '../modules/profile/containers/ProfileScreen'
@@ -27,6 +28,12 @@ const MainStack = Navigator(
     },
     Post: {
       screen: PostScreen,
+      navigationOptions: {
+        tabBarVisible: false,
+      }
+    },
+    VerifyAccount: {
+      screen: VerifyAccountScreen,
       navigationOptions: {
         tabBarVisible: false,
       }

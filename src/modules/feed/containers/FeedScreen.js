@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, InteractionManager, PermissionsAndroid, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, InteractionManager, PermissionsAndroid, Alert, AsyncStorage } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { func, array, bool, object, shape, string, number } from 'prop-types'
@@ -15,7 +15,7 @@ import {
 } from '../../../redux/actions/async/feedAsyncActions'
 import { fetchPost } from '../../../redux/actions/sync/postSyncActions'
 import { Values } from '../../../constants'
-import { getPosts, getLoadingPosts, getPostsEndReached } from '../../../redux/reducers/feed/selectors'
+import { getPosts, getLoadingPosts, getPostsEndReached, getUserLocation } from '../../../redux/reducers/feed/selectors'
 import { getUser } from '../../../redux/reducers/authentication/selectors'
 
 class FeedScreenContainer extends Component {
@@ -43,7 +43,6 @@ class FeedScreenContainer extends Component {
   componentDidMount = () => {
     InteractionManager.runAfterInteractions(() => {
       this.getLocalPosts()
-      // this.props.fetchPosts(0, 1, 1)
     })
   }
 
@@ -62,9 +61,11 @@ class FeedScreenContainer extends Component {
           async (position) => {
             const lat = position.coords.latitude
             const lng = position.coords.longitude
+            AsyncStorage.setItem('loc', JSON.stringify({ lat, lng })).then(() => { })
             await this.props.fetchPosts(0, lat, lng)
-          }, () => {
-            this.showAlert('Atenção', 'Ocorreu um problema ao buscar sua localização.')
+          }, async () => {
+            const { lat, lng } = this.props.userLoc
+            this.props.fetchPosts(0, lat, lng)
           },
           {
             enableHighAccuracy: true,
@@ -96,7 +97,8 @@ class FeedScreenContainer extends Component {
             const lng = position.coords.longitude
             await this.props.refreshPosts(lat, lng)
           }, () => {
-            // this.showAlert('Atenção', 'Ocorreu um problema ao buscar sua localização.')
+            const { lat, lng } = this.props.userLoc
+            this.props.fetchPosts(0, lat, lng)
           },
           {
             enableHighAccuracy: true,
@@ -112,7 +114,9 @@ class FeedScreenContainer extends Component {
     }
   }
   showAlert = (title, text) => Alert.alert(title, text, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
-  navigateToNewPost = () => this.props.navigation.navigate('PublishPost')
+  // navigateToNewPost = () => this.props.navigation.navigate('PublishPost')
+  navigateToNewPost = () => this.props.navigation.navigate('VerifyAccount')
+
   onGoToPostPress = (post) => {
     const commenting = false
     this.props.savePost(post, commenting)
@@ -130,7 +134,7 @@ class FeedScreenContainer extends Component {
   }
 
   render() {
-    // console.log(this.props.posts)
+    console.log(this.props.userLoc)
     return (
       <Feed
         feed={this.props.posts}
@@ -155,7 +159,8 @@ const mapStateToProps = state => ({
   user: getUser(state),
   isLoadingPosts: getLoadingPosts(state),
   hasPostsEndReached: getPostsEndReached(state),
-  posts: getPosts(state)
+  posts: getPosts(state),
+  userLoc: getUserLocation(state)
 })
 
 const mapDispatchToProps = dispatch => ({

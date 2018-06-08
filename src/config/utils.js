@@ -42,6 +42,22 @@ export async function getDevice() {
   return deviceJson
 }
 
+export async function getUserLocation() {
+  let userJson
+  await AsyncStorage.getItem('loc')
+    .then((loc) => {
+      if (loc) {
+        userJson = JSON.parse(loc)
+      } else {
+        userJson = {}
+      }
+    }).catch((err) => {
+      userJson = { err }
+    })
+
+  return userJson
+}
+
 export async function verifyResponse(response) {
   if (response.status !== 200 && response.status !== 201) {
     if (response.status === 401) {

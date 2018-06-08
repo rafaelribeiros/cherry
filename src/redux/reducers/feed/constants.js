@@ -4,4 +4,5 @@ export const FEED_INITIAL_STATE = {
   loadingPost: false,
   posts: [],
   postsEndReached: false,
+  loc: { lat: 0, lng: 0 }
 }

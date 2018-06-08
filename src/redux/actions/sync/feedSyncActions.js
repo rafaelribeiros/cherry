@@ -24,6 +24,7 @@ import {
   DECREASE_POST_COMMENT_COUNT_ON_FEED,
   UPDATE_POST_ON_FEED,
   VOTE_POST_SUCCESS,
+  SET_USER_LOCATION,
 } from '../../types/feedTypes'
 
 export const loadingPosts = loadingPosts => ({ type: LOADING_POSTS, loadingPosts })
@@ -51,3 +52,4 @@ export const cleanFeedPosts = () => ({ type: CLEAN_FEED_POSTS })
 export const increasePostCommentCount = postId => ({ type: INCREASE_POST_COMMENT_COUNT_ON_FEED, postId })
 export const decreasePostCommentCount = postId => ({ type: DECREASE_POST_COMMENT_COUNT_ON_FEED, postId })
 export const updatePost = post => ({ type: UPDATE_POST_ON_FEED, post })
+export const setLocation = loc => ({ type: SET_USER_LOCATION, loc })
