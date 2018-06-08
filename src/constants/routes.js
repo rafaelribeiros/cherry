@@ -17,3 +17,4 @@ export const VOTE_POST = `${API_URL}post/vote`
 export const GET_COMMENTS = postId => `${API_URL}comment/all/${postId}`
 export const PUBLISH_COMMENT = `${API_URL}comment/create`
 export const DELETE_COMMENT = `${API_URL}comment/delete`
+export const VERIFY_USER = `${API_URL}user/approve`

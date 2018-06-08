@@ -202,11 +202,19 @@ export class Feed extends Component {
     const {
       isAuthenticated,
       onNewPostPress,
-
+      user,
+      onVerifyAccountPress
     } = this.props
+    if (user.userStatus === 'PENDING') {
+      return <View style={styles.headerSpacing} />
+    }
+    const isPending = user.userStatus === 'UNVERIFIED'
+    const onPress = isPending ? onVerifyAccountPress : onNewPostPress
+    const text = isPending ? 'Enviar documento' : 'Criar ocorrência'
+    const iconName = isPending ? 'account-card-details' : 'image'
     return (
-      isAuthenticated
-        ? <CardCreatePost onPress={onNewPostPress} />
+      (isAuthenticated || isPending)
+        ? <CardCreatePost iconName={iconName} text={text} onPress={onPress} />
         : <View style={styles.headerSpacing} />
     )
   }

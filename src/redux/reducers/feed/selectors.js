@@ -13,3 +13,6 @@ export function getPostsEndReached(state) {
 export function getUserLocation(state) {
   return state.feed.loc
 }
+export function getVerifyingUser(state) {
+  return state.feed.isVerifyingUser
+}

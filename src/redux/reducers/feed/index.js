@@ -29,6 +29,7 @@ import {
   DELETE_POST_SUCCESS,
   VOTE_POST_SUCCESS,
   SET_USER_LOCATION,
+  VERIFYING_USER
 } from '../../types/feedTypes'
 import {
   loadingPost,
@@ -60,6 +61,7 @@ import {
   deletePost,
   votePostSuccess,
   setUserLocation,
+  verifyUser,
 } from './handlers'
 
 const actionHandlers = {
@@ -92,6 +94,7 @@ const actionHandlers = {
   [CLEAR_NEW_POST_STATE]: clearNewPostState,
   [VOTE_POST_SUCCESS]: votePostSuccess,
   [SET_USER_LOCATION]: setUserLocation,
+  [VERIFYING_USER]: verifyUser,
 }
 
 export const feedReducerConfig = {

@@ -11,13 +11,15 @@ import { IconButton } from './buttons'
 
 export const CardCreatePost = ({
   onPress,
+  text,
+  iconName
   // onImagePress,
 }) => (
   <Card style={styles.container}>
     <Touchable onPress={onPress} style={styles.wrap}>
-      <Text style={styles.title}>Criar ocorrência</Text>
+      <Text style={styles.title}>{text}</Text>
       <IconButton
-        name="image"
+        name={iconName}
         color={Colors.blackSecondary}
         // onPress={onImagePress}
       />

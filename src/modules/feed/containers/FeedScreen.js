@@ -121,7 +121,7 @@ class FeedScreenContainer extends Component {
   }
   showAlert = (title, text) => Alert.alert(title, text, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
   navigateToNewPost = () => this.props.navigation.navigate('PublishPost')
-  // navigateToNewPost = () => this.props.navigation.navigate('VerifyAccount')
+  navigateToVerifyAccount = () => this.props.navigation.navigate('VerifyAccount')
 
   onGoToPostPress = (post) => {
     const commenting = false
@@ -140,7 +140,6 @@ class FeedScreenContainer extends Component {
   }
 
   render() {
-    console.log(this.props.userLoc)
     return (
       <Feed
         feed={this.props.posts}
@@ -156,6 +155,7 @@ class FeedScreenContainer extends Component {
         onDeletePress={this.props.deletePost}
         onPositivePress={this.props.votePositive}
         onNegativePress={this.props.voteNegative}
+        onVerifyAccountPress={this.navigateToVerifyAccount}
       />
     )
   }

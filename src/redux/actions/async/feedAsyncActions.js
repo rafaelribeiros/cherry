@@ -12,6 +12,7 @@ import {
   getComments,
   publishComment,
   deleteComment,
+  verifyUser,
   // updatePost,
   // fetchOpenGraph,
 } from '../../../services/post'
@@ -32,6 +33,7 @@ import {
   fetchPosts,
   refreshPosts,
   votePostSuccess,
+  verifyingUser,
   // updatePostStatusOnFeed,
   // loadingOg,
   // saveOpenGraph,
@@ -43,6 +45,7 @@ import {
   // uploadVideoFailed,
 } from '../sync/feedSyncActions'
 import { loadingComments, fetchComments, publishCommentSuccess, deleteCommentSuccess } from '../sync/postSyncActions'
+import { saveUser } from '../sync/authenticationSyncActions'
 
 const showAlert = (title, text) => Alert.alert(title, text, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
 
@@ -121,7 +124,6 @@ export function getCommentsAction(postId, skip, sort) {
       dispatch(fetchComments(comments, true))
     } catch (error) {
       dispatch(loadingComments(false))
-      console.log(error)
       throw error
     }
   }
@@ -143,6 +145,24 @@ export function deleteCommentAction(postId, commentId) {
     try {
       await deleteComment(postId, commentId)
       dispatch(deleteCommentSuccess(postId, commentId))
+    } catch (error) {
+      throw error
+    }
+  }
+}
+
+export function verifyUserAction(image) {
+  return async (dispatch) => {
+    try {
+
+      dispatch(verifyingUser(true))
+      const user = await verifyUser(image)
+      if (image.uri) {
+        await sendImageS3(image, image.name)
+      }
+      AsyncStorage.setItem('profile', JSON.stringify(user)).then(() => { })
+      dispatch(saveUser(user))
+      dispatch(verifyingUser(false))
     } catch (error) {
       throw error
     }

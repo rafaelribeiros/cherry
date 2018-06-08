@@ -24,6 +24,7 @@ import {
   DELETE_COMMENT_REPLY,
   GET_POST_LIKES,
   VOTE_POST,
+  VERIFY_USER,
 } from '../../constants/routes'
 
 import { verifyResponse, getUser, mapPost, mapComment, mapCommentReply, mapUser } from '../../config/utils'
@@ -545,4 +546,22 @@ export const getPostLikes = async (postId, skip = 0) => {
     .catch((err) => {
       throw err
     })
+}
+
+export const verifyUser = async (image) => {
+  const user = await getUser()
+  return fetch(VERIFY_USER, {
+    method: 'POST',
+    Aceept: 'application/json',
+    headers: {
+      // Authorization: user.authorization,
+      Aceept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ userId: user.id, verifyImage: image.name })
+  }).then(resp => verifyResponse(resp))
+    .then((response) => {
+      user.status = 'PENDING'
+      return response
+    }).catch((err) => { throw err })
 }

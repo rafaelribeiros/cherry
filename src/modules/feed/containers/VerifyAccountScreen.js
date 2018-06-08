@@ -16,6 +16,8 @@ import { LoadingSpinner } from '../../shared/components/loadingSpinner'
 import { verifyAccount as styles, crmCardImage } from '../components/styles/verifyAccount.style'
 import { getFileName } from '../../../config/utils'
 import { Values } from '../../../constants'
+import { getVerifyingUser } from '../../../redux/reducers/feed/selectors'
+import { verifyUserAction } from '../../../redux/actions/async/feedAsyncActions'
 
 class VerifyAccountContainer extends Component {
 
@@ -59,28 +61,31 @@ class VerifyAccountContainer extends Component {
       allowsEditing: false,
     }
 
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.showImagePicker(options, async (response) => {
       if (response.error) {
         alert('Não foi possivel selecionar imagem')
       } else if (!response.didCancel) {
         const { uri, path, fileName } = response
         const name = `verifyImages/${getFileName(fileName || uri)}`
         const image = { uri, uploadUri: (Platform.OS === 'ios') ? uri : path, name }
-
+        await this.props.verifyAccount(image)
+        // this.props.navigation.goBack()
       }
     })
   }
 
   renderSpinnerOrButton = () => {
-    const { menuState } = this.props
-    if (menuState.isLoading) {
+    const { isLoading } = this.props
+    console.log(isLoading)
+    if (isLoading) {
       return <LoadingSpinner spinnerColor="#fff" />
     }
     return <CameraButton onPress={this.openImagePicker} />
   }
 
   render() {
-    const { navigation } = this.props
+    console.log(this.props)
+    // const { navigation } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.top}>
@@ -109,9 +114,11 @@ class VerifyAccountContainer extends Component {
 
 
 const mapStateToProps = state => ({
+  isLoading: getVerifyingUser(state)
 })
 
 const mapDispatchToProps = dispatch => ({
+  verifyAccount: image => dispatch(verifyUserAction(image))
 })
 
 export const VerifyAccountScreen = connect(mapStateToProps, mapDispatchToProps)(VerifyAccountContainer)
