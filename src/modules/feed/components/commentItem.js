@@ -7,7 +7,7 @@ import {
   commentDefaultProps,
 } from '../../shared/propTypes/commentPropTypes'
 
-import { ButtonTextGray } from '../../shared/components/buttons'
+// import { ButtonTextGray } from '../../shared/components/buttons'
 import { CommentSubItem } from './commentSubItem'
 import { IconButton } from '../../shared/components/iconButton'
 import { RowAvatar, RowText } from '../../shared/components/rows'
@@ -215,12 +215,12 @@ export class CommentItem extends Component {
               title={author.name}
               renderRight={
                 <View style={styles.buttonWrap}>
-                  <CommentLikeButton
+                  {/* <CommentLikeButton
                     isActive={liked}
                     number={likesCount}
                     disabled={this.state.disableLike}
                     onPress={likePressAction}
-                  />
+                  /> */}
                   <IconButton
                     name="dots-horizontal"
                     dense
@@ -233,13 +233,13 @@ export class CommentItem extends Component {
               }
             />
           </View>
-          <Text style={styles.commentWithoutBottomMargin}>{text}</Text>
-          <ButtonTextGray
+          <Text style={styles.comment}>{text}</Text>
+          {/* <ButtonTextGray
             title="Responder"
             onPress={this.onReplyComment}
-          />
+          /> */}
         </View>
-        {((repliesCount > 0)) &&
+        {/* {((repliesCount > 0)) &&
           <FlatList
             data={replies}
             inverted
@@ -248,7 +248,7 @@ export class CommentItem extends Component {
             keyExtractor={extractKey}
             extraData={this.state}
           />
-        }
+        } */}
         <MenuModal
           buttons={modalButtons}
           onCancelPress={this.hideMenuModal}

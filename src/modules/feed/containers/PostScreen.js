@@ -15,7 +15,7 @@ import { clearPost } from '../../../redux/actions/sync/postSyncActions'
 import { getPostAction } from '../../../redux/actions/async/postAsyncActions'
 import { Values } from '../../../constants'
 import { getUser } from '../../../redux/reducers/authentication/selectors'
-import { votePostAction, deletePostAction } from '../../../redux/actions/async/feedAsyncActions'
+import { votePostAction, deletePostAction, publishCommentAction, deleteCommentAction } from '../../../redux/actions/async/feedAsyncActions'
 
 class PostScreenContainer extends Component {
   static navigationOptions = () => ({
@@ -101,6 +101,7 @@ class PostScreenContainer extends Component {
   }
 
   render() {
+    console.log(this.props.comments)
     return (
       <Post
         user={this.props.user}
@@ -158,6 +159,8 @@ const mapDispatchToProps = dispatch => ({
   deletePost: postId => dispatch(deletePostAction(postId)),
   votePositive: (postId, vote) => dispatch(votePostAction(postId, vote)),
   voteNegative: (postId, vote) => dispatch(votePostAction(postId, vote)),
+  publishComment: (postId, text) => dispatch(publishCommentAction(postId, text)),
+  deleteComment: (postId, commentId) => dispatch(deleteCommentAction(postId, commentId)),
 })
 
 export const PostScreen = connect(mapStateToProps, mapDispatchToProps)(PostScreenContainer)

@@ -2,6 +2,7 @@ import { AsyncStorage } from 'react-native'
 // import Config from 'react-native-config'
 import { User } from '../domain/User'
 import { Post } from '../domain/Post'
+import { Comment } from '../domain/Comment'
 // import { Post } from '../domain/Post'
 // import { Comment } from '../domain/Comment'
 // import { CommentReply } from '../domain/CommentReply'
@@ -98,7 +99,9 @@ export const mapUser = (item) => {
 export const mapPost = (item) => {
   return new Post(item)
 }
-
+export const mapComment = (item) => {
+  return new Comment(item)
+}
 // export const mapComment = (item) => {
 //   const {
 //     _id,

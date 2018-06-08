@@ -44,7 +44,7 @@ export const fetchMoreComments = (state, { comments, commentsEndReached }) => {
 export const publishComment = (state, { comment }) => {
   const comments = _.cloneDeep(state.comments)
   const post = _.cloneDeep(state.post)
-  post.increaseComment()
+  // post.increaseComment()
   comments.unshift(comment)
   return { ...state, post, comments }
 }
@@ -76,7 +76,7 @@ export const deleteComment = (state, { commentId }) => {
   const comments = _.cloneDeep(state.comments)
   const post = _.cloneDeep(state.post)
   const newComments = comments.filter(item => item.id !== commentId)
-  post.decreaseComment()
+  // post.decreaseComment()
   return { ...state, post, comments: newComments }
 }
 export const clearComments = state => ({ ...state, comments: [] })

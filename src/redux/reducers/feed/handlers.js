@@ -35,3 +35,23 @@ export const votePostSuccess = (state, { postId, vote }) => {
   }
   return { ...state, posts }
 }
+// export const publishCommentSuccess = (state, { comment, postId }) => {
+//   const comments = _.cloneDeep(state.comments)
+//   const posts = _.cloneDeep(state.posts)
+//   const post = posts.find(item => item.id === postId)
+//   if (post) {
+//     post.increaseComment()
+//   }
+//   comments.unshift(comment)
+//   return { ...state, posts, comments }
+// }
+// export const deleteCommentSuccess = (state, { postId, commentId }) => {
+//   const comments = _.cloneDeep(state.comments)
+//   const posts = _.cloneDeep(state.posts)
+//   const newComments = comments.filter(item => item.id !== commentId)
+//   const post = posts.find(item => item.id === postId)
+//   if (post) {
+//     post.decreaseComment()
+//   }
+//   return { ...state, posts, comments: newComments }
+// }

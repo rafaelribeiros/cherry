@@ -228,9 +228,9 @@ export class CommentList extends Component {
       ]
 
     return (
-      (commentCount > 0) &&
+      (comments.length > 0) &&
       <Card>
-        <CommentListHeader commentCount={commentCount} />
+        <CommentListHeader commentCount={comments.length} />
         {
           this.state.loading ? this.renderLoading()
             : <FlatList

@@ -11,11 +11,13 @@ export const RowText = ({
   subtitle,
   renderRight
 }) => {
+  const hasTitle = title !== ''
+  const hasSubTitle = subtitle !== ''
   return (
     <View style={StyleSheet.flatten([styles.wrap, containerStyle])}>
       <View style={styles.wrapSpacingDense}>
-        {title !== '' && <Text style={styles.title}>{title}</Text>}
-        {subtitle !== '' && <Text style={styles.subTitle}>{subtitle}</Text>}
+        { hasTitle && <Text style={styles.title}>{title}</Text>}
+        { hasSubTitle && <Text style={styles.subTitle}>{subtitle}</Text>}
       </View>
       {renderRight}
     </View>

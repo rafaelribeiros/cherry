@@ -6,8 +6,8 @@ export const getPosts = async (skip = 0, lat = 1, lng = 1) => {
   const user = await getUser()
   const params = `?skip=${skip}&lat=${lat}&lng=${lng}`
   return fetch(
-    `${GET_ALL_POSTS(user.id)}${params}`,
-    // `${GET_POSTS_CLOSE}${params}`,
+    // `${GET_ALL_POSTS(user.id)}${params}`,
+    `${GET_POSTS_CLOSE(user.id)}${params}`,
     {
       method: 'GET',
       headers: {
@@ -17,9 +17,8 @@ export const getPosts = async (skip = 0, lat = 1, lng = 1) => {
   )
     .then(resp => verifyResponse(resp))
     .then((postsBackend) => {
-      console.log(postsBackend)
       const { payload } = postsBackend
-      const posts = postsBackend.map((item) => {
+      const posts = payload.map((item) => {
         const post = mapPost(item)
         return post
       })

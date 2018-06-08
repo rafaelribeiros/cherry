@@ -58,7 +58,6 @@ export function getPostAction(postId) {
   return async (dispatch) => {
     try {
       const post = await getPost(postId)
-      console.log(post)
       dispatch(fetchPost(post))
       // dispatch(updatePost(post))
     } catch (error) {

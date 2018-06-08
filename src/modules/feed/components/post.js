@@ -265,6 +265,9 @@ export class Post extends Component {
           <FeedCard
             onPositivePress={this.props.onPositivePress}
             onNegativePress={this.props.onNegativePress}
+            votedNegative={post.votedNegative}
+            votedPositive={post.votedPositive}
+            karma={post.karma}
             activeUserId={this.props.user.id}
             anonymus={post.anonymus}
             audio={post.audio}

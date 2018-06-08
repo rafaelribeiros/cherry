@@ -5,8 +5,14 @@ import { connect } from 'react-redux'
 import { func, array, bool, object, shape, string, number } from 'prop-types'
 
 import { Feed } from '../components/feed'
-import { getCommentsAction } from '../../../redux/actions/async/postAsyncActions'
-import { getPostsAction, refreshPostsAction, deletePostAction, votePostAction } from '../../../redux/actions/async/feedAsyncActions'
+// import { getCommentsAction } from '../../../redux/actions/async/postAsyncActions'
+import {
+  getPostsAction,
+  refreshPostsAction,
+  deletePostAction,
+  votePostAction,
+  getCommentsAction,
+} from '../../../redux/actions/async/feedAsyncActions'
 import { fetchPost } from '../../../redux/actions/sync/postSyncActions'
 import { Values } from '../../../constants'
 import { getPosts, getLoadingPosts, getPostsEndReached } from '../../../redux/reducers/feed/selectors'
@@ -36,8 +42,8 @@ class FeedScreenContainer extends Component {
 
   componentDidMount = () => {
     InteractionManager.runAfterInteractions(() => {
-      // this.getLocalPosts()
-      this.props.fetchPosts(0, 1, 1)
+      this.getLocalPosts()
+      // this.props.fetchPosts(0, 1, 1)
     })
   }
 
@@ -110,14 +116,13 @@ class FeedScreenContainer extends Component {
   onGoToPostPress = (post) => {
     const commenting = false
     this.props.savePost(post, commenting)
-    // this.props.getComments(post.id)
+    this.props.getComments(post.id)
     this.props.navigation.navigate('Post', { post })
   }
   onCommentPress = (post) => {
-    console.log('passou')
     const commenting = true
     this.props.savePost(post, commenting)
-    // this.props.getComments(post.id)
+    this.props.getComments(post.id)
     this.props.navigation.navigate('Post', { post })
   }
   onPlacePress = () => {

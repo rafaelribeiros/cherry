@@ -9,6 +9,9 @@ import {
   // sharePost,
   publishPost,
   votePost,
+  getComments,
+  publishComment,
+  deleteComment,
   // updatePost,
   // fetchOpenGraph,
 } from '../../../services/post'
@@ -39,6 +42,7 @@ import {
   // uploadVideoSuccess,
   // uploadVideoFailed,
 } from '../sync/feedSyncActions'
+import { loadingComments, fetchComments, publishCommentSuccess, deleteCommentSuccess } from '../sync/postSyncActions'
 
 const showAlert = (title, text) => Alert.alert(title, text, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
 
@@ -98,13 +102,48 @@ export function deletePostAction(postId) {
 }
 
 export function votePostAction(postId, vote) {
-  console.log(postId, vote)
   return async (dispatch) => {
     try {
       await votePost(postId, vote)
       dispatch(votePostSuccess(postId, vote))
     } catch (error) {
+      throw error
+    }
+  }
+}
+
+export function getCommentsAction(postId, skip, sort) {
+  return async (dispatch) => {
+    try {
+      dispatch(loadingComments(true))
+      const comments = await getComments(postId, skip, sort)
+      const commentsEndReached = comments.length < 10
+      dispatch(fetchComments(comments, true))
+    } catch (error) {
+      dispatch(loadingComments(false))
       console.log(error)
+      throw error
+    }
+  }
+}
+
+export function publishCommentAction(postId, text) {
+  return async (dispatch) => {
+    try {
+      const comment = await publishComment(postId, text)
+      dispatch(publishCommentSuccess(comment, postId))
+    } catch (error) {
+      throw error
+    }
+  }
+}
+
+export function deleteCommentAction(postId, commentId) {
+  return async (dispatch) => {
+    try {
+      await deleteComment(postId, commentId)
+      dispatch(deleteCommentSuccess(postId, commentId))
+    } catch (error) {
       throw error
     }
   }

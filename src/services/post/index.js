@@ -29,8 +29,8 @@ import {
 import { verifyResponse, getUser, mapPost, mapComment, mapCommentReply, mapUser } from '../../config/utils'
 
 export const getPost = async (postId) => {
-  // const user = await getUser()
-  return fetch(GET_POST(postId), {
+  const user = await getUser()
+  return fetch(GET_POST(postId, user.id), {
     method: 'GET',
     headers: {
       // Authorization: user.authorization,
@@ -151,7 +151,7 @@ export const sharePost = async (postId) => {
 export const getComments = async (postId, skip = 0, sort = 'DATE') => {
   const user = await getUser()
   const params = `?skip=${skip}&limit=${10}&sort=${sort}`
-  return fetch(`${GET_COMMENTS(postId)}${params}`, {
+  return fetch(`${GET_COMMENTS(postId)}`, {
     method: 'GET',
     headers: {
       Authorization: user.authorization,
@@ -160,8 +160,7 @@ export const getComments = async (postId, skip = 0, sort = 'DATE') => {
   })
     .then(resp => verifyResponse(resp))
     .then((commentsBackend) => {
-      const { payload } = commentsBackend
-      const comments = payload.map((item) => {
+      const comments = commentsBackend.map((item) => {
         const comment = mapComment(item)
         return comment
       })
@@ -169,9 +168,9 @@ export const getComments = async (postId, skip = 0, sort = 'DATE') => {
     }).catch((err) => { throw err })
 }
 
-export const publishComment = async (postId, text) => {
+export const publishComment = async (postId, description) => {
   const user = await getUser()
-  return fetch(PUBLISH_COMMENT(postId), {
+  return fetch(PUBLISH_COMMENT, {
     method: 'POST',
     Aceept: 'application/json',
     headers: {
@@ -180,19 +179,17 @@ export const publishComment = async (postId, text) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      text,
+      post: postId,
+      user: user.id,
+      description,
     })
   })
     .then(resp => verifyResponse(resp))
     .then((commentBackend) => {
-      const { payload } = commentBackend
-      if (_.isEmpty(user.pageAdmin)) {
-        payload.author = { _id: user.id, name: user.name, image: user.image }
-      } else {
-        payload.author = { _id: user.pageAdmin.id, name: user.pageAdmin.name, image: user.pageAdmin.imageUrl }
-      }
-      const comment = mapComment(payload)
-      return comment
+      const { comment } = commentBackend
+      comment.user = { _id: user.id, name: user.name, image: user.image }
+      const newComment = mapComment(comment)
+      return newComment
     }).catch((err) => { throw err })
 }
 
@@ -272,14 +269,17 @@ export const editComment = async (postId, commentId, text) => {
 
 export const deleteComment = async (postId, commentId) => {
   const user = await getUser()
-  return fetch(DELETE_COMMENT(postId, commentId), {
+  return fetch(DELETE_COMMENT, {
     method: 'POST',
     Aceept: 'application/json',
     headers: {
-      Authorization: user.authorization,
+      // Authorization: user.authorization,
       Aceept: 'application/json',
       'Content-Type': 'application/json'
     },
+    body: JSON.stringify({
+      id: commentId
+    })
   }).then(resp => verifyResponse(resp))
     .then((response) => {
       return response
