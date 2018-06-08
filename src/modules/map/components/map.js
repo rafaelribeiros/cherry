@@ -17,8 +17,8 @@ export class MapComponent extends Component {
     isRendering: true,
     refreshing: false,
     region: {
-      latitude: 37.78825,
-      longitude: -122.4324,
+      latitude: -20.3108711,
+      longitude: -40.3144384,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     },
@@ -51,11 +51,12 @@ export class MapComponent extends Component {
             })
           }, async () => {
             const { lat, lng } = this.props.userLoc
+            console.log(this.props.userLoc)
             this.setState({
               isRendering: false,
               region: {
-                latitude: lat,
-                longitude: lng,
+                latitude: lat || this.state.region.latitude,
+                longitude: lng || this.state.region.longitude,
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005
               }

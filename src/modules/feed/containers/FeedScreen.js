@@ -137,9 +137,7 @@ class FeedScreenContainer extends Component {
     this.props.getComments(post.id)
     this.props.navigation.navigate('Post', { post })
   }
-  onPlacePress = () => {
-    this.props.navigation.navigate('Map')
-  }
+  onPlacePress = () => {}
 
   render() {
     return (

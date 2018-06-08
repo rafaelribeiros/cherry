@@ -69,7 +69,7 @@ class VerifyAccountContainer extends Component {
         const name = `verifyImages/${getFileName(fileName || uri)}`
         const image = { uri, uploadUri: (Platform.OS === 'ios') ? uri : path, name }
         await this.props.verifyAccount(image)
-        // this.props.navigation.goBack()
+        this.props.navigation.goBack()
       }
     })
   }
