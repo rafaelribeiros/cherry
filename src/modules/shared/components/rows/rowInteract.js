@@ -19,12 +19,11 @@ export const interactionButton = (iconName, { number, onPress }) => (
       dense
       name={iconName}
     />
-    {renderNumber(number)}
+    {/* {renderNumber(number)} */}
   </Touchable>
 )
 
 const renderNumber = number => (
-  (typeof number === 'number' && number !== 0) &&
   <Text style={styles.buttonNumber}>{number}</Text>
 )
 

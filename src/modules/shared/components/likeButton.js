@@ -47,7 +47,6 @@ export class LikeButton extends PureComponent {
   }
 
   renderNumber = number => (
-    (typeof number === 'number' && number !== 0) &&
     <Text style={styles.buttonNumber}>{number}</Text>
   )
 
@@ -60,8 +59,8 @@ export class LikeButton extends PureComponent {
       votedPositive
     } = this.props
     const buttonOpacity = (disabled && this.state.processingTouch) ? { opacity: 0.5 } : {}
-    const [firstIconColor] = ((disabled && this.state.processingTouch) || votedPositive) ? [Colors.primary, 'thumb-up'] : [Colors.blackSecondary, 'thumb-up-outline']
-    const [secondIconColor] = ((disabled && this.state.processingTouch) || votedNegative) ? [Colors.primary, 'thumb-up'] : [Colors.blackSecondary, 'thumb-up-outline']
+    const [firstIconColor] = (((disabled && this.state.processingTouch) || votedPositive) && (number > 0)) ? [Colors.primary, 'thumb-up'] : [Colors.blackSecondary, 'thumb-up-outline']
+    const [secondIconColor] = (((disabled && this.state.processingTouch) || votedNegative) && (number > 0)) ? [Colors.primary, 'thumb-up'] : [Colors.blackSecondary, 'thumb-up-outline']
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center', alignContent: 'center' }}>
         <Touchable disabled={disabled} borderless onPress={this.onPositivePressButton} style={styles.buttonWrap}>

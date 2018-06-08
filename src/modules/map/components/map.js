@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { FlatList, View, Platform, RefreshControl, InteractionManager, PermissionsAndroid, Alert } from 'react-native'
 import { func, bool, arrayOf, shape, string, number } from 'prop-types'
 
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
+import _ from 'lodash'
 
 import { StatusBarStandard } from '../../shared/components/statusBarStandard'
 
@@ -39,9 +40,6 @@ export class MapComponent extends Component {
           async (position) => {
             const { latitude } = position.coords
             const { longitude } = position.coords
-            console.log('latitude', position)
-            console.log('latitude', latitude)
-            console.log('longitude', longitude)
             this.setState({
               isRendering: false,
               region: {
@@ -51,9 +49,17 @@ export class MapComponent extends Component {
                 longitudeDelta: 0.005
               }
             })
-          }, () => {
-            //  this.showAlert('Atenção', 'Ocorreu um problema ao buscar sua localização.')
-            this.setState({ isRendering: false })
+          }, async () => {
+            const { lat, lng } = this.props.userLoc
+            this.setState({
+              isRendering: false,
+              region: {
+                latitude: lat,
+                longitude: lng,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005
+              }
+            })
           },
           {
             enableHighAccuracy: true,
@@ -85,12 +91,26 @@ export class MapComponent extends Component {
   }
 
   onRegionChange = (region) => {
-    // console.log(region)
-    // this.setState({ region })
+    this.setState({ region })
+    _.debounce(() => {
+      if (!this.props.isLoadingPosts) {
+        this.props.onRefreshPosts(region.latitude, region.longitude)
+      }
+    }, 300)()
+  }
+
+  renderMark = (marker) => {
+    const [longitude, latitude] = marker.loc.coordinates
+    return (
+      <Marker
+        coordinate={{ latitude, longitude }}
+        title={marker.contentType}
+        description={marker.body}
+      />
+    )
   }
 
   render() {
-    console.log(this.state)
     return (
       <View style={styles.container} >
         <StatusBarStandard />
@@ -100,7 +120,9 @@ export class MapComponent extends Component {
            style={styles.map}
            region={this.state.region}
            onRegionChangeComplete={this.onRegionChange}
-         />
+         >
+           {this.props.feed.map(marker => this.renderMark(marker))}
+         </MapView>
          }
       </View>
     )

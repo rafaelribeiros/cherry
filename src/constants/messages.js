@@ -20,3 +20,5 @@ export const SHARE_APP_MESSAGE = 'Confira este app:'
 export const SHARE_MESSAGE = 'Mensagem de compartilhamento'
 export const UPLOAD_IMAGE_LIMIT = 'O limite de upload é de 5 imagens'
 export const LIMIT_REACHED = 'Limite atingido'
+export const USER_REPORT_SUCCESS = 'Usuário reportado com sucesso, obrigado!'
+

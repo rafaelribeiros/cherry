@@ -27,7 +27,7 @@ import { styles } from './styles/feed.style'
 import { Metrics, Colors } from '../../../constants'
 import { feedItemProps } from '../../shared/propTypes/feedPropTypes'
 import { MenuModal, ImagesGallery } from '../../shared/components/modals'
-import { SHARE_MESSAGE, POST_REQUEST_FAIL } from '../../../constants/messages'
+import { SHARE_MESSAGE, POST_REQUEST_FAIL, POST_REPORT_SUCCESS, USER_REPORT_SUCCESS } from '../../../constants/messages'
 
 const Container = ScreenWithScrollHOC(View)
 
@@ -82,8 +82,18 @@ export class Feed extends Component {
   showGallery = images => this.setState({ images, isGalleryVisible: true })
   hideGallery = () => this.setState({ isGalleryVisible: false, images: [] })
   report = () => {
-    this.props.onReportPress(this.state.selectedId)
+    // this.props.onReportPress(this.state.selectedId)
     this.hideMenuModal()
+    setTimeout(() => {
+      Alert.alert('Publicação reportada', POST_REPORT_SUCCESS, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
+    }, 200)
+  }
+  reportUser = () => {
+    // this.props.onReportPress(this.props.post.id)
+    this.hideMenuModal()
+    setTimeout(() => {
+      Alert.alert('Usuário reportado', USER_REPORT_SUCCESS, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
+    }, 200)
   }
   delete = () => {
     const postId = this.state.selectedId
@@ -279,6 +289,7 @@ export class Feed extends Component {
       ] :
       [
         { label: 'Reportar publicação', onPress: this.report },
+        { label: 'Reportar usuário', onPress: this.reportUser }
       ]
     return (
       <Container>

@@ -18,6 +18,7 @@ import { Values } from '../../../constants'
 import { getPosts, getLoadingPosts, getPostsEndReached, getUserLocation } from '../../../redux/reducers/feed/selectors'
 import { getUser } from '../../../redux/reducers/authentication/selectors'
 import { setLocation } from '../../../redux/actions/sync/feedSyncActions'
+import { getUserProfileAction } from '../../../redux/actions/async/profileAsyncActions'
 
 class FeedScreenContainer extends Component {
   static navigationOptions = () => ({
@@ -43,6 +44,7 @@ class FeedScreenContainer extends Component {
 
   componentDidMount = () => {
     InteractionManager.runAfterInteractions(() => {
+      this.props.getProfile()
       this.getLocalPosts()
     })
   }
@@ -144,8 +146,8 @@ class FeedScreenContainer extends Component {
       <Feed
         feed={this.props.posts}
         user={this.props.user}
-        isAuthenticated
-        // isAuthenticated={this.props.user.isAuthenticated}
+        // isAuthenticated
+        isAuthenticated={this.props.user.isAuthenticated}
         onNewPostPress={this.navigateToNewPost}
         onReadMorePress={this.onGoToPostPress}
         onCommentPress={this.onCommentPress}
@@ -178,6 +180,7 @@ const mapDispatchToProps = dispatch => ({
   votePositive: (postId, vote) => dispatch(votePostAction(postId, vote)),
   voteNegative: (postId, vote) => dispatch(votePostAction(postId, vote)),
   setUserLocation: loc => dispatch(setLocation(loc)),
+  getProfile: () => dispatch(getUserProfileAction()),
 })
 
 export const FeedScreen = connect(mapStateToProps, mapDispatchToProps)(FeedScreenContainer)

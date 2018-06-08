@@ -24,7 +24,7 @@ import { MenuModal, ImagesGallery } from '../../shared/components/modals'
 import { InputFooter } from '../../shared/components/inputs'
 import { ViewHandlingKeyboard } from '../../shared/components/viewHandlingKeyboard'
 
-import { SHARE_MESSAGE, POST_REQUEST_FAIL, COMMENT_REPORT_SUCCESS, POST_REPORT_SUCCESS } from '../../../constants/messages'
+import { SHARE_MESSAGE, POST_REQUEST_FAIL, COMMENT_REPORT_SUCCESS, POST_REPORT_SUCCESS, USER_REPORT_SUCCESS } from '../../../constants/messages'
 import { styles } from './styles/post.style'
 import { Colors } from '../../../constants'
 
@@ -187,14 +187,21 @@ export class Post extends Component {
     // this.props.onReportPress(this.props.post.id)
     this.hideMenuModal()
     setTimeout(() => {
-      Alert.alert('Postagem reportada', POST_REPORT_SUCCESS, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
+      Alert.alert('Publicação reportada', POST_REPORT_SUCCESS, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
+    }, 200)
+  }
+  reportUser = () => {
+    // this.props.onReportPress(this.props.post.id)
+    this.hideMenuModal()
+    setTimeout(() => {
+      Alert.alert('Usuário reportado', USER_REPORT_SUCCESS, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
     }, 200)
   }
   deletePost = () => {
     this.hideMenuModal()
     setTimeout(() => {
       Alert.alert(
-        'Excluir postagem',
+        'Excluir publicação',
         'Deseja excluir esta publicação?',
         [
           { text: 'Manter', onPress: () => { }, style: 'cancel' },
@@ -237,7 +244,7 @@ export class Post extends Component {
     this.commentInput.focus()
   }
   reportCommentReply = async (replyId) => {
-    await this.props.onReportCommentReplyPress(this.props.post.id, replyId)
+    // await this.props.onReportCommentReplyPress(this.props.post.id, replyId)
     Alert.alert('Comentário reportado', COMMENT_REPORT_SUCCESS, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
   }
   clearReplyingTo = () => this.setState({ replyingTo: '', isReplying: false, selectedCommentId: '' })
@@ -256,7 +263,7 @@ export class Post extends Component {
       ] :
       [
         { label: 'Reportar publicação', onPress: this.reportPost },
-        // { label: 'Reportar usuário', onPress: this.reportPage }
+        { label: 'Reportar usuário', onPress: this.reportUser }
       ]
 
     return (
@@ -265,6 +272,7 @@ export class Post extends Component {
           <FeedCard
             onPositivePress={this.props.onPositivePress}
             onNegativePress={this.props.onNegativePress}
+            isAuthenticated={this.props.isAuthenticated}
             votedNegative={post.votedNegative}
             votedPositive={post.votedPositive}
             karma={post.karma}

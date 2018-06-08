@@ -7,6 +7,8 @@ import { func, array, bool, object, shape, string, number } from 'prop-types'
 import { MapComponent } from '../components/map'
 
 import { Values } from '../../../constants'
+import { getPosts, getUserLocation, getLoadingPosts } from '../../../redux/reducers/feed/selectors'
+import { refreshPostsAction } from '../../../redux/actions/async/feedAsyncActions'
 
 
 class MapScreenContainer extends Component {
@@ -27,16 +29,23 @@ class MapScreenContainer extends Component {
   render() {
     return (
       <MapComponent
-        feed={[]}
+        feed={this.props.posts}
+        onRefreshPosts={this.props.refreshPosts}
+        userLoc={this.props.userLoc}
+        isLoadingPosts={this.props.isLoadingPosts}
       />
     )
   }
 }
 
 const mapStateToProps = state => ({
+  posts: getPosts(state),
+  userLoc: getUserLocation(state),
+  isLoadingPosts: getLoadingPosts(state),
 })
 
 const mapDispatchToProps = dispatch => ({
+  refreshPosts: (lat, lng) => dispatch(refreshPostsAction(lat, lng)),
 })
 
 export const MapScreen = connect(mapStateToProps, mapDispatchToProps)(MapScreenContainer)

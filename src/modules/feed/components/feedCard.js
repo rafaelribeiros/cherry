@@ -61,6 +61,12 @@ export class FeedCard extends Component {
     if (this.props.interactions.like.disabled !== nextProps.interactions.like.disabled) {
       return true
     }
+    if (this.props.anonymus !== nextProps.anonymus) {
+      return true
+    }
+    if (this.props.isAuthenticated !== nextProps.isAuthenticated) {
+      return true
+    }
     return false
   }
 
@@ -154,7 +160,7 @@ export class FeedCard extends Component {
                 dense
                 size={Metrics.icons.small}
               />
-              <Text>{placeDescription}</Text>
+              <Text style={{ flex: 1 }}>{placeDescription}</Text>
             </Touchable>
           </View>
         </TouchableWithoutFeedback>

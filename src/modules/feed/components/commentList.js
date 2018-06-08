@@ -11,6 +11,7 @@ import { Touchable } from '../../shared/components/touchable'
 
 import { styles } from './styles/post.style'
 import { Colors } from '../../../constants'
+import { USER_REPORT_SUCCESS, POST_REPORT_SUCCESS, COMMENT_REPORT_SUCCESS } from '../../../constants/messages'
 
 const commentProps = {
   author: shape({ name: string }),
@@ -101,8 +102,8 @@ export class CommentList extends Component {
   }
 
   showMenuModal = (selectedId, author) => {
-    const { activeUserId, activePageId } = this.props
-    const hasPermission = (author._id === activeUserId) || (author._id === activePageId)
+    const { activeUserId } = this.props
+    const hasPermission = (author.id === activeUserId)
     this.setState({
       isMenuModalVisible: true,
       selectedId,
@@ -117,9 +118,12 @@ export class CommentList extends Component {
     author: {},
   })
   reportComment = () => {
-    const commentId = this.state.selectedId
+    // const commentId = this.state.selectedId
     this.hideMenuModal()
-    this.props.onReportCommentPress(commentId)
+    // this.props.onReportCommentPress(commentId)
+    setTimeout(() => {
+      Alert.alert('Comentário reportado', COMMENT_REPORT_SUCCESS, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
+    }, 200)
   }
   deleteComment = () => {
     const commentId = this.state.selectedId
@@ -145,13 +149,17 @@ export class CommentList extends Component {
     }
   }
   reportCommentAuthor = () => {
-    const commentAuthor = this.state.author
     this.hideMenuModal()
-    if (commentAuthor.type === 'USER') {
-      this.props.onReportUserPress(this.state.author._id)
-    } else if (commentAuthor.type === 'PAGE') {
-      this.props.onReportPagePress(this.state.author._id)
-    }
+    setTimeout(() => {
+      Alert.alert('Usuário reportado', USER_REPORT_SUCCESS, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
+    }, 200)
+    // const commentAuthor = this.state.author
+    // this.hideMenuModal()
+    // if (commentAuthor.type === 'USER') {
+    //   this.props.onReportUserPress(this.state.author._id)
+    // } else if (commentAuthor.type === 'PAGE') {
+    //   this.props.onReportPagePress(this.state.author._id)
+    // }
   }
 
   renderComment = ({ item }) => {

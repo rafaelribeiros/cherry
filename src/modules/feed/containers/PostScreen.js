@@ -101,13 +101,12 @@ class PostScreenContainer extends Component {
   }
 
   render() {
-    console.log(this.props.comments)
     return (
       <Post
         user={this.props.user}
         autofocusInput={this.props.commenting}
         isAuthenticated={this.props.user.isAuthenticated}
-        // activeUserId={this.props.user.id}
+        activeUserId={this.props.user.id}
         // activePageId={this.props.user.pageAdmin.id}
         // isAdmin={this.props.user.isAdmin}
         post={this.props.post}
