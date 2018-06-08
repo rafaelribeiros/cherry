@@ -17,6 +17,7 @@ import { fetchPost } from '../../../redux/actions/sync/postSyncActions'
 import { Values } from '../../../constants'
 import { getPosts, getLoadingPosts, getPostsEndReached, getUserLocation } from '../../../redux/reducers/feed/selectors'
 import { getUser } from '../../../redux/reducers/authentication/selectors'
+import { setLocation } from '../../../redux/actions/sync/feedSyncActions'
 
 class FeedScreenContainer extends Component {
   static navigationOptions = () => ({
@@ -61,7 +62,9 @@ class FeedScreenContainer extends Component {
           async (position) => {
             const lat = position.coords.latitude
             const lng = position.coords.longitude
-            AsyncStorage.setItem('loc', JSON.stringify({ lat, lng })).then(() => { })
+            const loc = { lat, lng }
+            AsyncStorage.setItem('loc', JSON.stringify(loc)).then(() => { })
+            this.props.setUserLocation(loc)
             await this.props.fetchPosts(0, lat, lng)
           }, async () => {
             const { lat, lng } = this.props.userLoc
@@ -95,10 +98,13 @@ class FeedScreenContainer extends Component {
           async (position) => {
             const lat = position.coords.latitude
             const lng = position.coords.longitude
+            const loc = { lat, lng }
+            AsyncStorage.setItem('loc', JSON.stringify(loc)).then(() => { })
+            this.props.setUserLocation(loc)
             await this.props.refreshPosts(lat, lng)
-          }, () => {
+          }, async () => {
             const { lat, lng } = this.props.userLoc
-            this.props.fetchPosts(0, lat, lng)
+            await this.props.refreshPosts(lat, lng)
           },
           {
             enableHighAccuracy: true,
@@ -114,8 +120,8 @@ class FeedScreenContainer extends Component {
     }
   }
   showAlert = (title, text) => Alert.alert(title, text, [{ text: 'OK', onPress: () => { } }], { cancelable: true })
-  // navigateToNewPost = () => this.props.navigation.navigate('PublishPost')
-  navigateToNewPost = () => this.props.navigation.navigate('VerifyAccount')
+  navigateToNewPost = () => this.props.navigation.navigate('PublishPost')
+  // navigateToNewPost = () => this.props.navigation.navigate('VerifyAccount')
 
   onGoToPostPress = (post) => {
     const commenting = false
@@ -171,6 +177,7 @@ const mapDispatchToProps = dispatch => ({
   deletePost: postId => dispatch(deletePostAction(postId)),
   votePositive: (postId, vote) => dispatch(votePostAction(postId, vote)),
   voteNegative: (postId, vote) => dispatch(votePostAction(postId, vote)),
+  setUserLocation: loc => dispatch(setLocation(loc)),
 })
 
 export const FeedScreen = connect(mapStateToProps, mapDispatchToProps)(FeedScreenContainer)
